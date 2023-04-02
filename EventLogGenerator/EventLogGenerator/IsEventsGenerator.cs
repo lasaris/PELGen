@@ -1,6 +1,9 @@
 ﻿namespace EventLogGenerator;
 
-public class IsEventsGenerator
+public static class IsEventsGenerator
 {
-    
+    public static void GenerateIsLogs(int numberOfActors)
+    {
+        // TODO
+    }
 }
