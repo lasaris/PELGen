@@ -5,6 +5,11 @@
 /// </summary>
 public class Resource
 {
-    // Name of the Resource. Should be unique. 
-    public string ResourceName = "";
+    // Name of the Resource. Should be unique.
+    public string ResourceName;
+
+    public Resource(string resourceName)
+    {
+        ResourceName = resourceName;
+    }
 }

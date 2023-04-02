@@ -15,8 +15,8 @@ public class StateRules
     public int MaxPasses;
 
     // ProcessStates that must be visited by Actor before the current one (can be indirect)
-    public List<ProcessCase> MustPreceed;
+    public List<ProcessState> MustPreceed;
     
-    // ProcessState that must be a direct parent of current one
-    public ProcessCase DirectParent;
+    // ProcessState that must be a direct parent of the current one (null if not required)
+    public ProcessState? DirectParent;
 }

@@ -2,6 +2,7 @@
 
 public enum EActivityType
 {
+    // For IS student activities
     EnrollCourse,
     PickSeminarGroup,
     AttendSeminar,

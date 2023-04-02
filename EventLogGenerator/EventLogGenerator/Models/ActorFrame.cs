@@ -7,7 +7,7 @@ public class ActorFrame
 {
     public Actor Actor;
 
-    public ProcessCase? CurrentCase;
+    public ProcessState? CurrentCase;
     
-    // TODO
+    // TODO: Next() function to jump to next state after evaluation from StateEvaluator()
 }
