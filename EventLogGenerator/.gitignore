@@ -1,3 +1,7 @@
-﻿.idea/
-bin/
-obj/
+﻿.idea
+*.suo
+*.user
+_ReSharper.*
+bin
+obj
+packages
