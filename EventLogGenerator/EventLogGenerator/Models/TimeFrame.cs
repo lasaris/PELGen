@@ -6,9 +6,17 @@ public class TimeFrame
 
     public DateTime End;
 
-    public TimeFrame(DateTime start, DateTime end)
+    public ETimeFrameDistribution Distribution;
+
+    public TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform)
     {
+        if (start >= end)
+        {
+            throw new ArgumentException("The end of TimeFrame must be chronologically later than the start");
+        }
+        
         Start = start;
         End = end;
+        Distribution = distribution;
     }
 }

@@ -1,15 +1,13 @@
 ﻿namespace EventLogGenerator.Models;
 
-/// <summary>
-/// Defines a Resource that can be used with Activity
-/// </summary>
+// Resource that can be used with combination of Activity
 public class Resource
 {
-    // Name of the Resource. Should be unique.
-    public string ResourceName;
+    // Name of resource. Should be unique
+    public string Name;
 
-    public Resource(string resourceName)
+    public Resource(string name)
     {
-        ResourceName = resourceName;
+        Name = name;
     }
 }
