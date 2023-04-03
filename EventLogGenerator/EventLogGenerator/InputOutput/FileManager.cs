@@ -8,6 +8,7 @@ public static class FileManager
 
     /// <summary>
     /// Creates new CSV file and appends given header to it
+    /// CSV file must be prepared before trying to append lines to it via "AppendLineToCsv"
     /// </summary>
     /// <param name="headerLine">header for CSV file</param>
     /// <param name="filename">name of newly created file</param>

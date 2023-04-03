@@ -1,4 +1,5 @@
-﻿using EventLogGenerator.Models;
+﻿using EventLogGenerator.InputOutput;
+using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
 
 namespace EventLogGenerator;
@@ -11,7 +12,10 @@ public static class IsEventsGenerator
         {
             throw new ArgumentException($"Invalid number of actors: students {studentsCount}");
         }
-
+        
+        // Setup FileManager output CSV file
+        FileManager.SetupNewCsvFile("CaseId,Activity,ActorId,ActorType,StartTimestamp,EndTimestamp");
+        
         // Prepare Actors
         List<Actor> students = Enumerable.Range(0, studentsCount)
             .Select(_ => new Actor(EActorType.Student))
