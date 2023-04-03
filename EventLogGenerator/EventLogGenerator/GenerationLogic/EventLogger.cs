@@ -36,6 +36,7 @@ public static class EventLogger
         sb.Append(data.State.ActivityType + ",");
         sb.Append(data.Actor.Id + ",");
         sb.Append(data.Actor.Type + ",");
+        sb.Append(data.State.Resource + ",");
         sb.Append(stateEnteredTime + ",");
         sb.Append(data.TimeStamp);
         
