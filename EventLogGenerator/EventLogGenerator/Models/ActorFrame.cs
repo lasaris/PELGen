@@ -9,19 +9,19 @@ public class ActorFrame
     public Actor Actor;
 
     // Current state of the process (null if process just finished)
-    public ProcessState? CurrentState;
-
-    // ProcessStates that are available for next step in the process
-    public HashSet<ProcessState> AvailableNext;
+    public ProcessState? CurrentState = null;
 
     // Dictionary of ProcessStates that were previously visited in the process, values counts the visits
-    public Dictionary<ProcessState, int> VisitedMap;
+    public Dictionary<ProcessState, int> VisitedMap = new();
 
     // The previously visited state (null if currently at start)
-    public ProcessState? LastVisited;
+    public ProcessState? LastVisited = null;
 
     // The time in which the frame moves. Should be updated forward after each state transition
-    public DateTime CurrentTime;
+    public DateTime? CurrentTime = null;
 
-    // TODO: Next() function to jump to next state after evaluation from StateEvaluator()
+    public ActorFrame(Actor actor)
+   {
+        Actor = actor;
+    }
 }

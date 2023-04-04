@@ -1,4 +1,5 @@
-﻿using EventLogGenerator.Models.Enums;
+﻿using EventLogGenerator.GenerationLogic;
+using EventLogGenerator.Models.Enums;
 
 namespace EventLogGenerator.Models;
 
@@ -41,5 +42,7 @@ public class ProcessState
         TimeFrame = timeFrame;
         IsStarting = isStarting;
         IsFinishing = isFinishing;
+
+        StateEvaluator.AddState(this);
     }
 }
