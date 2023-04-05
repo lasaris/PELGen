@@ -33,9 +33,15 @@ public class ProcessState
         Rules = rules;
         
         // Override compulsory states chance for visit to 100%
-        if (rules.IsCompulsory)
+        if(rules.IsCompulsory)
         {
             chances.ChanceToVisit = 1f;
+        }
+        
+        // Override chance for looping if maxLoop is set to 0
+        if (rules.MaxLoops == 0)
+        {
+            chances.LoopChance = 0f;
         }
         
         Chances = chances;
