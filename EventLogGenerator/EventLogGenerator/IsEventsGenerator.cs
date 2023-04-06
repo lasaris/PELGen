@@ -522,7 +522,7 @@ public static class IsEventsGenerator
         var passCourse = new ProcessState(
             EActivityType.PassCourse,
             course,
-            new StateRules(true, 1, 0),
+            new StateRules(true, 1, 0, null, enrolledCourseSet, new HashSet<EActivityType>(){EActivityType.RegisterExamTerm}),
             new StateChances(),
             new TimeFrame(semesterStart, semesterEnd),
             false,
@@ -532,7 +532,7 @@ public static class IsEventsGenerator
         var failCourse = new ProcessState(
             EActivityType.FailCourse,
             course,
-            new StateRules(true, 1, 0),
+            new StateRules(true, 1, 0, null, enrolledCourseSet),
             new StateChances(),
             new TimeFrame(semesterStart, semesterEnd),
             false,
@@ -541,11 +541,11 @@ public static class IsEventsGenerator
 
         foreach (var _ in students)
         {
-            var actorFrame = new ActorFrame(new Actor(EActorType.Student));
+            var actorFrame = new ActorFrame(new Actor(EActorType.Student), enrollCourse);
             StateEvaluator.CurrentActorFrame = actorFrame;
             StateEvaluator.RunProcess();
         }
-        
+
         // TODO: Implement Good vs. Bad student Actor
 
         // TODO: Implement variable offset for attending seminar for each student Actor
