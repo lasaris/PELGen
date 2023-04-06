@@ -18,7 +18,10 @@ public class ActorFrame
     public ProcessState? LastVisited = null;
 
     // The time in which the frame moves. Should be updated forward after each state transition
-    public DateTime? CurrentTime = null;
+    public DateTime CurrentTime;
+
+    // Number of loops over the current state
+    public int CurrentLoopCount = 0;
 
     public ActorFrame(Actor actor, ProcessState currentState)
    {

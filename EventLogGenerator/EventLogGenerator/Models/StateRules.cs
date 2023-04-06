@@ -14,27 +14,27 @@ public class StateRules
     public int MaxLoops;
 
     // Following activity type and its chance to follow as next one 
-    public (EActivityType, float)[]? FollowingActivitiesMap;
+    public Dictionary<EActivityType, float>? FollowingActivitiesMap;
 
     // ProcessStates that must be visited by Actor before the current one (can be indirect, null if no limitations)
-    public HashSet<ProcessState>? MustPreceedStates;
+    public HashSet<ProcessState>? MustPrecedeStates;
 
     // Activities that must be visited by Actor before the current one (can be indirect, null if no limitations)
-    public HashSet<EActivityType>? MustPreceedActivities;
+    public HashSet<EActivityType>? MustPrecedeActivities;
 
     // ProcessState that must be a direct parent of the current one (null if not required)
     public ProcessState? DirectParent;
 
     public StateRules(bool isCompulsory = false, int maxPasses = 1, int maxLoops = 0,
-        (EActivityType, float)[]? followingActivitiesMap = null, HashSet<ProcessState>? mustPreceedStates = null,
-        HashSet<EActivityType>? mustPreceedActivities = null, ProcessState? directParent = null)
+        Dictionary<EActivityType, float>? followingActivitiesMap = null, HashSet<ProcessState>? mustPrecedeStates = null,
+        HashSet<EActivityType>? mustPrecedeActivities = null, ProcessState? directParent = null)
     {
         IsCompulsory = isCompulsory;
         MaxPasses = maxPasses;
         MaxLoops = maxLoops;
         FollowingActivitiesMap = followingActivitiesMap;
-        MustPreceedStates = mustPreceedStates;
-        MustPreceedActivities = mustPreceedActivities;
+        MustPrecedeStates = mustPrecedeStates;
+        MustPrecedeActivities = mustPrecedeActivities;
         DirectParent = directParent;
     }
 }

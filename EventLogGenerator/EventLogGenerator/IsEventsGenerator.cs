@@ -78,7 +78,7 @@ public static class IsEventsGenerator
         );
 
         var materialRules =
-            new StateRules(false, -1, -1, new[] { (EActivityType.AttendSeminar, 0.8f) }, enrolledCourseSet);
+            new StateRules(false, -1, -1, new Dictionary<EActivityType, float>() { {EActivityType.AttendSeminar, 0.8f} }, enrolledCourseSet);
 
         var readStudyMaterials1 = new ProcessState(
             EActivityType.ReadStudyMaterials,
@@ -235,10 +235,10 @@ public static class IsEventsGenerator
         var timeFrameRopot6 =
             new TimeFrame(new DateTime(2023, 2, 07, 12, 00, 00), new DateTime(2023, 2, 07, 12, 15, 00));
 
-        var openRopotFollowing = new[] { (EActivityType.SubmitRopot, 0.7f), (EActivityType.SaveRopot, 0.3f) };
-        var saveRopotFollowing = new[] { (EActivityType.SubmitRopot, 0.7f), (EActivityType.SaveRopot, 0.3f) };
-        var submitRopotFollowing = new[] { (EActivityType.ViewRopot, 0.9f) };
-        var viewRopotFollowing = new[] { (EActivityType.ReadStudyMaterials, 0.5f) };
+        var openRopotFollowing = new Dictionary<EActivityType, float>(){ {EActivityType.SubmitRopot, 0.7f}, {EActivityType.SaveRopot, 0.3f} };
+        var saveRopotFollowing = new Dictionary<EActivityType, float>() { {EActivityType.SubmitRopot, 0.7f}, {EActivityType.SaveRopot, 0.3f} };
+        var submitRopotFollowing = new Dictionary<EActivityType, float>() { {EActivityType.ViewRopot, 0.9f} };
+        var viewRopotFollowing = new Dictionary<EActivityType, float>(){ {EActivityType.ReadStudyMaterials, 0.5f} };
 
         var openRopotChances = new StateChances(1f);
         var saveRopotChances = new StateChances(0.8f);
@@ -490,7 +490,7 @@ public static class IsEventsGenerator
         );
 
         var examRules = new StateRules(false, 1, 0,
-            new[] { (EActivityType.PassCourse, 0.5f), (EActivityType.RegisterExamTerm, 0.5f) });
+            new Dictionary<EActivityType, float>(){ {EActivityType.PassCourse, 0.5f}, {EActivityType.RegisterExamTerm, 0.5f} });
         var examChances = new StateChances(0.9f);
 
         // exam dates 14.2, 21.2., 28.2.
@@ -504,7 +504,7 @@ public static class IsEventsGenerator
 
         var registerTerm2 = new ProcessState(
             EActivityType.RegisterExamTerm,
-            exam1,
+            exam2,
             examRules,
             examChances,
             new TimeFrame(new DateTime(2023, 2, 14), new DateTime(2023, 2, 20))
@@ -512,7 +512,7 @@ public static class IsEventsGenerator
 
         var registerTerm3 = new ProcessState(
             EActivityType.RegisterExamTerm,
-            exam1,
+            exam3,
             examRules,
             examChances,
             new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 27))
@@ -542,7 +542,7 @@ public static class IsEventsGenerator
         foreach (var _ in students)
         {
             var actorFrame = new ActorFrame(new Actor(EActorType.Student), enrollCourse);
-            StateEvaluator.CurrentActorFrame = actorFrame;
+            StateEvaluator.InitializeEvaluator(actorFrame);
             StateEvaluator.RunProcess();
         }
 
