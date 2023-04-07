@@ -14,6 +14,12 @@ public static class FileManager
     /// <param name="filename">name of newly created file</param>
     public static void SetupNewCsvFile(string headerLine, string? filename = null)
     {
+        // If file exists, remove it and create log with the new header
+        if (File.Exists(filename))
+        {
+            File.Delete(filename);
+        }
+        
         filename ??= OutputFileName;
         Directory.CreateDirectory(OutputFolderName);
         AppendLine(headerLine);
