@@ -1,5 +1,4 @@
 ﻿using EventLogGenerator.Models;
-using EventLogGenerator.Models.Enums;
 
 namespace EventLogGenerator.GenerationLogic;
 
@@ -23,7 +22,7 @@ public static class StateEvaluator
     // The time when process has to be finished. Can be used as emergency limit
     public static DateTime? ProcessEnd { get; set; }
 
-    private static readonly Random random = new();
+    private static readonly Random Random = new();
 
     public static void AddState(ProcessState state)
     {
@@ -40,7 +39,7 @@ public static class StateEvaluator
         {
             throw new Exception("ActorFrame must be set before running the evaluator");
         }
-        
+
         if (ProcessEnd == null)
         {
             throw new Exception("ProcessEnd must be set before running the evaluator");
@@ -50,8 +49,6 @@ public static class StateEvaluator
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
         {
-            Console.WriteLine(
-                $"[INFO] Current state {CurrentActorFrame.CurrentState.ActivityType} - {CurrentActorFrame.CurrentState.Resource.Name}");
             // Create copy of all states
             HashSet<ProcessState> allStatesCopy = new HashSet<ProcessState>(AllStates);
 
@@ -62,26 +59,25 @@ public static class StateEvaluator
             foreach (var state in AllStates)
             {
                 // Remove states with invalid time
-                if (CurrentActorFrame.CurrentTime < state.TimeFrame.Start
-                    || CurrentActorFrame.CurrentTime >= state.TimeFrame.End)
+                if (CurrentActorFrame.CurrentTime < state.TimeFrame.Start || CurrentActorFrame.CurrentTime > state.TimeFrame.End)
                 {
                     allStatesCopy.Remove(state);
                     continue;
                 }
-
+                
                 // Remove states where must precede states were not yet visited
                 if (state.Rules.MustPrecedeStates != null)
                 {
                     foreach (var mustVisit in state.Rules.MustPrecedeStates)
                     {
-                        if (!CurrentActorFrame.VisitedMap.Keys.Contains(mustVisit)
+                        if (!CurrentActorFrame.VisitedMap.ContainsKey(mustVisit)
                             && !CurrentActorFrame.CurrentState.Equals(mustVisit))
                         {
                             allStatesCopy.Remove(state);
                         }
                     }
                 }
-
+                
                 // Remove states where must precede activities were not yet visited
                 if (state.Rules.MustPrecedeActivities != null)
                 {
@@ -94,14 +90,21 @@ public static class StateEvaluator
                         }
                     }
                 }
-
+                
+                // Remove states that are at maximum amount of passes
+                if (CurrentActorFrame.VisitedMap.ContainsKey(state) 
+                    && CurrentActorFrame.VisitedMap[state] == state.Rules.MaxPasses)
+                {
+                    allStatesCopy.Remove(state);
+                }
+                
                 // Remove states which have direct parent defined and it is not our current state
                 if (state.Rules.DirectParent != null && state.Rules.DirectParent != currentState)
                 {
                     allStatesCopy.Remove(state);
                     continue;
                 }
-
+                
                 // Remove current state, if MaxLoops == 0 or current loop count is at maximum
                 if (currentState.Equals(state)
                     && (state.Rules.MaxLoops == 0 || CurrentActorFrame.CurrentLoopCount == currentState.Rules.MaxLoops))
@@ -113,11 +116,12 @@ public static class StateEvaluator
             // Handle empty states
             if (!allStatesCopy.Any())
             {
-                CurrentActorFrame.CurrentTime = CurrentActorFrame.CurrentTime.AddMinutes(10);
+                CurrentActorFrame.CurrentTime = CurrentActorFrame.CurrentTime.AddMinutes(5);
                 if (CurrentActorFrame.CurrentTime >= ProcessEnd)
                 {
-                    Console.WriteLine($"[INFO] Current time reached the end time process end at {currentState.ActivityType} {currentState.Resource.Name}");
-                     break;
+                    Console.WriteLine(
+                        $"[INFO] Current time reached the end time process end at {currentState.ActivityType} {currentState.Resource.Name}");
+                    break;
                 }
 
                 continue;
@@ -135,7 +139,7 @@ public static class StateEvaluator
                 {
                     rating += Constants.CompulsoryWeight;
                 }
-                
+
                 // Rank loop chance
                 if (currentState.Equals(state))
                 {
@@ -144,7 +148,7 @@ public static class StateEvaluator
 
                 // Rank following activities
                 if (currentState.Rules.FollowingActivitiesMap != null
-                    && currentState.Rules.FollowingActivitiesMap.Keys.Contains(state.ActivityType))
+                    && currentState.Rules.FollowingActivitiesMap.ContainsKey(state.ActivityType))
                 {
                     rating += currentState.Rules.FollowingActivitiesMap[state.ActivityType] *
                               Constants.ChanceToFollowWeight;
@@ -160,7 +164,7 @@ public static class StateEvaluator
                 }
 
                 // Penalize previous visit
-                if (CurrentActorFrame.VisitedMap.Keys.Contains(state))
+                if (CurrentActorFrame.VisitedMap.ContainsKey(state))
                 {
                     rating += CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight;
                 }
@@ -186,22 +190,24 @@ public static class StateEvaluator
                 weightedStates.Add(state, rating);
             }
 
+            
             var nextState = SelectWeightedState(weightedStates);
             JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime));
         }
+
         Console.Out.WriteLine("[INFO] --- ENDING PROCESS RUN ---");
     }
 
     private static void JumpNextState(ProcessState newState, DateTime jumpDate)
     {
         // Update VisitedMap
-        if (CurrentActorFrame.VisitedMap.Keys.Contains(CurrentActorFrame.CurrentState))
+        if (CurrentActorFrame.VisitedMap.ContainsKey(CurrentActorFrame.CurrentState))
         {
             CurrentActorFrame.VisitedMap[CurrentActorFrame.CurrentState] += 1;
         }
         else
         {
-            CurrentActorFrame.VisitedMap.Add(newState, 1);
+            CurrentActorFrame.VisitedMap.Add(CurrentActorFrame.CurrentState, 1);
         }
 
         // Update loop count or current state to the new one
@@ -212,7 +218,7 @@ public static class StateEvaluator
         else
         {
             CurrentActorFrame.LastVisited = CurrentActorFrame.CurrentState;
-            CurrentActorFrame.CurrentState = newState;    
+            CurrentActorFrame.CurrentState = newState;
         }
 
         CurrentActorFrame.CurrentTime = jumpDate;
@@ -222,7 +228,7 @@ public static class StateEvaluator
     public static ProcessState SelectWeightedState(Dictionary<ProcessState, float> stateWeights)
     {
         float totalWeight = stateWeights.Values.Sum();
-        float randomWeight = (float)random.NextDouble() * totalWeight;
+        float randomWeight = (float)Random.NextDouble() * totalWeight;
         float cumulativeWeight = 0f;
 
         foreach (var kvp in stateWeights)
@@ -233,12 +239,13 @@ public static class StateEvaluator
                 return kvp.Key;
             }
         }
-
+        
         throw new InvalidOperationException("Cannot pick from empty state-weight pairs");
     }
 
     public static void OnStateEnter(Actor actor, ProcessState newState, DateTime enteredTime)
     {
+        Console.Out.WriteLine($"[INFO] {actor.Id} Entering state: {newState.ActivityType} {newState.Resource.Name}");
         var eventData = new StateEnteredEvent(newState, actor, enteredTime);
         StateEntered.Invoke(null, eventData);
     }

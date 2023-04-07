@@ -6,7 +6,7 @@ namespace EventLogGenerator.Models;
 public class Actor
 {
     // Unique ID
-    public uint Id;
+    public uint Id { get; }
 
     // Type of the Actor. Different Actor can have specific process generated
     public EActorType Type;

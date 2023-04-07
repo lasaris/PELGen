@@ -24,7 +24,7 @@ public class TimeFrame
     {
         if (newStartLimit != null && newStartLimit >= End)
         {
-            throw new ArgumentException("Cannot have limit of start before the end of current time");
+            throw new ArgumentException("Cannot have limit of start after the end of current time");
         }
         
         DateTime pickedDateTime;
@@ -68,7 +68,7 @@ public class TimeFrame
             throw new Exception($"Generated wrong time. Start: {Start}; End: {End}; Generated: {pickedDateTime}");
         }
 
-        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Min(newStartLimit.Value.Ticks, pickedDateTime.Ticks));
+        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Max(newStartLimit.Value.Ticks, pickedDateTime.Ticks));
     }
 
     private double WeightFunctionLinear(long ticks, long range)
