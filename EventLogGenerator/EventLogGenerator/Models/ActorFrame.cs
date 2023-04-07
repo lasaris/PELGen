@@ -27,5 +27,6 @@ public class ActorFrame
    {
         Actor = actor;
         CurrentState = currentState;
+        CurrentTime = currentState.TimeFrame.PickTimeByDistribution();
    }
 }

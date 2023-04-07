@@ -18,7 +18,7 @@ public static class EventLogger
         sb.Append(data.Actor.Type + ",");
         sb.Append(data.State.ActivityType + ",");
         sb.Append(data.State.Resource + ",");
-        sb.Append(data.TimeStamp + ",");
+        sb.Append(data.TimeStamp);
         
         // Write string to CSV file
         FileManager.AppendLineToCsv(sb.ToString());

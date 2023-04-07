@@ -14,15 +14,17 @@ public static class FileManager
     /// <param name="filename">name of newly created file</param>
     public static void SetupNewCsvFile(string headerLine, string? filename = null)
     {
-        // If file exists, remove it and create log with the new header
-        if (File.Exists(filename))
-        {
-            File.Delete(filename);
-        }
-        
         filename ??= OutputFileName;
         Directory.CreateDirectory(OutputFolderName);
-        AppendLine(headerLine);
+        if (File.Exists(Path.Combine(OutputFolderName, filename)))
+        {
+            Console.WriteLine("EXISTS");
+            using (StreamWriter sw = new StreamWriter(Path.Combine(OutputFolderName, filename)))
+            {
+                sw.Write("");
+            }
+        }
+        AppendLine(headerLine, filename);
     }
 
     /// <summary>
@@ -41,21 +43,23 @@ public static class FileManager
             throw new ArgumentException("Provided file does not exist");
         }
 
-        using var reader = new StreamReader(outPath);
-        var headerLine = reader.ReadLine();
-        if (headerLine == null)
+        using (var reader = new StreamReader(outPath))
         {
-            throw new ArgumentException("Given CSV file has no header");
-        }
+            var headerLine = reader.ReadLine();
+            if (headerLine == null)
+            {
+                throw new ArgumentException("Given CSV file has no header");
+            }
         
-        var columnCount = headerLine.Split(',').Length;
-        var lineColumnCount = line.Split(',').Length;
+            var columnCount = headerLine.Split(',').Length;
+            var lineColumnCount = line.Split(',').Length;
 
-        if (columnCount != lineColumnCount)
-        {
-            throw new ArgumentException($"Given CSV file has {columnCount} columns, but in file there were {lineColumnCount} given");
+            if (columnCount != lineColumnCount)
+            {
+                throw new ArgumentException($"Given CSV file has {columnCount} columns, but in file there were {lineColumnCount} given");
+            }
         }
-        
+
         AppendLine(line, filename);
     }
     
@@ -63,12 +67,10 @@ public static class FileManager
     {
         filename ??= OutputFileName;
         string outPath = Path.Combine(OutputFolderName, filename);
-        if (!File.Exists(outPath))
+
+        using (StreamWriter writer = new StreamWriter(outPath, true))
         {
-            File.Create(outPath);
+            writer.WriteLine(line);
         }
-        
-        using StreamWriter writer = new StreamWriter(outPath, true);
-        writer.WriteLine(line);
     }
 }

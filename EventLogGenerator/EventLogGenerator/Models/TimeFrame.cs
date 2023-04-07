@@ -22,7 +22,7 @@ public class TimeFrame
 
     public DateTime PickTimeByDistribution(DateTime? newStartLimit = null)
     {
-        if (newStartLimit != null && newStartLimit <= End)
+        if (newStartLimit != null && newStartLimit >= End)
         {
             throw new ArgumentException("Cannot have limit of start before the end of current time");
         }

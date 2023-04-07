@@ -21,7 +21,7 @@ public static class StateEvaluator
     public static HashSet<ProcessState> AllStates = new();
 
     // The time when process has to be finished. Can be used as emergency limit
-    public static DateTime ProcessEnd { get; set; }
+    public static DateTime? ProcessEnd { get; set; }
 
     private static readonly Random random = new();
 
@@ -40,13 +40,18 @@ public static class StateEvaluator
         {
             throw new Exception("ActorFrame must be set before running the evaluator");
         }
+        
+        if (ProcessEnd == null)
+        {
+            throw new Exception("ProcessEnd must be set before running the evaluator");
+        }
 
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
         {
             Console.WriteLine(
-                $"[INFO] Current state {CurrentActorFrame.CurrentState.ActivityType} - {CurrentActorFrame.CurrentState.Resource}");
+                $"[INFO] Current state {CurrentActorFrame.CurrentState.ActivityType} - {CurrentActorFrame.CurrentState.Resource.Name}");
             // Create copy of all states
             HashSet<ProcessState> allStatesCopy = new HashSet<ProcessState>(AllStates);
 
@@ -57,10 +62,11 @@ public static class StateEvaluator
             foreach (var state in AllStates)
             {
                 // Remove states with invalid time
-                if (state.TimeFrame.Start < CurrentActorFrame.CurrentTime
-                    || state.TimeFrame.End > CurrentActorFrame.CurrentTime)
+                if (CurrentActorFrame.CurrentTime < state.TimeFrame.Start
+                    || CurrentActorFrame.CurrentTime >= state.TimeFrame.End)
                 {
                     allStatesCopy.Remove(state);
+                    continue;
                 }
 
                 // Remove states where must precede states were not yet visited
@@ -68,7 +74,8 @@ public static class StateEvaluator
                 {
                     foreach (var mustVisit in state.Rules.MustPrecedeStates)
                     {
-                        if (!CurrentActorFrame.VisitedMap.Keys.Contains(mustVisit))
+                        if (!CurrentActorFrame.VisitedMap.Keys.Contains(mustVisit)
+                            && !CurrentActorFrame.CurrentState.Equals(mustVisit))
                         {
                             allStatesCopy.Remove(state);
                         }
@@ -80,7 +87,8 @@ public static class StateEvaluator
                 {
                     foreach (var mustPerform in state.Rules.MustPrecedeActivities)
                     {
-                        if (CurrentActorFrame.VisitedMap.Keys.All(s => s.ActivityType != mustPerform))
+                        if (CurrentActorFrame.VisitedMap.Keys.All(s => s.ActivityType != mustPerform)
+                            && CurrentActorFrame.CurrentState.ActivityType != mustPerform)
                         {
                             allStatesCopy.Remove(state);
                         }
@@ -91,6 +99,7 @@ public static class StateEvaluator
                 if (state.Rules.DirectParent != null && state.Rules.DirectParent != currentState)
                 {
                     allStatesCopy.Remove(state);
+                    continue;
                 }
 
                 // Remove current state, if MaxLoops == 0 or current loop count is at maximum
@@ -104,12 +113,14 @@ public static class StateEvaluator
             // Handle empty states
             if (!allStatesCopy.Any())
             {
-                CurrentActorFrame.CurrentTime = CurrentActorFrame.CurrentTime.AddMinutes(5);
+                CurrentActorFrame.CurrentTime = CurrentActorFrame.CurrentTime.AddMinutes(10);
                 if (CurrentActorFrame.CurrentTime >= ProcessEnd)
                 {
                     Console.WriteLine($"[INFO] Current time reached the end time process end {currentState.ActivityType} {currentState.Resource}");
-                    break;
+                     break;
                 }
+
+                continue;
             }
 
             Dictionary<ProcessState, float> weightedStates = new();
@@ -143,7 +154,10 @@ public static class StateEvaluator
                 }
 
                 // Penalize previous visit
-                rating += CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight;
+                if (CurrentActorFrame.VisitedMap.Keys.Contains(state))
+                {
+                    rating += CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight;
+                }
 
                 // Penalize last visited
                 if (CurrentActorFrame.LastVisited != null && CurrentActorFrame.LastVisited.Equals(state))
@@ -164,13 +178,6 @@ public static class StateEvaluator
                 }
 
                 weightedStates.Add(state, rating);
-            }
-
-            // Handle empty states
-            if (!weightedStates.Any())
-            {
-                Console.WriteLine("[INFO] No states available, looping and adding time");
-                continue;
             }
 
             var nextState = SelectWeightedState(weightedStates);
@@ -230,8 +237,9 @@ public static class StateEvaluator
         StateEntered.Invoke(null, eventData);
     }
 
-    public static void InitializeEvaluator(ActorFrame actorFrame)
+    public static void InitializeEvaluator(ActorFrame actorFrame, DateTime processEnd)
     {
         CurrentActorFrame = actorFrame;
+        ProcessEnd = processEnd;
     }
 }
