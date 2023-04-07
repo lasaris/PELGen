@@ -542,6 +542,7 @@ public static class IsEventsGenerator
         foreach (var _ in students)
         {
             var actorFrame = new ActorFrame(new Actor(EActorType.Student), enrollCourse);
+            StateEvaluator.OnStateEnter(actorFrame.Actor, enrollCourse, actorFrame.CurrentTime);
             StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 4, 1));
             StateEvaluator.RunProcess();
         }

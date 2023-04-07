@@ -116,7 +116,7 @@ public static class StateEvaluator
                 CurrentActorFrame.CurrentTime = CurrentActorFrame.CurrentTime.AddMinutes(10);
                 if (CurrentActorFrame.CurrentTime >= ProcessEnd)
                 {
-                    Console.WriteLine($"[INFO] Current time reached the end time process end {currentState.ActivityType} {currentState.Resource}");
+                    Console.WriteLine($"[INFO] Current time reached the end time process end at {currentState.ActivityType} {currentState.Resource.Name}");
                      break;
                 }
 
@@ -134,6 +134,12 @@ public static class StateEvaluator
                 if (state.Rules.IsCompulsory)
                 {
                     rating += Constants.CompulsoryWeight;
+                }
+                
+                // Rank loop chance
+                if (currentState.Equals(state))
+                {
+                    rating += currentState.Chances.LoopChance * Constants.LoopChanceWeight;
                 }
 
                 // Rank following activities
@@ -231,7 +237,7 @@ public static class StateEvaluator
         throw new InvalidOperationException("Cannot pick from empty state-weight pairs");
     }
 
-    private static void OnStateEnter(Actor actor, ProcessState newState, DateTime enteredTime)
+    public static void OnStateEnter(Actor actor, ProcessState newState, DateTime enteredTime)
     {
         var eventData = new StateEnteredEvent(newState, actor, enteredTime);
         StateEntered.Invoke(null, eventData);
