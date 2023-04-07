@@ -178,7 +178,7 @@ public static class StateEvaluator
             }
 
             var nextState = SelectWeightedState(weightedStates);
-            JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution());
+            JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime));
         }
     }
 

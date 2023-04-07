@@ -20,8 +20,13 @@ public class TimeFrame
         Distribution = distribution;
     }
 
-    public DateTime PickTimeByDistribution()
+    public DateTime PickTimeByDistribution(DateTime? newStartLimit = null)
     {
+        if (newStartLimit != null && newStartLimit <= End)
+        {
+            throw new ArgumentException("Cannot have limit of start before the end of current time");
+        }
+        
         DateTime pickedDateTime;
         Random random = new Random();
         long range = (End - Start).Ticks;
@@ -63,7 +68,7 @@ public class TimeFrame
             throw new Exception($"Generated wrong time. Start: {Start}; End: {End}; Generated: {pickedDateTime}");
         }
 
-        return pickedDateTime;
+        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Min(newStartLimit.Value.Ticks, pickedDateTime.Ticks));
     }
 
     private double WeightFunctionLinear(long ticks, long range)
