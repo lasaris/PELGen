@@ -25,6 +25,8 @@ public static class StateEvaluator
 
     // The time when process has to be finished. Can be used as emergency limit
     public static DateTime ProcessEnd { get; set; }
+    
+    private static readonly Random random = new Random();
 
     public static void AddState(ProcessState state)
     {
@@ -41,7 +43,7 @@ public static class StateEvaluator
         {
             throw new Exception("ActorFrame must be set before running the evaluator");
         }
-
+ 
         Console.WriteLine("[INFO] Process run started");
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
@@ -168,8 +170,15 @@ public static class StateEvaluator
                 
                 weightedStates.Add(state, rating);
             }
-            
-            // TODO: Pick next from weighted states
+
+            // Handle empty states
+            if (!weightedStates.Any())
+            {
+                continue;
+            }
+
+            var nextState = SelectWeightedState(weightedStates);
+            JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution());
         }
     }
 
@@ -180,6 +189,24 @@ public static class StateEvaluator
         // TODO: update AvailableNext
 
         OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate);
+    }
+    
+    public static ProcessState SelectWeightedState(Dictionary<ProcessState, float> stateWeights)
+    {
+        float totalWeight = stateWeights.Values.Sum();
+        float randomWeight = (float)random.NextDouble() * totalWeight;
+        float cumulativeWeight = 0f;
+
+        foreach (var kvp in stateWeights)
+        {
+            cumulativeWeight += kvp.Value;
+            if (randomWeight < cumulativeWeight)
+            {
+                return kvp.Key;
+            }
+        }
+
+        throw new InvalidOperationException("Cannot pick from empty state-weight pairs");
     }
 
     private static void OnStateEnter(Actor actor, ProcessState newState, DateTime enteredTime)
