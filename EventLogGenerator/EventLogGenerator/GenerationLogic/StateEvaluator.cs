@@ -190,7 +190,8 @@ public static class StateEvaluator
                 weightedStates.Add(state, rating);
             }
 
-            
+            // TODO: FIX this selection always must select next state -> only first exam term registration is chosen
+            // Maybe implement some waiting with higher probability?
             var nextState = SelectWeightedState(weightedStates);
             JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime));
         }

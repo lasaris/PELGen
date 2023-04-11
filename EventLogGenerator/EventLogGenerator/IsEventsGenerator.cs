@@ -17,7 +17,7 @@ public static class IsEventsGenerator
         // Setup FileManager output CSV file
         FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp");
 
-        // Prepare Actors
+        // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)
             .Select(_ => new Actor(EActorType.Student))
             .ToList();
@@ -130,13 +130,12 @@ public static class IsEventsGenerator
 
         var submitHomeworkRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
 
-        // TODO: FIX TimeFrame for homework submissions
         var submitHomework1 = new ProcessState(
             EActivityType.SubmitHomework,
             hw1,
             submitHomeworkRules,
             defaultChances,
-            new TimeFrame(new DateTime(2023, 1, 2), new DateTime(2023, 1, 15), ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15), ETimeFrameDistribution.Exponential)
         );
 
         var submitHomework2 = new ProcessState(
@@ -144,7 +143,7 @@ public static class IsEventsGenerator
             hw2,
             submitHomeworkRules,
             defaultChances,
-            new TimeFrame(new DateTime(2023, 1, 16), new DateTime(2023, 1, 29), ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29), ETimeFrameDistribution.Exponential)
         );
 
         var submitHomework3 = new ProcessState(
@@ -152,7 +151,7 @@ public static class IsEventsGenerator
             hw3,
             submitHomeworkRules,
             defaultChances,
-            new TimeFrame(new DateTime(2023, 1, 30), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
         );
 
         var attendSeminarRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
@@ -236,10 +235,12 @@ public static class IsEventsGenerator
         var timeFrameRopot6 =
             new TimeFrame(new DateTime(2023, 2, 07, 12, 00, 00), new DateTime(2023, 2, 07, 12, 15, 00));
 
-        var openRopotFollowing = new Dictionary<EActivityType, float>(){ {EActivityType.SubmitRopot, 0.7f}, {EActivityType.SaveRopot, 0.3f} };
-        var saveRopotFollowing = new Dictionary<EActivityType, float>() { {EActivityType.SubmitRopot, 0.7f}, {EActivityType.SaveRopot, 0.3f} };
-        var submitRopotFollowing = new Dictionary<EActivityType, float>() { {EActivityType.ViewRopot, 0.9f} };
-        var viewRopotFollowing = new Dictionary<EActivityType, float>(){ {EActivityType.ReadStudyMaterials, 0.5f} };
+        var openRopotFollowing = new Dictionary<EActivityType, float>()
+            { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
+        var saveRopotFollowing = new Dictionary<EActivityType, float>()
+            { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
+        var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
+        var viewRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ReadStudyMaterials, 0.5f } };
 
         var openRopotChances = new StateChances(1f);
         var saveRopotChances = new StateChances(0.8f);
@@ -259,46 +260,6 @@ public static class IsEventsGenerator
         var openRopotRulesSeminar6 =
             new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { attendSeminar6 });
 
-        var saveRopotRulesSeminar1 =
-            new StateRules(false, 1, 0, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar1 });
-        var saveRopotRulesSeminar2 =
-            new StateRules(false, 1, 0, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar2 });
-        var saveRopotRulesSeminar3 =
-            new StateRules(false, 1, 0, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar3 });
-        var saveRopotRulesSeminar4 =
-            new StateRules(false, 1, 0, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar4 });
-        var saveRopotRulesSeminar5 =
-            new StateRules(false, 1, 0, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar5 });
-        var saveRopotRulesSeminar6 =
-            new StateRules(false, 1, 0, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar6 });
-
-        var submitRopotRulesSeminar1 =
-            new StateRules(true, 1, 0, submitRopotFollowing, new HashSet<ProcessState>() { attendSeminar1 });
-        var submitRopotRulesSeminar2 =
-            new StateRules(true, 1, 0, submitRopotFollowing, new HashSet<ProcessState>() { attendSeminar2 });
-        var submitRopotRulesSeminar3 =
-            new StateRules(true, 1, 0, submitRopotFollowing, new HashSet<ProcessState>() { attendSeminar3 });
-        var submitRopotRulesSeminar4 =
-            new StateRules(true, 1, 0, submitRopotFollowing, new HashSet<ProcessState>() { attendSeminar4 });
-        var submitRopotRulesSeminar5 =
-            new StateRules(true, 1, 0, submitRopotFollowing, new HashSet<ProcessState>() { attendSeminar5 });
-        var submitRopotRulesSeminar6 =
-            new StateRules(true, 1, 0, submitRopotFollowing, new HashSet<ProcessState>() { attendSeminar6 });
-
-        var viewRopotRulesSeminar1 =
-            new StateRules(false, 1, 0, viewRopotFollowing, new HashSet<ProcessState>() { attendSeminar1 });
-        var viewRopotRulesSeminar2 =
-            new StateRules(false, 1, 0, viewRopotFollowing, new HashSet<ProcessState>() { attendSeminar2 });
-        var viewRopotRulesSeminar3 =
-            new StateRules(false, 1, 0, viewRopotFollowing, new HashSet<ProcessState>() { attendSeminar3 });
-        var viewRopotRulesSeminar4 =
-            new StateRules(false, 1, 0, viewRopotFollowing, new HashSet<ProcessState>() { attendSeminar4 });
-        var viewRopotRulesSeminar5 =
-            new StateRules(false, 1, 0, viewRopotFollowing, new HashSet<ProcessState>() { attendSeminar5 });
-        var viewRopotRulesSeminar6 =
-            new StateRules(false, 1, 0, viewRopotFollowing, new HashSet<ProcessState>() { attendSeminar6 });
-
-        // TODO: FIX Opening ropot should be "must precede" state for submiting it
         var openRopot1 = new ProcessState(
             EActivityType.OpenRopot,
             ropot1,
@@ -347,6 +308,39 @@ public static class IsEventsGenerator
             timeFrameRopot6
         );
 
+        var saveRopotRulesSeminar1 =
+            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar1, openRopot1 });
+        var saveRopotRulesSeminar2 =
+            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar2, openRopot2 });
+        var saveRopotRulesSeminar3 =
+            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar3, openRopot3 });
+        var saveRopotRulesSeminar4 =
+            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar3, openRopot4 });
+        var saveRopotRulesSeminar5 =
+            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar5, openRopot5 });
+        var saveRopotRulesSeminar6 =
+            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { attendSeminar6, openRopot6 });
+
+        var submitRopotRulesSeminar1 =
+            new StateRules(true, 1, 0, submitRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar1, openRopot1 });
+        var submitRopotRulesSeminar2 =
+            new StateRules(true, 1, 0, submitRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar2, openRopot2 });
+        var submitRopotRulesSeminar3 =
+            new StateRules(true, 1, 0, submitRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar3, openRopot3 });
+        var submitRopotRulesSeminar4 =
+            new StateRules(true, 1, 0, submitRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar4, openRopot4 });
+        var submitRopotRulesSeminar5 =
+            new StateRules(true, 1, 0, submitRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar5, openRopot5 });
+        var submitRopotRulesSeminar6 =
+            new StateRules(true, 1, 0, submitRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar6, openRopot6 });
+
+        // TODO: FIX ropot saving after view (add states/activites that cannot be before/after each other?)
         var saveRopot1 = new ProcessState(
             EActivityType.SaveRopot,
             ropot1,
@@ -442,8 +436,28 @@ public static class IsEventsGenerator
             submitRopotChances,
             timeFrameRopot6
         );
-        
+
+        var viewRopotRulesSeminar1 =
+            new StateRules(false, 1, 0, viewRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar1, submitRopot1 });
+        var viewRopotRulesSeminar2 =
+            new StateRules(false, 1, 0, viewRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar2, submitRopot2 });
+        var viewRopotRulesSeminar3 =
+            new StateRules(false, 1, 0, viewRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar3, submitRopot3 });
+        var viewRopotRulesSeminar4 =
+            new StateRules(false, 1, 0, viewRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar4, submitRopot4 });
+        var viewRopotRulesSeminar5 =
+            new StateRules(false, 1, 0, viewRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar5, submitRopot5 });
+        var viewRopotRulesSeminar6 =
+            new StateRules(false, 1, 0, viewRopotFollowing,
+                new HashSet<ProcessState>() { attendSeminar6, submitRopot6 });
+
         // TODO: FIX view ropot time frames (should be anytime after it was submitted)
+        // Should this also be a random event throughout the semester?
         var viewRopot1 = new ProcessState(
             EActivityType.ViewRopot,
             ropot1,
@@ -493,16 +507,16 @@ public static class IsEventsGenerator
         );
 
         var examRules = new StateRules(false, 1, 0,
-            new Dictionary<EActivityType, float>(){ {EActivityType.PassCourse, 0.5f}, {EActivityType.RegisterExamTerm, 0.5f} });
+            new Dictionary<EActivityType, float>()
+                { { EActivityType.PassCourse, 0.5f }, { EActivityType.RegisterExamTerm, 0.5f } });
         var examChances = new StateChances(0.9f);
 
-        // exam dates 14.2, 21.2., 28.2.
         var registerTerm1 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam1,
             examRules,
             examChances,
-            new TimeFrame(new DateTime(2023, 2, 8), new DateTime(2023, 2, 13))
+            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 15))
         );
 
         var registerTerm2 = new ProcessState(
@@ -510,7 +524,7 @@ public static class IsEventsGenerator
             exam2,
             examRules,
             examChances,
-            new TimeFrame(new DateTime(2023, 2, 14), new DateTime(2023, 2, 20))
+            new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20))
         );
 
         var registerTerm3 = new ProcessState(
@@ -518,14 +532,15 @@ public static class IsEventsGenerator
             exam3,
             examRules,
             examChances,
-            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 27))
+            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24))
         );
 
         // Finishing processes
         var passCourse = new ProcessState(
             EActivityType.PassCourse,
             course,
-            new StateRules(true, 1, 0, null, enrolledCourseSet, new HashSet<EActivityType>(){EActivityType.RegisterExamTerm}),
+            new StateRules(true, 1, 0, null, enrolledCourseSet,
+                new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
             new StateChances(),
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
             false,
@@ -535,7 +550,8 @@ public static class IsEventsGenerator
         var failCourse = new ProcessState(
             EActivityType.FailCourse,
             course,
-            new StateRules(true, 1, 0, null, enrolledCourseSet, new HashSet<EActivityType>(){EActivityType.RegisterExamTerm}),
+            new StateRules(true, 1, 0, null, enrolledCourseSet,
+                new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
             new StateChances(),
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
             false,
@@ -550,9 +566,11 @@ public static class IsEventsGenerator
             StateEvaluator.RunProcess();
         }
 
-        // TODO: Implement Good vs. Bad student Actor
+        // TODO: Implement Good vs. Bad student Actor (it naturally happens, is it really needed?)
 
         // TODO: Implement variable offset for attending seminar for each student Actor
+        
+        // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 
         // TODO: Create process for teacher Actor
     }
