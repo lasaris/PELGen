@@ -94,21 +94,21 @@ public static class IsEventsGenerator
             new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
         );
         
-        var registerSeminarGroup2 = new ProcessState(
-            EActivityType.RegisterSeminarGroup,
-            seminarGroup2,
-            new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
-            new StateChances(1, 0.05f),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
-        );
-        
-        var registerSeminarGroup3 = new ProcessState(
-            EActivityType.RegisterSeminarGroup,
-            seminarGroup3,
-            new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
-            new StateChances(1, 0.05f),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
-        );
+        // var registerSeminarGroup2 = new ProcessState(
+        //     EActivityType.RegisterSeminarGroup,
+        //     seminarGroup2,
+        //     new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
+        //     new StateChances(1, 0.05f),
+        //     new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+        // );
+        //
+        // var registerSeminarGroup3 = new ProcessState(
+        //     EActivityType.RegisterSeminarGroup,
+        //     seminarGroup3,
+        //     new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
+        //     new StateChances(1, 0.05f),
+        //     new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+        // );
 
         // var materialRules =
         //     new StateRules(false, -1, -1, new Dictionary<EActivityType, float>() { {EActivityType.AttendSeminar, 0.8f} }, enrolledCourseSet);
