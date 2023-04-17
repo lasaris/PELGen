@@ -24,7 +24,7 @@ public static class IsEventsGenerator
 
         // Prepare Resources
         var course = new Resource("Course X");
-        var seminarGroup = new Resource("Seminar group 1");
+        var seminarGroup = new Resource("Seminar group"); // TODO: Should we differentiate between seminar groups? (YES)
         var seminarWeek1 = new Resource("Seminar week 1");
         var seminarWeek2 = new Resource("Seminar week 2");
         var seminarWeek3 = new Resource("Seminar week 3");
@@ -49,6 +49,22 @@ public static class IsEventsGenerator
         var exam1 = new Resource("Exam term 1");
         var exam2 = new Resource("Exam term 2");
         var exam3 = new Resource("Exam term 3");
+
+        var seminarResources = new HashSet<Resource>()
+        {
+            seminarWeek1, seminarWeek2, seminarWeek3, seminarWeek4, seminarWeek5, seminarWeek6,
+            ropot1, ropot2, ropot3, ropot4, ropot5, ropot6
+        };
+
+        // TODO: Which data structure should I use here???
+        // TODO: Offset given by seminar group
+        Dictionary<HashSet<Resource>, TimeSpan> offsetSeminar1 =
+            new Dictionary<HashSet<Resource>, TimeSpan>() { { seminarResources, TimeSpan.FromDays(0) } };
+        Dictionary<HashSet<Resource>, TimeSpan> offsetSeminar2 =
+            new Dictionary<HashSet<Resource>, TimeSpan>() { { seminarResources, TimeSpan.FromDays(1) } };
+        Dictionary<HashSet<Resource>, TimeSpan> offsetSeminar3 =
+            new Dictionary<HashSet<Resource>, TimeSpan>() { { seminarResources, TimeSpan.FromDays(2) } };
+
 
         // Useful properties
         var defaultChances = new StateChances();
@@ -154,7 +170,8 @@ public static class IsEventsGenerator
             new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
         );
 
-        var attendSeminarRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
+        var attendSeminarRules = new StateRules(true, 1, 0, new Dictionary<EActivityType, float>()
+            { { EActivityType.OpenRopot, 1f } }, enrolledCourseSet);
 
         var attendSeminar1 = new ProcessState(
             EActivityType.AttendSeminar,
@@ -524,7 +541,7 @@ public static class IsEventsGenerator
             exam2,
             examRules,
             examChances,
-            new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20))
+            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 20))
         );
 
         var registerTerm3 = new ProcessState(
@@ -532,7 +549,7 @@ public static class IsEventsGenerator
             exam3,
             examRules,
             examChances,
-            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24))
+            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 24))
         );
 
         // Finishing processes
@@ -569,9 +586,11 @@ public static class IsEventsGenerator
         // TODO: Implement Good vs. Bad student Actor (it naturally happens, is it really needed?)
 
         // TODO: Implement variable offset for attending seminar for each student Actor
-        
+
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 
         // TODO: Create process for teacher Actor
+
+        // TODO: Implement FailExam activity
     }
 }

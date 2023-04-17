@@ -16,7 +16,7 @@ public static class Constants
 
     public const float CompulsoryWeight = 100;
 
-    public const float ChanceToFollowWeight = 40;
+    public const float ChanceToFollowWeight = 50;
 
     public const float ChanceToVisitWeight = 20;
 

@@ -146,6 +146,7 @@ public static class StateEvaluator
                     rating += currentState.Chances.LoopChance * Constants.LoopChanceWeight;
                 }
 
+                // TODO: Handle following activites before ranking
                 // Rank following activities
                 if (currentState.Rules.FollowingActivitiesMap != null
                     && currentState.Rules.FollowingActivitiesMap.ContainsKey(state.ActivityType))
