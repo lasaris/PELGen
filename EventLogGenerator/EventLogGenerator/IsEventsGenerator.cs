@@ -24,7 +24,9 @@ public static class IsEventsGenerator
 
         // Prepare Resources
         var course = new Resource("Course X");
-        var seminarGroup = new Resource("Seminar group"); // TODO: Should we differentiate between seminar groups? (YES)
+        var seminarGroup1 = new Resource("Seminar group 1");
+        var seminarGroup2 = new Resource("Seminar group 2");
+        var seminarGroup3 = new Resource("Seminar group 3");
         var seminarWeek1 = new Resource("Seminar week 1");
         var seminarWeek2 = new Resource("Seminar week 2");
         var seminarWeek3 = new Resource("Seminar week 3");
@@ -79,15 +81,30 @@ public static class IsEventsGenerator
             course,
             new StateRules(true, 1, 0),
             defaultChances,
-            new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2022, 12, 24)),
-            true
+            new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2022, 12, 24))
         );
 
         var enrolledCourseSet = new HashSet<ProcessState>() { enrollCourse };
 
-        var registerSeminarGroup = new ProcessState(
+        var registerSeminarGroup1 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
-            seminarGroup,
+            seminarGroup1,
+            new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
+            new StateChances(1, 0.05f),
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+        );
+        
+        var registerSeminarGroup2 = new ProcessState(
+            EActivityType.RegisterSeminarGroup,
+            seminarGroup2,
+            new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
+            new StateChances(1, 0.05f),
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+        );
+        
+        var registerSeminarGroup3 = new ProcessState(
+            EActivityType.RegisterSeminarGroup,
+            seminarGroup3,
             new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
             new StateChances(1, 0.05f),
             new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
@@ -560,7 +577,6 @@ public static class IsEventsGenerator
                 new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
             new StateChances(),
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
-            false,
             true
         );
 
@@ -571,7 +587,6 @@ public static class IsEventsGenerator
                 new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
             new StateChances(),
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
-            false,
             true
         );
 

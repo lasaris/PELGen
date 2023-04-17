@@ -20,13 +20,10 @@ public class ProcessState
     // Start and end time in between which the state can be visited
     public TimeFrame TimeFrame;
 
-    // Indicates if this is the starting state of process (should be only one)
-    public bool IsStarting;
-
     // Indicates if process is finished with this state (can be multiple states)
     public bool IsFinishing;
 
-    public ProcessState(EActivityType activity, Resource resource, StateRules rules, StateChances chances, TimeFrame timeFrame, bool isStarting = false, bool isFinishing = false)
+    public ProcessState(EActivityType activity, Resource resource, StateRules rules, StateChances chances, TimeFrame timeFrame, bool isFinishing = false)
     {
         ActivityType = activity;
         Resource = resource;
@@ -39,7 +36,6 @@ public class ProcessState
         
         Chances = chances;
         TimeFrame = timeFrame;
-        IsStarting = isStarting;
         IsFinishing = isFinishing;
 
         StateEvaluator.AddState(this);
