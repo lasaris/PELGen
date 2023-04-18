@@ -9,6 +9,6 @@ internal class Program
     public static void Main(string[] args)
     {
         StateEvaluator.StateEntered += EventLogger.StateEnteredHandler;
-        IsEventsGenerator.GenerateIsLogs(100);
+        IsEventsGenerator.GenerateIsLogs(200);
     }
 }

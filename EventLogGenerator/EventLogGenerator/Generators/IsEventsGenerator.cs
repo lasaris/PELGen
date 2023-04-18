@@ -23,7 +23,7 @@ public static class IsEventsGenerator
             .ToList();
 
         // Prepare Resources
-        var course = new Resource("Course X");
+        var course = new Resource("Our Course");
         var seminarGroup1 = new Resource("Seminar group 1");
         var seminarGroup2 = new Resource("Seminar group 2");
         var seminarGroup3 = new Resource("Seminar group 3");
@@ -69,9 +69,6 @@ public static class IsEventsGenerator
 
 
         // Useful properties
-        var defaultChances = new StateChances();
-        var seminarAttendanceChances = new StateChances(0.95f);
-        var defaultStudyMaterialsChances = new StateChances(0.8f, 0.05f);
         var semesterStart = new DateTime(2023, 1, 1);
         var semesterEnd = new DateTime(2023, 3, 1);
 
@@ -80,7 +77,6 @@ public static class IsEventsGenerator
             EActivityType.EnrollCourse,
             course,
             new StateRules(true, 1, 0),
-            defaultChances,
             new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2022, 12, 24))
         );
 
@@ -89,77 +85,68 @@ public static class IsEventsGenerator
         var registerSeminarGroup1 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup1,
-            new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
-            new StateChances(1, 0.05f),
+            new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
             new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
         );
         
-        // var registerSeminarGroup2 = new ProcessState(
-        //     EActivityType.RegisterSeminarGroup,
-        //     seminarGroup2,
-        //     new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
-        //     new StateChances(1, 0.05f),
-        //     new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
-        // );
-        //
-        // var registerSeminarGroup3 = new ProcessState(
-        //     EActivityType.RegisterSeminarGroup,
-        //     seminarGroup3,
-        //     new StateRules(true, 1, 4, null, new HashSet<ProcessState>() { enrollCourse }),
-        //     new StateChances(1, 0.05f),
-        //     new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
-        // );
+        var registerSeminarGroup2 = new ProcessState(
+            EActivityType.RegisterSeminarGroup,
+            seminarGroup2,
+            new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+        );
+        
+        var registerSeminarGroup3 = new ProcessState(
+            EActivityType.RegisterSeminarGroup,
+            seminarGroup3,
+            new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+        );
 
-        // var materialRules =
-        //     new StateRules(false, -1, -1, new Dictionary<EActivityType, float>() { {EActivityType.AttendSeminar, 0.8f} }, enrolledCourseSet);
-        //
-        // var readStudyMaterials1 = new ProcessState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek1,
-        //     materialRules,
-        //     defaultStudyMaterialsChances,
-        //     new TimeFrame(new DateTime(2023, 1, 2), semesterEnd)
-        // );
-        //
-        // var readStudyMaterials2 = new ProcessState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek2,
-        //     materialRules,
-        //     defaultStudyMaterialsChances,
-        //     new TimeFrame(new DateTime(2023, 1, 9), semesterEnd)
-        // );
-        //
-        // var readStudyMaterials3 = new ProcessState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek3,
-        //     materialRules,
-        //     defaultStudyMaterialsChances,
-        //     new TimeFrame(new DateTime(2023, 1, 16), semesterEnd)
-        // );
-        //
-        // var readStudyMaterials4 = new ProcessState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek4,
-        //     materialRules,
-        //     defaultStudyMaterialsChances,
-        //     new TimeFrame(new DateTime(2023, 1, 23), semesterEnd)
-        // );
-        //
-        // var readStudyMaterials5 = new ProcessState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek5,
-        //     materialRules,
-        //     defaultStudyMaterialsChances,
-        //     new TimeFrame(new DateTime(2023, 1, 30), semesterEnd)
-        // );
-        //
-        // var readStudyMaterials6 = new ProcessState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek6,
-        //     materialRules,
-        //     defaultStudyMaterialsChances,
-        //     new TimeFrame(new DateTime(2023, 2, 6), semesterEnd)
-        // );
+        var materialRules =
+            new StateRules(false, -1, -1, new Dictionary<EActivityType, float>() { {EActivityType.AttendSeminar, 0.8f} }, enrolledCourseSet);
+        
+        var readStudyMaterials1 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek1,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 2), semesterEnd)
+        );
+        
+        var readStudyMaterials2 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek2,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 9), semesterEnd)
+        );
+        
+        var readStudyMaterials3 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek3,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 16), semesterEnd)
+        );
+        
+        var readStudyMaterials4 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek4,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 23), semesterEnd)
+        );
+        
+        var readStudyMaterials5 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek5,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 30), semesterEnd)
+        );
+        
+        var readStudyMaterials6 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek6,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 2, 6), semesterEnd)
+        );
 
         var submitHomeworkRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
 
@@ -167,7 +154,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitHomework,
             hw1,
             submitHomeworkRules,
-            defaultChances,
             new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15), ETimeFrameDistribution.Exponential)
         );
 
@@ -175,7 +161,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitHomework,
             hw2,
             submitHomeworkRules,
-            defaultChances,
             new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29), ETimeFrameDistribution.Exponential)
         );
 
@@ -183,7 +168,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitHomework,
             hw3,
             submitHomeworkRules,
-            defaultChances,
             new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
         );
 
@@ -194,7 +178,6 @@ public static class IsEventsGenerator
             EActivityType.AttendSeminar,
             seminarWeek1,
             attendSeminarRules,
-            seminarAttendanceChances,
             new TimeFrame(new DateTime(2023, 1, 3, 12, 00, 00), new DateTime(2023, 1, 3, 12, 20, 00))
         );
 
@@ -202,7 +185,6 @@ public static class IsEventsGenerator
             EActivityType.AttendSeminar,
             seminarWeek2,
             attendSeminarRules,
-            seminarAttendanceChances,
             new TimeFrame(new DateTime(2023, 1, 10, 12, 00, 00), new DateTime(2023, 1, 10, 12, 20, 00))
         );
 
@@ -210,7 +192,6 @@ public static class IsEventsGenerator
             EActivityType.AttendSeminar,
             seminarWeek3,
             attendSeminarRules,
-            seminarAttendanceChances,
             new TimeFrame(new DateTime(2023, 1, 17, 12, 00, 00), new DateTime(2023, 1, 17, 12, 20, 00))
         );
 
@@ -218,7 +199,6 @@ public static class IsEventsGenerator
             EActivityType.AttendSeminar,
             seminarWeek4,
             attendSeminarRules,
-            seminarAttendanceChances,
             new TimeFrame(new DateTime(2023, 1, 24, 12, 00, 00), new DateTime(2023, 1, 24, 12, 20, 00))
         );
 
@@ -226,7 +206,6 @@ public static class IsEventsGenerator
             EActivityType.AttendSeminar,
             seminarWeek5,
             attendSeminarRules,
-            seminarAttendanceChances,
             new TimeFrame(new DateTime(2023, 1, 31, 12, 00, 00), new DateTime(2023, 1, 31, 12, 20, 00))
         );
 
@@ -234,7 +213,6 @@ public static class IsEventsGenerator
             EActivityType.AttendSeminar,
             seminarWeek6,
             attendSeminarRules,
-            seminarAttendanceChances,
             new TimeFrame(new DateTime(2023, 2, 7, 12, 00, 00), new DateTime(2023, 2, 7, 12, 20, 00))
         );
 
@@ -276,11 +254,6 @@ public static class IsEventsGenerator
         var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
         var viewRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ReadStudyMaterials, 0.5f } };
 
-        var openRopotChances = new StateChances(1f);
-        var saveRopotChances = new StateChances(0.8f);
-        var submitRopotChances = new StateChances(1f);
-        var viewRopotChances = new StateChances(0.9f);
-
         var openRopotRulesSeminar1 =
             new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { attendSeminar1 });
         var openRopotRulesSeminar2 =
@@ -298,7 +271,6 @@ public static class IsEventsGenerator
             EActivityType.OpenRopot,
             ropot1,
             openRopotRulesSeminar1,
-            openRopotChances,
             timeFrameRopot1
         );
 
@@ -306,7 +278,6 @@ public static class IsEventsGenerator
             EActivityType.OpenRopot,
             ropot2,
             openRopotRulesSeminar2,
-            openRopotChances,
             timeFrameRopot2
         );
 
@@ -314,7 +285,6 @@ public static class IsEventsGenerator
             EActivityType.OpenRopot,
             ropot3,
             openRopotRulesSeminar3,
-            openRopotChances,
             timeFrameRopot3
         );
 
@@ -322,7 +292,6 @@ public static class IsEventsGenerator
             EActivityType.OpenRopot,
             ropot4,
             openRopotRulesSeminar4,
-            openRopotChances,
             timeFrameRopot4
         );
 
@@ -330,7 +299,6 @@ public static class IsEventsGenerator
             EActivityType.OpenRopot,
             ropot5,
             openRopotRulesSeminar5,
-            openRopotChances,
             timeFrameRopot5
         );
 
@@ -338,7 +306,6 @@ public static class IsEventsGenerator
             EActivityType.OpenRopot,
             ropot6,
             openRopotRulesSeminar6,
-            openRopotChances,
             timeFrameRopot6
         );
 
@@ -379,7 +346,6 @@ public static class IsEventsGenerator
             EActivityType.SaveRopot,
             ropot1,
             saveRopotRulesSeminar1,
-            saveRopotChances,
             timeFrameRopot1
         );
 
@@ -387,7 +353,6 @@ public static class IsEventsGenerator
             EActivityType.SaveRopot,
             ropot2,
             saveRopotRulesSeminar2,
-            saveRopotChances,
             timeFrameRopot2
         );
 
@@ -395,7 +360,6 @@ public static class IsEventsGenerator
             EActivityType.SaveRopot,
             ropot3,
             saveRopotRulesSeminar3,
-            saveRopotChances,
             timeFrameRopot3
         );
 
@@ -403,7 +367,6 @@ public static class IsEventsGenerator
             EActivityType.SaveRopot,
             ropot4,
             saveRopotRulesSeminar4,
-            saveRopotChances,
             timeFrameRopot4
         );
 
@@ -411,7 +374,6 @@ public static class IsEventsGenerator
             EActivityType.SaveRopot,
             ropot5,
             saveRopotRulesSeminar5,
-            saveRopotChances,
             timeFrameRopot5
         );
 
@@ -419,7 +381,6 @@ public static class IsEventsGenerator
             EActivityType.SaveRopot,
             ropot6,
             saveRopotRulesSeminar6,
-            saveRopotChances,
             timeFrameRopot6
         );
 
@@ -427,7 +388,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitRopot,
             ropot1,
             submitRopotRulesSeminar1,
-            submitRopotChances,
             timeFrameRopot1
         );
 
@@ -435,7 +395,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitRopot,
             ropot2,
             submitRopotRulesSeminar2,
-            submitRopotChances,
             timeFrameRopot2
         );
 
@@ -443,7 +402,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitRopot,
             ropot3,
             submitRopotRulesSeminar3,
-            submitRopotChances,
             timeFrameRopot3
         );
 
@@ -451,7 +409,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitRopot,
             ropot4,
             submitRopotRulesSeminar4,
-            submitRopotChances,
             timeFrameRopot4
         );
 
@@ -459,7 +416,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitRopot,
             ropot5,
             submitRopotRulesSeminar5,
-            submitRopotChances,
             timeFrameRopot5
         );
 
@@ -467,7 +423,6 @@ public static class IsEventsGenerator
             EActivityType.SubmitRopot,
             ropot6,
             submitRopotRulesSeminar6,
-            submitRopotChances,
             timeFrameRopot6
         );
 
@@ -489,67 +444,59 @@ public static class IsEventsGenerator
         var viewRopotRulesSeminar6 =
             new StateRules(false, 1, 0, viewRopotFollowing,
                 new HashSet<ProcessState>() { attendSeminar6, submitRopot6 });
-
+        
         // TODO: FIX view ropot time frames (should be anytime after it was submitted)
         // Should this also be a random event throughout the semester?
         var viewRopot1 = new ProcessState(
             EActivityType.ViewRopot,
             ropot1,
             viewRopotRulesSeminar1,
-            viewRopotChances,
             timeFrameRopot1
         );
-
+        
         var viewRopot2 = new ProcessState(
             EActivityType.ViewRopot,
             ropot2,
             viewRopotRulesSeminar2,
-            viewRopotChances,
             timeFrameRopot2
         );
-
+        
         var viewRopot3 = new ProcessState(
             EActivityType.ViewRopot,
             ropot3,
             viewRopotRulesSeminar3,
-            viewRopotChances,
             timeFrameRopot3
         );
-
+        
         var viewRopot4 = new ProcessState(
             EActivityType.ViewRopot,
             ropot4,
             viewRopotRulesSeminar4,
-            viewRopotChances,
             timeFrameRopot4
         );
-
+        
         var viewRopot5 = new ProcessState(
             EActivityType.ViewRopot,
             ropot5,
             viewRopotRulesSeminar5,
-            viewRopotChances,
             timeFrameRopot5
         );
-
+        
         var viewRopot6 = new ProcessState(
             EActivityType.ViewRopot,
             ropot6,
             viewRopotRulesSeminar6,
-            viewRopotChances,
             timeFrameRopot6
         );
 
         var examRules = new StateRules(false, 1, 0,
             new Dictionary<EActivityType, float>()
                 { { EActivityType.PassCourse, 0.5f }, { EActivityType.RegisterExamTerm, 0.5f } });
-        var examChances = new StateChances(0.9f);
 
         var registerTerm1 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam1,
             examRules,
-            examChances,
             new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 15))
         );
 
@@ -557,7 +504,6 @@ public static class IsEventsGenerator
             EActivityType.RegisterExamTerm,
             exam2,
             examRules,
-            examChances,
             new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 20))
         );
 
@@ -565,7 +511,6 @@ public static class IsEventsGenerator
             EActivityType.RegisterExamTerm,
             exam3,
             examRules,
-            examChances,
             new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 24))
         );
 
@@ -575,7 +520,6 @@ public static class IsEventsGenerator
             course,
             new StateRules(true, 1, 0, null, enrolledCourseSet,
                 new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
-            new StateChances(),
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
             true
         );
@@ -585,11 +529,53 @@ public static class IsEventsGenerator
             course,
             new StateRules(true, 1, 0, null, enrolledCourseSet,
                 new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
-            new StateChances(),
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
             true
         );
-
+        
+        // Setup following states map
+        enrollCourse.AddFollowingStates((registerSeminarGroup1, 1/3f), (registerSeminarGroup2, 1/3f), (registerSeminarGroup3, 1/3f));
+        registerSeminarGroup1.AddFollowingStates((registerSeminarGroup2, 0.04f), (registerSeminarGroup3, 0.04f), (openRopot1, 0.92f));
+        registerSeminarGroup2.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup3, 0.04f), (openRopot1, 0.92f));
+        registerSeminarGroup3.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup2, 0.04f), (openRopot1, 0.92f));
+        // ropot 1
+        openRopot1.AddFollowingStates((saveRopot1, 0.8f), (submitRopot1, 0.2f));
+        saveRopot1.AddFollowingStates((submitRopot1, 0.85f),(saveRopot1, 0.15f));
+        submitRopot1.AddFollowingStates((openRopot2, 1f));
+        // ropot 2
+        openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
+        saveRopot2.AddFollowingStates((submitRopot2, 0.85f),(saveRopot2, 0.15f));
+        submitRopot2.AddFollowingStates((submitHomework1, 1f));
+        // hw 1
+        submitHomework1.AddFollowingStates((openRopot3, 1f));
+        // ropot 3
+        openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
+        saveRopot3.AddFollowingStates((submitRopot3, 0.85f),(saveRopot3, 0.15f));
+        submitRopot3.AddFollowingStates((openRopot4, 1f));
+        // ropot 4
+        openRopot4.AddFollowingStates((saveRopot4, 0.8f), (submitRopot4, 0.2f));
+        saveRopot4.AddFollowingStates((submitRopot4, 0.85f),(saveRopot4, 0.15f));
+        submitRopot4.AddFollowingStates((submitHomework2, 1f));
+        // hw 2
+        submitHomework2.AddFollowingStates((openRopot5, 1f));
+        // ropot 5
+        openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
+        saveRopot5.AddFollowingStates((submitRopot5, 0.85f),(saveRopot5, 0.15f));
+        submitRopot5.AddFollowingStates((openRopot6, 1f));
+        // ropot 6
+        openRopot6.AddFollowingStates((saveRopot6, 0.8f), (submitRopot6, 0.2f));
+        saveRopot6.AddFollowingStates((submitRopot6, 0.85f),(saveRopot6, 0.15f));
+        submitRopot6.AddFollowingStates((submitHomework3, 1f));
+        // hw 3
+        submitHomework3.AddFollowingStates((registerTerm1, 0.9f), (registerTerm2, 0.05f), (registerTerm3, 0.05f));
+        // exams
+        registerTerm1.AddFollowingStates((passCourse, 0.65f), (registerTerm2, 0.30f), (failCourse, 0.05f));
+        registerTerm2.AddFollowingStates((passCourse, 0.65f), (registerTerm3, 0.30f), (failCourse, 0.05f));
+        registerTerm3.AddFollowingStates((passCourse, 0.65f), (failCourse, 0.35f));
+        
+        // TODO: Register checkpoints here
+        
+        
         foreach (var student in students)
         {
             var actorFrame = new ActorFrame(student, enrollCourse);

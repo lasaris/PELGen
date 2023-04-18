@@ -14,17 +14,13 @@ public static class Constants
     
     // Process evaluation points weights for next state jump (ideally in range 0 - 1000)
 
+    public const float ChanceToFollowWeight = 500;
+    
     public const float CompulsoryWeight = 100;
-
-    public const float ChanceToFollowWeight = 50;
-
-    public const float ChanceToVisitWeight = 20;
-
-    public const float LoopChanceWeight = 5;
 
     public const float DifferentActivityWeight = 5;
 
-    public const float EachPreviousVisitWeight = 0;
+    public const float EachPreviousVisitWeight = -20;
 
     public const float LastVisitWeight = 0;
 

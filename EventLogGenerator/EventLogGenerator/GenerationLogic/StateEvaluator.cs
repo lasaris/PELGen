@@ -1,4 +1,5 @@
-﻿using EventLogGenerator.Models;
+﻿using EventLogGenerator.Exceptions;
+using EventLogGenerator.Models;
 
 namespace EventLogGenerator.GenerationLogic;
 
@@ -16,21 +17,10 @@ public static class StateEvaluator
     // Current ActorFrame going through the process
     public static ActorFrame? CurrentActorFrame { get; set; }
 
-    // All current available states of the process
-    public static HashSet<ProcessState> AllStates = new();
-
     // The time when process has to be finished. Can be used as emergency limit
     public static DateTime? ProcessEnd { get; set; }
 
     private static readonly Random Random = new();
-
-    public static void AddState(ProcessState state)
-    {
-        if (!AllStates.Add(state))
-        {
-            throw new ArgumentException("State already present in the evaluator set");
-        }
-    }
 
     public static void RunProcess()
     {
@@ -49,89 +39,32 @@ public static class StateEvaluator
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
         {
-            // Create copy of all states
-            HashSet<ProcessState> allStatesCopy = new HashSet<ProcessState>(AllStates);
-
-            // Alias for shorter code
+            // Get available following states of current states
             var currentState = CurrentActorFrame.CurrentState;
-
-            // From the copy, remove states that cannot be visited
-            foreach (var state in AllStates)
+            var availableStates = currentState.FollowingMap.Keys.ToList();
+            
+            if (!availableStates.Any())
             {
-                // Remove states with invalid time
-                if (CurrentActorFrame.CurrentTime < state.TimeFrame.Start || CurrentActorFrame.CurrentTime > state.TimeFrame.End)
+                throw new InvalidProcessStateException("Following map must contain following states");
+            }
+
+            // Evaluate weight of the states
+            Dictionary<ProcessState, float> weightedStates = new();
+            foreach (var state in availableStates)
+            {
+                // Skip states that end before our current time
+                if (CurrentActorFrame.CurrentTime > state.TimeFrame.End)
                 {
-                    allStatesCopy.Remove(state);
                     continue;
                 }
-                
-                // Remove states where must precede states were not yet visited
-                if (state.Rules.MustPrecedeStates != null)
-                {
-                    foreach (var mustVisit in state.Rules.MustPrecedeStates)
-                    {
-                        if (!CurrentActorFrame.VisitedMap.ContainsKey(mustVisit)
-                            && !CurrentActorFrame.CurrentState.Equals(mustVisit))
-                        {
-                            allStatesCopy.Remove(state);
-                        }
-                    }
-                }
-                
-                // Remove states where must precede activities were not yet visited
-                if (state.Rules.MustPrecedeActivities != null)
-                {
-                    foreach (var mustPerform in state.Rules.MustPrecedeActivities)
-                    {
-                        if (CurrentActorFrame.VisitedMap.Keys.All(s => s.ActivityType != mustPerform)
-                            && CurrentActorFrame.CurrentState.ActivityType != mustPerform)
-                        {
-                            allStatesCopy.Remove(state);
-                        }
-                    }
-                }
-                
-                // Remove states that are at maximum amount of passes
-                if (CurrentActorFrame.VisitedMap.ContainsKey(state) 
+
+                // Skip states that are at maximum amount of passes
+                if (CurrentActorFrame.VisitedMap.ContainsKey(state)
                     && CurrentActorFrame.VisitedMap[state] == state.Rules.MaxPasses)
                 {
-                    allStatesCopy.Remove(state);
-                }
-                
-                // Remove states which have direct parent defined and it is not our current state
-                if (state.Rules.DirectParent != null && state.Rules.DirectParent != currentState)
-                {
-                    allStatesCopy.Remove(state);
                     continue;
                 }
                 
-                // Remove current state, if MaxLoops == 0 or current loop count is at maximum
-                if (currentState.Equals(state)
-                    && (state.Rules.MaxLoops == 0 || CurrentActorFrame.CurrentLoopCount == currentState.Rules.MaxLoops))
-                {
-                    allStatesCopy.Remove(state);
-                }
-            }
-
-            // Handle empty states
-            if (!allStatesCopy.Any())
-            {
-                CurrentActorFrame.CurrentTime = CurrentActorFrame.CurrentTime.AddMinutes(5);
-                if (CurrentActorFrame.CurrentTime >= ProcessEnd)
-                {
-                    Console.WriteLine(
-                        $"[INFO] Current time reached the end time process end at {currentState.ActivityType} {currentState.Resource.Name}");
-                    break;
-                }
-
-                continue;
-            }
-
-            Dictionary<ProcessState, float> weightedStates = new();
-
-            // Evaluate remaining states
-            foreach (var state in allStatesCopy)
-            {
                 float rating = 0;
 
                 // Rank compulsory
@@ -140,40 +73,13 @@ public static class StateEvaluator
                     rating += Constants.CompulsoryWeight;
                 }
 
-                // Rank loop chance
-                if (currentState.Equals(state))
-                {
-                    rating += currentState.Chances.LoopChance * Constants.LoopChanceWeight;
-                }
-
-                // TODO: Handle following activites before ranking
-                // Rank following activities
-                if (currentState.Rules.FollowingActivitiesMap != null
-                    && currentState.Rules.FollowingActivitiesMap.ContainsKey(state.ActivityType))
-                {
-                    rating += currentState.Rules.FollowingActivitiesMap[state.ActivityType] *
-                              Constants.ChanceToFollowWeight;
-                }
-
-                // Rank chance to visit
-                rating += state.Chances.ChanceToVisit * Constants.ChanceToVisitWeight;
+                // Rank following chance
+                rating += currentState.FollowingMap[state] * Constants.ChanceToFollowWeight;
 
                 // Rank activity chance
                 if (currentState.ActivityType != state.ActivityType)
                 {
                     rating += Constants.DifferentActivityWeight;
-                }
-
-                // Penalize previous visit
-                if (CurrentActorFrame.VisitedMap.ContainsKey(state))
-                {
-                    rating += CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight;
-                }
-
-                // Penalize last visited
-                if (CurrentActorFrame.LastVisited != null && CurrentActorFrame.LastVisited.Equals(state))
-                {
-                    rating += Constants.LastVisitWeight;
                 }
 
                 // Rank same resource
@@ -187,11 +93,28 @@ public static class StateEvaluator
                 {
                     rating += Constants.ToFinishingWeight;
                 }
+                
+                // Penalize previous visit
+                if (CurrentActorFrame.VisitedMap.ContainsKey(state))
+                {
+                    rating = Math.Max(0, CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight + rating);
+                }
+
+                // Penalize last visited
+                if (CurrentActorFrame.LastVisited != null && CurrentActorFrame.LastVisited.Equals(state))
+                {
+                    rating = Math.Max(0, rating + Constants.LastVisitWeight);
+                }
 
                 weightedStates.Add(state, rating);
             }
 
-            // TODO: FIX this selection always must select next state -> only first exam term registration is chosen
+            if (!weightedStates.Any())
+            {
+                throw new InvalidProcessStateException(
+                    "Weighted states are empty, this can happen because all following states end sooner than our current state");
+            }
+
             // Maybe implement some waiting with higher probability?
             var nextState = SelectWeightedState(weightedStates);
             JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime));
@@ -224,6 +147,7 @@ public static class StateEvaluator
         }
 
         CurrentActorFrame.CurrentTime = jumpDate;
+        CurrentActorFrame.VisitedStack.Add((newState, jumpDate));
         OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate);
     }
 

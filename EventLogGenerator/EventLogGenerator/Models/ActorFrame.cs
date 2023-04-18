@@ -13,6 +13,9 @@ public class ActorFrame
 
     // Dictionary of ProcessStates that were previously visited in the process, values counts the visits
     public Dictionary<ProcessState, int> VisitedMap = new();
+    
+    // The List (stack) of all visited States and the times they were visited in
+    public List<(ProcessState, DateTime)> VisitedStack = new();
 
     // The previously visited state (null if currently at start)
     public ProcessState? LastVisited = null;
