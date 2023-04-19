@@ -2,6 +2,7 @@
 using EventLogGenerator.InputOutput;
 using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
+using EventLogGenerator.Services;
 
 namespace EventLogGenerator;
 
@@ -21,7 +22,40 @@ public static class IsEventsGenerator
         List<Actor> students = Enumerable.Range(0, studentsCount)
             .Select(_ => new Actor(EActorType.Student))
             .ToList();
+        
+        // Setup seminar offsets
+        var seminarActivites = new HashSet<EActivityType>()
+        {
+            EActivityType.AttendSeminar,
+            EActivityType.OpenRopot,
+            EActivityType.SaveRopot,
+            EActivityType.SubmitRopot,
+            EActivityType.ViewRopot
+        };
+        int third = students.Count / 3;
+        var firstOffset = TimeSpan.Zero;
+        List<Actor> firstThird = students.GetRange(0, third);
+        var secondOffset = TimeSpan.FromDays(1);
+        List<Actor> secondThird = students.GetRange(third, third);
+        var thirdOffset = TimeSpan.FromDays(2);
+        List<Actor> thirdThird = students.GetRange(third * 2, students.Count - third * 2);
+        
+        // Set the offset on each group of students
+        foreach (Actor student in firstThird)
+        {
+            ActorService.RegisterActivitiesOffset(student, seminarActivites, firstOffset);
+        }
 
+        foreach (Actor student in secondThird)
+        {
+            ActorService.RegisterActivitiesOffset(student, seminarActivites, secondOffset);
+        }
+
+        foreach (Actor student in thirdThird)
+        {
+            ActorService.RegisterActivitiesOffset(student, seminarActivites, thirdOffset);
+        }
+        
         // Prepare Resources
         var course = new Resource("Our Course");
         var seminarGroup1 = new Resource("Seminar group 1");
@@ -57,16 +91,6 @@ public static class IsEventsGenerator
             seminarWeek1, seminarWeek2, seminarWeek3, seminarWeek4, seminarWeek5, seminarWeek6,
             ropot1, ropot2, ropot3, ropot4, ropot5, ropot6
         };
-
-        // TODO: Which data structure should I use here???
-        // TODO: Offset given by seminar group
-        Dictionary<HashSet<Resource>, TimeSpan> offsetSeminar1 =
-            new Dictionary<HashSet<Resource>, TimeSpan>() { { seminarResources, TimeSpan.FromDays(0) } };
-        Dictionary<HashSet<Resource>, TimeSpan> offsetSeminar2 =
-            new Dictionary<HashSet<Resource>, TimeSpan>() { { seminarResources, TimeSpan.FromDays(1) } };
-        Dictionary<HashSet<Resource>, TimeSpan> offsetSeminar3 =
-            new Dictionary<HashSet<Resource>, TimeSpan>() { { seminarResources, TimeSpan.FromDays(2) } };
-
 
         // Useful properties
         var semesterStart = new DateTime(2023, 1, 1);
@@ -340,8 +364,7 @@ public static class IsEventsGenerator
         var submitRopotRulesSeminar6 =
             new StateRules(true, 1, 0, submitRopotFollowing,
                 new HashSet<ProcessState>() { attendSeminar6, openRopot6 });
-
-        // TODO: FIX ropot saving after view (add states/activites that cannot be before/after each other?)
+        
         var saveRopot1 = new ProcessState(
             EActivityType.SaveRopot,
             ropot1,
@@ -584,9 +607,7 @@ public static class IsEventsGenerator
             StateEvaluator.RunProcess();
         }
 
-        // TODO: Implement Good vs. Bad student Actor (it naturally happens, is it really needed?)
-
-        // TODO: Implement variable offset for attending seminar for each student Actor
+        // TODO: Implement Good vs. Bad student Actor
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 

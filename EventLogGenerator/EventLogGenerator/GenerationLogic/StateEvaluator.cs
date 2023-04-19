@@ -1,5 +1,6 @@
 ﻿using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
+using EventLogGenerator.Services;
 
 namespace EventLogGenerator.GenerationLogic;
 
@@ -35,6 +36,8 @@ public static class StateEvaluator
             throw new Exception("ProcessEnd must be set before running the evaluator");
         }
 
+
+
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
@@ -42,7 +45,7 @@ public static class StateEvaluator
             // Get available following states of current states
             var currentState = CurrentActorFrame.CurrentState;
             var availableStates = currentState.FollowingMap.Keys.ToList();
-            
+
             if (!availableStates.Any())
             {
                 throw new InvalidProcessStateException("Following map must contain following states");
@@ -108,22 +111,23 @@ public static class StateEvaluator
 
                 weightedStates.Add(state, rating);
             }
-
+            
             if (!weightedStates.Any())
             {
                 throw new InvalidProcessStateException(
                     "Weighted states are empty, this can happen because all following states end sooner than our current state");
             }
-
-            // Maybe implement some waiting with higher probability?
+            
             var nextState = SelectWeightedState(weightedStates);
-            JumpNextState(nextState, nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime));
+            var jumpTime = nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime);
+            var actorOffset = ActorService.GetActorActivityOffset(CurrentActorFrame.Actor, currentState.ActivityType);;
+            JumpNextState(nextState, jumpTime, actorOffset);
         }
 
         Console.Out.WriteLine("[INFO] --- ENDING PROCESS RUN ---");
     }
 
-    private static void JumpNextState(ProcessState newState, DateTime jumpDate)
+    private static void JumpNextState(ProcessState newState, DateTime jumpDate, TimeSpan actorOffset)
     {
         // Update VisitedMap
         if (CurrentActorFrame.VisitedMap.ContainsKey(CurrentActorFrame.CurrentState))
@@ -145,10 +149,10 @@ public static class StateEvaluator
             CurrentActorFrame.LastVisited = CurrentActorFrame.CurrentState;
             CurrentActorFrame.CurrentState = newState;
         }
-
+        
         CurrentActorFrame.CurrentTime = jumpDate;
         CurrentActorFrame.VisitedStack.Add((newState, jumpDate));
-        OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate);
+        OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate + actorOffset);
     }
 
     public static ProcessState SelectWeightedState(Dictionary<ProcessState, float> stateWeights)
