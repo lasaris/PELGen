@@ -536,7 +536,25 @@ public static class IsEventsGenerator
             examRules,
             new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 24))
         );
-
+        
+        var failExam1 = new ProcessState(
+            EActivityType.FailExam,
+            exam1,
+            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
+            new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20)));
+        
+        var failExam2 = new ProcessState(
+            EActivityType.FailExam,
+            exam2,
+            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
+            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24)));
+        
+        var failExam3 = new ProcessState(
+            EActivityType.FailExam,
+            exam3,
+            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
+            new TimeFrame(new DateTime(2023, 2, 25), new DateTime(2023, 2, 28)));
+        
         // Finishing processes
         var passCourse = new ProcessState(
             EActivityType.PassCourse,
@@ -592,9 +610,12 @@ public static class IsEventsGenerator
         // hw 3
         submitHomework3.AddFollowingStates((registerTerm1, 0.9f), (registerTerm2, 0.05f), (registerTerm3, 0.05f));
         // exams
-        registerTerm1.AddFollowingStates((passCourse, 0.65f), (registerTerm2, 0.30f), (failCourse, 0.05f));
-        registerTerm2.AddFollowingStates((passCourse, 0.65f), (registerTerm3, 0.30f), (failCourse, 0.05f));
-        registerTerm3.AddFollowingStates((passCourse, 0.65f), (failCourse, 0.35f));
+        registerTerm1.AddFollowingStates((passCourse, 0.65f), (failExam1, 0.30f), (failCourse, 0.05f));
+        registerTerm2.AddFollowingStates((passCourse, 0.65f), (failExam2, 0.30f), (failCourse, 0.05f));
+        registerTerm3.AddFollowingStates((passCourse, 0.65f), (failExam3, 0.35f));
+        failExam1.AddFollowingStates((registerTerm2, 0.9f), (failCourse, 0.1f));
+        failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
+        failExam3.AddFollowingStates((failCourse, 1f));
         
         // TODO: Register checkpoints here
         
@@ -612,7 +633,5 @@ public static class IsEventsGenerator
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 
         // TODO: Create process for teacher Actor
-
-        // TODO: Implement FailExam activity
     }
 }

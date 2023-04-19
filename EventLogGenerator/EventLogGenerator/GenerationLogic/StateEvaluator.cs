@@ -35,9 +35,7 @@ public static class StateEvaluator
         {
             throw new Exception("ProcessEnd must be set before running the evaluator");
         }
-
-
-
+        
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
@@ -67,7 +65,7 @@ public static class StateEvaluator
                 {
                     continue;
                 }
-                
+
                 float rating = 0;
 
                 // Rank compulsory

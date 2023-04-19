@@ -13,6 +13,7 @@ public enum EActivityType
     SubmitRopot,
     ViewRopot,
     RegisterExamTerm,
+    FailExam,
     PassCourse,
-    FailCourse
+    FailCourse,
 }

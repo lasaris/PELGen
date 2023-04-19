@@ -22,12 +22,9 @@ public class StateRules
     // Activities that must be visited by Actor before the current one (can be indirect, null if no limitations)
     public HashSet<EActivityType>? MustPrecedeActivities;
 
-    // ProcessState that must be a direct parent of the current one (null if not required)
-    public ProcessState? DirectParent;
-
     public StateRules(bool isCompulsory = false, int maxPasses = 1, int maxLoops = 0,
         Dictionary<EActivityType, float>? followingActivitiesMap = null, HashSet<ProcessState>? mustPrecedeStates = null,
-        HashSet<EActivityType>? mustPrecedeActivities = null, ProcessState? directParent = null)
+        HashSet<EActivityType>? mustPrecedeActivities = null)
     {
         IsCompulsory = isCompulsory;
         MaxPasses = maxPasses;
@@ -35,6 +32,5 @@ public class StateRules
         FollowingActivitiesMap = followingActivitiesMap;
         MustPrecedeStates = mustPrecedeStates;
         MustPrecedeActivities = mustPrecedeActivities;
-        DirectParent = directParent;
     }
 }
