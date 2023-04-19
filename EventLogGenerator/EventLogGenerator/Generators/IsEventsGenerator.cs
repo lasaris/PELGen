@@ -15,8 +15,9 @@ public static class IsEventsGenerator
             throw new ArgumentException($"Invalid number of actors: students {studentsCount}");
         }
 
-        // Setup FileManager output CSV file
+        // Setup necessary services
         FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp");
+        SprinkleService.ResetSprinklerState();
 
         // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)
@@ -130,47 +131,7 @@ public static class IsEventsGenerator
         var materialRules =
             new StateRules(false, -1, -1, new Dictionary<EActivityType, float>() { {EActivityType.AttendSeminar, 0.8f} }, enrolledCourseSet);
         
-        var readStudyMaterials1 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek1,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 2), semesterEnd)
-        );
         
-        var readStudyMaterials2 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek2,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 9), semesterEnd)
-        );
-        
-        var readStudyMaterials3 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek3,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 16), semesterEnd)
-        );
-        
-        var readStudyMaterials4 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek4,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 23), semesterEnd)
-        );
-        
-        var readStudyMaterials5 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek5,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 30), semesterEnd)
-        );
-        
-        var readStudyMaterials6 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek6,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 2, 6), semesterEnd)
-        );
 
         var submitHomeworkRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
 
@@ -467,50 +428,6 @@ public static class IsEventsGenerator
         var viewRopotRulesSeminar6 =
             new StateRules(false, 1, 0, viewRopotFollowing,
                 new HashSet<ProcessState>() { attendSeminar6, submitRopot6 });
-        
-        // TODO: FIX view ropot time frames (should be anytime after it was submitted)
-        // Should this also be a random event throughout the semester?
-        var viewRopot1 = new ProcessState(
-            EActivityType.ViewRopot,
-            ropot1,
-            viewRopotRulesSeminar1,
-            timeFrameRopot1
-        );
-        
-        var viewRopot2 = new ProcessState(
-            EActivityType.ViewRopot,
-            ropot2,
-            viewRopotRulesSeminar2,
-            timeFrameRopot2
-        );
-        
-        var viewRopot3 = new ProcessState(
-            EActivityType.ViewRopot,
-            ropot3,
-            viewRopotRulesSeminar3,
-            timeFrameRopot3
-        );
-        
-        var viewRopot4 = new ProcessState(
-            EActivityType.ViewRopot,
-            ropot4,
-            viewRopotRulesSeminar4,
-            timeFrameRopot4
-        );
-        
-        var viewRopot5 = new ProcessState(
-            EActivityType.ViewRopot,
-            ropot5,
-            viewRopotRulesSeminar5,
-            timeFrameRopot5
-        );
-        
-        var viewRopot6 = new ProcessState(
-            EActivityType.ViewRopot,
-            ropot6,
-            viewRopotRulesSeminar6,
-            timeFrameRopot6
-        );
 
         var examRules = new StateRules(false, 1, 0,
             new Dictionary<EActivityType, float>()
@@ -617,8 +534,92 @@ public static class IsEventsGenerator
         failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
         failExam3.AddFollowingStates((failCourse, 1f));
         
-        // TODO: Register checkpoints here
+        // TODO: Register sprinkles here
+        var readStudyMaterials1 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek1,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 2), semesterEnd)
+        );
         
+        var readStudyMaterials2 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek2,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 9), semesterEnd)
+        );
+        
+        var readStudyMaterials3 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek3,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 16), semesterEnd)
+        );
+        
+        var readStudyMaterials4 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek4,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 23), semesterEnd)
+        );
+        
+        var readStudyMaterials5 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek5,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 1, 30), semesterEnd)
+        );
+        
+        var readStudyMaterials6 = new ProcessState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek6,
+            materialRules,
+            new TimeFrame(new DateTime(2023, 2, 6), semesterEnd)
+        );
+        
+        // TODO: FIX view ropot time frames (should be anytime after it was submitted)
+        // Should this also be a random event throughout the semester?
+        var viewRopot1 = new ProcessState(
+            EActivityType.ViewRopot,
+            ropot1,
+            viewRopotRulesSeminar1,
+            timeFrameRopot1
+        );
+        
+        var viewRopot2 = new ProcessState(
+            EActivityType.ViewRopot,
+            ropot2,
+            viewRopotRulesSeminar2,
+            timeFrameRopot2
+        );
+        
+        var viewRopot3 = new ProcessState(
+            EActivityType.ViewRopot,
+            ropot3,
+            viewRopotRulesSeminar3,
+            timeFrameRopot3
+        );
+        
+        var viewRopot4 = new ProcessState(
+            EActivityType.ViewRopot,
+            ropot4,
+            viewRopotRulesSeminar4,
+            timeFrameRopot4
+        );
+        
+        var viewRopot5 = new ProcessState(
+            EActivityType.ViewRopot,
+            ropot5,
+            viewRopotRulesSeminar5,
+            timeFrameRopot5
+        );
+        
+        var viewRopot6 = new ProcessState(
+            EActivityType.ViewRopot,
+            ropot6,
+            viewRopotRulesSeminar6,
+            timeFrameRopot6
+        );
         
         foreach (var student in students)
         {

@@ -27,4 +27,8 @@ public static class Constants
     public const float SameResourceWeight = 0;
 
     public const float ToFinishingWeight = 20;
+    
+    // Constants for services
+
+    public const float NoSprinkleChance = 0.5f;
 }
