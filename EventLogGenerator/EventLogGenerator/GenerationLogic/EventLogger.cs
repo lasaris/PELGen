@@ -2,14 +2,23 @@
 using EventLogGenerator.InputOutput;
 using EventLogGenerator.Models;
 using EventLogGenerator.Services;
+ using EventLogGenerator.Utilities;
 
-namespace EventLogGenerator.GenerationLogic;
+ namespace EventLogGenerator.GenerationLogic;
 
 /// <summary>
 /// Listens for events and then logs them into specified log file
 /// </summary>
 public static class EventLogger
 {
+    public static void SprinkleAddedHandler(object sender, SprinkleAddedEvent data)
+    {
+        var processStateFromSprinkle = StateUtils.TransformSprinkleToState(data.Sprinkle);
+        var newProcessStateEvent = new StateEnteredEvent(processStateFromSprinkle, data.Actor, data.TimeStamp);
+        
+        StateEnteredHandler(sender, newProcessStateEvent);
+;    }
+    
     public static void StateEnteredHandler(object sender, StateEnteredEvent data)
     {
         // Prepare string

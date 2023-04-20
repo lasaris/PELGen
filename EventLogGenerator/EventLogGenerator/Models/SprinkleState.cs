@@ -16,38 +16,51 @@ public class SprinkleState
 
     // State after which sprinkle cannot be performed
     public ProcessState StopBefore;
-    
+
     // How much likely is the sprinkle going to be used right after the BeginAfter state
-    public float ChanceRightAfter;
+    public Dictionary<ProcessState, float>? AfterStateChances;
 
     // How many passes for this state remain
     public int RemainingPasses;
 
-    public SprinkleState(ProcessState beginAfter, ProcessState stopBefore, EActivityType activityType,
-        Resource resource, float chanceRightAfter = 1f, int remainingPasses = 1, bool register = true)
+    public SprinkleState(EActivityType activityType, Resource resource, ProcessState beginAfter,
+        ProcessState stopBefore, Dictionary<ProcessState, float>? afterStateChances = null, int remainingPasses = 1,
+        bool register = true)
     {
         // Cannot sparkle between same state
         if (beginAfter == stopBefore)
         {
             throw new ArgumentException("Cannot create Sprinkle with same beginning and ending state");
         }
-        
+
         // Passes must be > 0
         if (remainingPasses <= 0)
         {
             throw new ArgumentException("Sprinkle must be created with at least 1 pass remaining");
         }
         
-        BeginAfter = beginAfter;
-        StopBefore = stopBefore;
+        // Cannot sprinkle after finishing state
+        if (beginAfter.IsFinishing)
+        {
+            throw new ArgumentException("Sprinkle cannot be added after a finishing state (for now)");
+        }
+
         ActivityType = activityType;
         Resource = resource;
-        ChanceRightAfter = chanceRightAfter;
+        BeginAfter = beginAfter;
+        StopBefore = stopBefore;
+        AfterStateChances = afterStateChances;
         RemainingPasses = remainingPasses;
 
         if (register)
         {
             SprinkleService.LoadSprinklerState(this);
         }
+    }
+
+    // For special internal use only
+    public SprinkleState(EActivityType activityType)
+    {
+        ActivityType = activityType;
     }
 }

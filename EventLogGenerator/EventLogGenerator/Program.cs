@@ -9,8 +9,14 @@ internal class Program
 
     public static void Main(string[] args)
     {
+        RegisterSubscribers();
+        IsEventsGenerator.GenerateIsLogs(200);
+    }
+
+    private static void RegisterSubscribers()
+    {
         StateEvaluator.StateEntered += EventLogger.StateEnteredHandler;
         StateEvaluator.StateEntered += SprinkleService.StateEnteredHandler;
-        IsEventsGenerator.GenerateIsLogs(200);
+        SprinkleService.SprinkleAdded += EventLogger.SprinkleAddedHandler;
     }
 }

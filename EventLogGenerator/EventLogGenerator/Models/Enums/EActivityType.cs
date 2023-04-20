@@ -16,4 +16,6 @@ public enum EActivityType
     FailExam,
     PassCourse,
     FailCourse,
+    // Special internal
+    NoSprinkle,
 }

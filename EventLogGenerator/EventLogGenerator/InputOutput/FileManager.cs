@@ -43,6 +43,7 @@ public static class FileManager
             throw new ArgumentException("Provided file does not exist");
         }
 
+        // FIXME: Could this be optimized so we don't open file on every write?
         using (var reader = new StreamReader(outPath))
         {
             var headerLine = reader.ReadLine();

@@ -534,13 +534,13 @@ public static class IsEventsGenerator
         failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
         failExam3.AddFollowingStates((failCourse, 1f));
         
-        // TODO: Register sprinkles here
-        var readStudyMaterials1 = new ProcessState(
-            EActivityType.ReadStudyMaterials,
-            materialsWeek1,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 2), semesterEnd)
-        );
+        // TODO: Register sprinkles here. OH NOT ITS FUCKED! THE AFTER AND BEFORE STATE ARE NOT ENOUGH! FUCK!!!
+        // var readStudyMaterials1 = new SprinkleState(
+        //     EActivityType.ReadStudyMaterials,
+        //     materialsWeek1,
+        //     registerSeminarGroup1,
+        //     failCourse
+        // );
         
         var readStudyMaterials2 = new ProcessState(
             EActivityType.ReadStudyMaterials,
