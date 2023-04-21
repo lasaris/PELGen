@@ -527,20 +527,19 @@ public static class IsEventsGenerator
         // hw 3
         submitHomework3.AddFollowingStates((registerTerm1, 0.9f), (registerTerm2, 0.05f), (registerTerm3, 0.05f));
         // exams
-        registerTerm1.AddFollowingStates((passCourse, 0.65f), (failExam1, 0.30f), (failCourse, 0.05f));
-        registerTerm2.AddFollowingStates((passCourse, 0.65f), (failExam2, 0.30f), (failCourse, 0.05f));
+        registerTerm1.AddFollowingStates((passCourse, 0.65f), (failExam1, 0.35f));
+        registerTerm2.AddFollowingStates((passCourse, 0.65f), (failExam2, 0.35f));
         registerTerm3.AddFollowingStates((passCourse, 0.65f), (failExam3, 0.35f));
         failExam1.AddFollowingStates((registerTerm2, 0.9f), (failCourse, 0.1f));
         failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
         failExam3.AddFollowingStates((failCourse, 1f));
         
-        // TODO: Register sprinkles here. OH NOT ITS FUCKED! THE AFTER AND BEFORE STATE ARE NOT ENOUGH! FUCK!!!
-        // var readStudyMaterials1 = new SprinkleState(
-        //     EActivityType.ReadStudyMaterials,
-        //     materialsWeek1,
-        //     registerSeminarGroup1,
-        //     failCourse
-        // );
+        var readStudyMaterials1 = new SprinkleState(
+            EActivityType.ReadStudyMaterials,
+            materialsWeek1,
+            new HashSet<ProcessState>(){registerSeminarGroup1, registerSeminarGroup2, registerSeminarGroup3},
+            new HashSet<ProcessState>(){registerTerm1, registerTerm2, registerTerm3}
+        );
         
         var readStudyMaterials2 = new ProcessState(
             EActivityType.ReadStudyMaterials,
@@ -627,12 +626,15 @@ public static class IsEventsGenerator
             StateEvaluator.OnStateEnter(actorFrame.Actor, enrollCourse, actorFrame.CurrentTime);
             StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 4, 1));
             StateEvaluator.RunProcess();
+            SprinkleService.ResetAvailableSprinkles();
         }
 
         // TODO: Implement Good vs. Bad student Actor
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 
-        // TODO: Create process for teacher Actor
+        // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
+        
+        // TODO: Add activity to receive points from homework
     }
 }

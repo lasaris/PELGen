@@ -30,7 +30,7 @@ public static class Constants
     
     // Constants for services
 
-    public const float NoSprinkleChance = 0.6f;
+    public const float NoSprinkleWeight = 20f;
 
     public const float SprinkleAfterStateWeight = 100;
 }

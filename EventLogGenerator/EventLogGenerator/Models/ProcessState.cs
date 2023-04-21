@@ -3,7 +3,7 @@ using EventLogGenerator.Models.Enums;
 
 namespace EventLogGenerator.Models;
 
-public class ProcessState
+public class ProcessState : ABaseState
 {
     // Activity for given state
     public EActivityType ActivityType;

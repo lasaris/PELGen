@@ -68,44 +68,46 @@ public static class StateEvaluator
 
                 float rating = 0;
 
-                // Rank compulsory
-                if (state.Rules.IsCompulsory)
-                {
-                    rating += Constants.CompulsoryWeight;
-                }
-
                 // Rank following chance
                 rating += currentState.FollowingMap[state] * Constants.ChanceToFollowWeight;
-
-                // Rank activity chance
-                if (currentState.ActivityType != state.ActivityType)
-                {
-                    rating += Constants.DifferentActivityWeight;
-                }
-
-                // Rank same resource
-                if (currentState.Resource == state.Resource)
-                {
-                    rating += Constants.SameResourceWeight;
-                }
-
-                // Rank finishing state
-                if (state.IsFinishing)
-                {
-                    rating += Constants.ToFinishingWeight;
-                }
                 
-                // Penalize previous visit
-                if (CurrentActorFrame.VisitedMap.ContainsKey(state))
-                {
-                    rating = Math.Max(0, CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight + rating);
-                }
-
-                // Penalize last visited
-                if (CurrentActorFrame.LastVisited != null && CurrentActorFrame.LastVisited.Equals(state))
-                {
-                    rating = Math.Max(0, rating + Constants.LastVisitWeight);
-                }
+                // FIXME: Remove this old ranking by state parameters
+                // // Rank compulsory
+                //
+                // if (state.Rules.IsCompulsory)
+                // {
+                //     rating += Constants.CompulsoryWeight;
+                // }
+                //
+                // // Rank activity chance
+                // if (currentState.ActivityType != state.ActivityType)
+                // {
+                //     rating += Constants.DifferentActivityWeight;
+                // }
+                //
+                // // Rank same resource
+                // if (currentState.Resource == state.Resource)
+                // {
+                //     rating += Constants.SameResourceWeight;
+                // }
+                //
+                // // Rank finishing state
+                // if (state.IsFinishing)
+                // {
+                //     rating += Constants.ToFinishingWeight;
+                // }
+                //
+                // // Penalize previous visit
+                // if (CurrentActorFrame.VisitedMap.ContainsKey(state))
+                // {
+                //     rating = Math.Max(0, CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight + rating);
+                // }
+                //
+                // // Penalize last visited
+                // if (CurrentActorFrame.LastVisited != null && CurrentActorFrame.LastVisited.Equals(state))
+                // {
+                //     rating = Math.Max(0, rating + Constants.LastVisitWeight);
+                // }
 
                 weightedStates.Add(state, rating);
             }

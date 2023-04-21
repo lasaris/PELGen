@@ -9,6 +9,6 @@ public static class StateUtils
         return new ProcessState(
             state.ActivityType,
             state.Resource,
-            new StateRules(), new TimeFrame(new DateTime(0), new DateTime(0)));
+            new StateRules(), new TimeFrame(new DateTime(0), new DateTime(1)));
     }
 }

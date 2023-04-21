@@ -26,7 +26,7 @@ public class TimeFrame
         {
             throw new ArgumentException("Cannot have limit of start after the end of current time");
         }
-        
+
         DateTime pickedDateTime;
         Random random = new Random();
         long range = (End - Start).Ticks;
@@ -68,7 +68,9 @@ public class TimeFrame
             throw new Exception($"Generated wrong time. Start: {Start}; End: {End}; Generated: {pickedDateTime}");
         }
 
-        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Max(newStartLimit.Value.Ticks, pickedDateTime.Ticks));
+        // FIXME: Maybe handle the picked DateTime differently? Instead of adding 1, just pick randomly by given strategy in interval <startLimit, picked>?
+        // The 1 in MathMax means that 2 states will differ with at least 1 tick
+        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Max(newStartLimit.Value.Ticks + 1, pickedDateTime.Ticks));
     }
 
     private double WeightFunctionLinear(long ticks, long range)
