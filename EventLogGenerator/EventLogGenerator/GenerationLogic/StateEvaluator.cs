@@ -23,7 +23,7 @@ public static class StateEvaluator
 
     private static readonly Random Random = new();
 
-    public static void RunProcess()
+    public static ActorFrame RunProcess(ProcessState initial)
     {
         // Check for desired state of evaluator
         if (CurrentActorFrame == null)
@@ -37,6 +37,8 @@ public static class StateEvaluator
         }
         
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
+        OnStateEnter(CurrentActorFrame.Actor, initial, CurrentActorFrame.CurrentTime);
+        
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
         {
@@ -69,46 +71,8 @@ public static class StateEvaluator
                 float rating = 0;
 
                 // Rank following chance
+                // FIXME: Since following chance/weight is the only ranking, it should be emitted and refactored to simpler form
                 rating += currentState.FollowingMap[state] * Constants.ChanceToFollowWeight;
-                
-                // FIXME: Remove this old ranking by state parameters
-                // // Rank compulsory
-                //
-                // if (state.Rules.IsCompulsory)
-                // {
-                //     rating += Constants.CompulsoryWeight;
-                // }
-                //
-                // // Rank activity chance
-                // if (currentState.ActivityType != state.ActivityType)
-                // {
-                //     rating += Constants.DifferentActivityWeight;
-                // }
-                //
-                // // Rank same resource
-                // if (currentState.Resource == state.Resource)
-                // {
-                //     rating += Constants.SameResourceWeight;
-                // }
-                //
-                // // Rank finishing state
-                // if (state.IsFinishing)
-                // {
-                //     rating += Constants.ToFinishingWeight;
-                // }
-                //
-                // // Penalize previous visit
-                // if (CurrentActorFrame.VisitedMap.ContainsKey(state))
-                // {
-                //     rating = Math.Max(0, CurrentActorFrame.VisitedMap[state] * Constants.EachPreviousVisitWeight + rating);
-                // }
-                //
-                // // Penalize last visited
-                // if (CurrentActorFrame.LastVisited != null && CurrentActorFrame.LastVisited.Equals(state))
-                // {
-                //     rating = Math.Max(0, rating + Constants.LastVisitWeight);
-                // }
-
                 weightedStates.Add(state, rating);
             }
             
@@ -125,6 +89,7 @@ public static class StateEvaluator
         }
 
         Console.Out.WriteLine("[INFO] --- ENDING PROCESS RUN ---");
+        return CurrentActorFrame;
     }
 
     private static void JumpNextState(ProcessState newState, DateTime jumpDate, TimeSpan actorOffset)
@@ -151,7 +116,7 @@ public static class StateEvaluator
         }
         
         CurrentActorFrame.CurrentTime = jumpDate;
-        CurrentActorFrame.VisitedStack.Add((newState, jumpDate));
+        CurrentActorFrame.VisitedStack.Add((newState, jumpDate + actorOffset));
         OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate + actorOffset);
     }
 

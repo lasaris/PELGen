@@ -17,13 +17,12 @@ public static class IsEventsGenerator
 
         // Setup necessary services
         FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp");
-        SprinkleService.ResetSprinklerState();
 
         // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)
             .Select(_ => new Actor(EActorType.Student))
             .ToList();
-        
+
         // Setup seminar offsets
         var seminarActivites = new HashSet<EActivityType>()
         {
@@ -40,7 +39,7 @@ public static class IsEventsGenerator
         List<Actor> secondThird = students.GetRange(third, third);
         var thirdOffset = TimeSpan.FromDays(2);
         List<Actor> thirdThird = students.GetRange(third * 2, students.Count - third * 2);
-        
+
         // Set the offset on each group of students
         foreach (Actor student in firstThird)
         {
@@ -56,7 +55,7 @@ public static class IsEventsGenerator
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, thirdOffset);
         }
-        
+
         // Prepare Resources
         var course = new Resource("Our Course");
         var seminarGroup1 = new Resource("Seminar group 1");
@@ -113,14 +112,14 @@ public static class IsEventsGenerator
             new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
             new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
         );
-        
+
         var registerSeminarGroup2 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup2,
             new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
             new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
         );
-        
+
         var registerSeminarGroup3 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup3,
@@ -129,9 +128,9 @@ public static class IsEventsGenerator
         );
 
         var materialRules =
-            new StateRules(false, -1, -1, new Dictionary<EActivityType, float>() { {EActivityType.AttendSeminar, 0.8f} }, enrolledCourseSet);
-        
-        
+            new StateRules(false, -1, -1,
+                new Dictionary<EActivityType, float>() { { EActivityType.AttendSeminar, 0.8f } }, enrolledCourseSet);
+
 
         var submitHomeworkRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
 
@@ -235,7 +234,7 @@ public static class IsEventsGenerator
         var openRopotFollowing = new Dictionary<EActivityType, float>()
             { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
         var saveRopotFollowing = new Dictionary<EActivityType, float>()
-            { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
+            { { EActivityType.SubmitRopot, 0.6f }, { EActivityType.SaveRopot, 0.4f } };
         var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
         var viewRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ReadStudyMaterials, 0.5f } };
 
@@ -325,7 +324,7 @@ public static class IsEventsGenerator
         var submitRopotRulesSeminar6 =
             new StateRules(true, 1, 0, submitRopotFollowing,
                 new HashSet<ProcessState>() { attendSeminar6, openRopot6 });
-        
+
         var saveRopot1 = new ProcessState(
             EActivityType.SaveRopot,
             ropot1,
@@ -453,25 +452,25 @@ public static class IsEventsGenerator
             examRules,
             new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 24))
         );
-        
+
         var failExam1 = new ProcessState(
             EActivityType.FailExam,
             exam1,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
             new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20)));
-        
+
         var failExam2 = new ProcessState(
             EActivityType.FailExam,
             exam2,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
             new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24)));
-        
+
         var failExam3 = new ProcessState(
             EActivityType.FailExam,
             exam3,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
             new TimeFrame(new DateTime(2023, 2, 25), new DateTime(2023, 2, 28)));
-        
+
         // Finishing processes
         var passCourse = new ProcessState(
             EActivityType.PassCourse,
@@ -490,39 +489,43 @@ public static class IsEventsGenerator
             new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
             true
         );
-        
+
         // Setup following states map
-        enrollCourse.AddFollowingStates((registerSeminarGroup1, 1/3f), (registerSeminarGroup2, 1/3f), (registerSeminarGroup3, 1/3f));
-        registerSeminarGroup1.AddFollowingStates((registerSeminarGroup2, 0.04f), (registerSeminarGroup3, 0.04f), (openRopot1, 0.92f));
-        registerSeminarGroup2.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup3, 0.04f), (openRopot1, 0.92f));
-        registerSeminarGroup3.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup2, 0.04f), (openRopot1, 0.92f));
+        enrollCourse.AddFollowingStates((registerSeminarGroup1, 1 / 3f), (registerSeminarGroup2, 1 / 3f),
+            (registerSeminarGroup3, 1 / 3f));
+        registerSeminarGroup1.AddFollowingStates((registerSeminarGroup2, 0.04f), (registerSeminarGroup3, 0.04f),
+            (openRopot1, 0.92f));
+        registerSeminarGroup2.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup3, 0.04f),
+            (openRopot1, 0.92f));
+        registerSeminarGroup3.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup2, 0.04f),
+            (openRopot1, 0.92f));
         // ropot 1
         openRopot1.AddFollowingStates((saveRopot1, 0.8f), (submitRopot1, 0.2f));
-        saveRopot1.AddFollowingStates((submitRopot1, 0.85f),(saveRopot1, 0.15f));
+        saveRopot1.AddFollowingStates((submitRopot1, 0.85f), (saveRopot1, 0.15f));
         submitRopot1.AddFollowingStates((openRopot2, 1f));
         // ropot 2
         openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
-        saveRopot2.AddFollowingStates((submitRopot2, 0.85f),(saveRopot2, 0.15f));
+        saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
         submitRopot2.AddFollowingStates((submitHomework1, 1f));
         // hw 1
         submitHomework1.AddFollowingStates((openRopot3, 1f));
         // ropot 3
         openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
-        saveRopot3.AddFollowingStates((submitRopot3, 0.85f),(saveRopot3, 0.15f));
+        saveRopot3.AddFollowingStates((submitRopot3, 0.85f), (saveRopot3, 0.15f));
         submitRopot3.AddFollowingStates((openRopot4, 1f));
         // ropot 4
         openRopot4.AddFollowingStates((saveRopot4, 0.8f), (submitRopot4, 0.2f));
-        saveRopot4.AddFollowingStates((submitRopot4, 0.85f),(saveRopot4, 0.15f));
+        saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
         submitRopot4.AddFollowingStates((submitHomework2, 1f));
         // hw 2
         submitHomework2.AddFollowingStates((openRopot5, 1f));
         // ropot 5
         openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
-        saveRopot5.AddFollowingStates((submitRopot5, 0.85f),(saveRopot5, 0.15f));
+        saveRopot5.AddFollowingStates((submitRopot5, 0.85f), (saveRopot5, 0.15f));
         submitRopot5.AddFollowingStates((openRopot6, 1f));
         // ropot 6
         openRopot6.AddFollowingStates((saveRopot6, 0.8f), (submitRopot6, 0.2f));
-        saveRopot6.AddFollowingStates((submitRopot6, 0.85f),(saveRopot6, 0.15f));
+        saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
         submitRopot6.AddFollowingStates((submitHomework3, 1f));
         // hw 3
         submitHomework3.AddFollowingStates((registerTerm1, 0.9f), (registerTerm2, 0.05f), (registerTerm3, 0.05f));
@@ -533,100 +536,130 @@ public static class IsEventsGenerator
         failExam1.AddFollowingStates((registerTerm2, 0.9f), (failCourse, 0.1f));
         failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
         failExam3.AddFollowingStates((failCourse, 1f));
-        
+
+        var endCourseSet = new HashSet<ProcessState>() { passCourse, failCourse };
+
+        var openRopotSet = new HashSet<ProcessState>()
+            { openRopot1, openRopot2, openRopot3, openRopot4, openRopot5, openRopot6 };
+        var submitRopotSet = new HashSet<ProcessState>()
+            { submitRopot1, submitRopot2, submitRopot3, submitRopot4, submitRopot5, submitRopot6 };
+
+        // Create sprinkles
         var readStudyMaterials1 = new SprinkleState(
             EActivityType.ReadStudyMaterials,
             materialsWeek1,
-            new HashSet<ProcessState>(){registerSeminarGroup1, registerSeminarGroup2, registerSeminarGroup3},
-            new HashSet<ProcessState>(){registerTerm1, registerTerm2, registerTerm3}
+            new HashSet<ProcessState>() { registerSeminarGroup1, registerSeminarGroup2, registerSeminarGroup3 },
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var readStudyMaterials2 = new ProcessState(
+        var readStudyMaterials2 = new SprinkleState(
             EActivityType.ReadStudyMaterials,
             materialsWeek2,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 9), semesterEnd)
+            new HashSet<ProcessState>(){submitRopot1},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var readStudyMaterials3 = new ProcessState(
+        var readStudyMaterials3 = new SprinkleState(
             EActivityType.ReadStudyMaterials,
             materialsWeek3,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 16), semesterEnd)
+            new HashSet<ProcessState>(){submitRopot2},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var readStudyMaterials4 = new ProcessState(
+        var readStudyMaterials4 = new SprinkleState(
             EActivityType.ReadStudyMaterials,
             materialsWeek4,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 23), semesterEnd)
+            new HashSet<ProcessState>(){submitRopot3},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var readStudyMaterials5 = new ProcessState(
+        var readStudyMaterials5 = new SprinkleState(
             EActivityType.ReadStudyMaterials,
             materialsWeek5,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 1, 30), semesterEnd)
+            new HashSet<ProcessState>(){submitRopot4},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var readStudyMaterials6 = new ProcessState(
+        var readStudyMaterials6 = new SprinkleState(
             EActivityType.ReadStudyMaterials,
             materialsWeek6,
-            materialRules,
-            new TimeFrame(new DateTime(2023, 2, 6), semesterEnd)
+            new HashSet<ProcessState>(){submitRopot5},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        // TODO: FIX view ropot time frames (should be anytime after it was submitted)
-        // Should this also be a random event throughout the semester?
-        var viewRopot1 = new ProcessState(
+        var viewRopot1 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot1,
-            viewRopotRulesSeminar1,
-            timeFrameRopot1
+            new HashSet<ProcessState>(){submitRopot1},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var viewRopot2 = new ProcessState(
+        var viewRopot2 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot2,
-            viewRopotRulesSeminar2,
-            timeFrameRopot2
+            new HashSet<ProcessState>(){submitRopot2},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var viewRopot3 = new ProcessState(
+        var viewRopot3 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot3,
-            viewRopotRulesSeminar3,
-            timeFrameRopot3
+            new HashSet<ProcessState>(){submitRopot3},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var viewRopot4 = new ProcessState(
+        var viewRopot4 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot4,
-            viewRopotRulesSeminar4,
-            timeFrameRopot4
+            new HashSet<ProcessState>(){submitRopot4},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var viewRopot5 = new ProcessState(
+        var viewRopot5 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot5,
-            viewRopotRulesSeminar5,
-            timeFrameRopot5
+            new HashSet<ProcessState>(){submitRopot5},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
         
-        var viewRopot6 = new ProcessState(
+        var viewRopot6 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot6,
-            viewRopotRulesSeminar6,
-            timeFrameRopot6
+            new HashSet<ProcessState>(){submitRopot6},
+            endCourseSet,
+            openRopotSet,
+            submitRopotSet
         );
-        
+
         foreach (var student in students)
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
-            StateEvaluator.OnStateEnter(actorFrame.Actor, enrollCourse, actorFrame.CurrentTime);
+            // FIXME: StateEvaluator.RunProcess() can take these parameters
             StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 4, 1));
-            StateEvaluator.RunProcess();
-            SprinkleService.ResetAvailableSprinkles();
+            var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
+            SprinkleService.RunSprinkling(filledActorFrame);
         }
 
         // TODO: Implement Good vs. Bad student Actor
@@ -634,7 +667,7 @@ public static class IsEventsGenerator
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 
         // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
-        
+
         // TODO: Add activity to receive points from homework
     }
 }

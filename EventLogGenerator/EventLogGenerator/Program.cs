@@ -10,13 +10,12 @@ internal class Program
     public static void Main(string[] args)
     {
         RegisterSubscribers();
-        IsEventsGenerator.GenerateIsLogs(200);
+        IsEventsGenerator.GenerateIsLogs(3);
     }
 
     private static void RegisterSubscribers()
     {
         StateEvaluator.StateEntered += EventLogger.StateEnteredHandler;
-        StateEvaluator.StateEntered += SprinkleService.StateEnteredHandler;
         SprinkleService.SprinkleAdded += EventLogger.SprinkleAddedHandler;
     }
 }

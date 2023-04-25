@@ -18,159 +18,91 @@ public static class SprinkleService
     // Define event for state entering that uses the delegate above
     public static event SprinkleAddedhandler SprinkleAdded;
     
-    // Sprinkles, that are yet to be sprinkled
-    public static HashSet<SprinkleState> UpcomingSprinkles = new();
-
     // Sprinkles currently ready to be sprinkled into the process
-    public static HashSet<SprinkleState> AvailableSprinkles = new();
+    public static HashSet<SprinkleState> Sprinkles = new();
+
+    // Maps sprinkles to available timeframes for given actorframe
+    public static Dictionary<SprinkleState, List<TimeFrame>> SprinkleTimeMap = new();
     
-    // Sprinkles, that were previously used
-    public static HashSet<SprinkleState> UsedSprinkles = new();
-
-    // Time of last event
-    private static DateTime LastTimestamp;
-
-    // If we want the process to be sprinkled or not
-    public static bool Enabled = true;
-    
-    private static void UpdateAvailableSprinkles(ProcessState newState)
-    {
-        var totalSprinkles = UpcomingSprinkles.Count + AvailableSprinkles.Count + UsedSprinkles.Count; 
-        // Remove unusable sprinkles
-        HashSet<SprinkleState> newAvailable = new();
-        foreach (var state in AvailableSprinkles)
-        {
-            if (state.StopBefore.Contains(newState) || state.RemainingPasses == 0)
-            {
-                UsedSprinkles.Add(state);
-            }
-            else
-            {
-                newAvailable.Add(state);
-            }
-        }
-
-        AvailableSprinkles = newAvailable;
-
-        // Add newly available sprinkles and remove them from upcoming
-        var newlyAvailable = UpcomingSprinkles.Where(state => state.BeginAfter.Contains(newState)).ToHashSet();
-        AvailableSprinkles.UnionWith(newlyAvailable);
-        UpcomingSprinkles.ExceptWith(newlyAvailable);
-
-        // Defensive mechanism for integrity control
-        if (totalSprinkles != UpcomingSprinkles.Count + AvailableSprinkles.Count + UsedSprinkles.Count)
-        {
-            throw new InvalidSprinklerState("Some sprinkles were lost in the update process");
-        }
-    }
-
-    private static void AddRandomSprinkle(ProcessState newState, Actor actor, DateTime enteredTime)
-    {
-        if (!AvailableSprinkles.Any())
-        {
-            return;
-        }
-        
-        // Weight each state
-        var weightedStates = new Dictionary<SprinkleState, float>();
-        foreach (var sprinkle in AvailableSprinkles)
-        {
-            float weight = 1;
-            
-            // TODO: AfterStateChances should probably be handled separately before random selection of sprinkle? 
-            // Rank afterStateChances
-            if (sprinkle.AfterStateChances != null && sprinkle.AfterStateChances.ContainsKey(newState))
-            {
-                weight += Constants.SprinkleAfterStateWeight * sprinkle.AfterStateChances[newState];
-            }
-            
-            weightedStates.Add(sprinkle, weight);
-        }
-        var newSprinkle = SelectNextSprinkle(weightedStates);
-        
-        // Dont sprinkle
-        if (newSprinkle == null)
-        {
-            return;
-        }
-
-        if (LastTimestamp == null)
-        {
-            throw new ArgumentException("Cannot have defined sprinkles and no previous state time");
-        }
-
-        var sprinkleTime = TimeUtils.PickDateInInterval(LastTimestamp, enteredTime);
-        
-        OnSprinkleAdd(newSprinkle, actor, sprinkleTime);
-    }
-
-    private static SprinkleState? SelectNextSprinkle(Dictionary<SprinkleState, float> weightedSprinkles)
-    {
-        var random = new Random();
-        // Add special no sprinkle state
-        weightedSprinkles.Add(new SprinkleState(EActivityType.NoSprinkle), Constants.NoSprinkleWeight);
-        
-        float totalWeight = weightedSprinkles.Values.Sum();
-        float randomWeight = (float)random.NextDouble() * totalWeight;
-        float cumulativeWeight = 0f;
-
-        foreach (var kvp in weightedSprinkles)
-        {
-            cumulativeWeight += kvp.Value;
-            if (randomWeight < cumulativeWeight)
-            {
-                if (kvp.Key.ActivityType == EActivityType.NoSprinkle)
-                {
-                    return null;
-                }
-                
-                return kvp.Key;
-            }
-        }
-        
-        throw new InvalidOperationException("Cannot pick from empty state-weight pairs");
-    }
-
     private static void OnSprinkleAdd(SprinkleState sprinkle, Actor actor, DateTime timeStamp)
     {
-        // TODO: This applies to all actors -> only first passes if remaining passes are decremented
-        sprinkle.RemainingPasses -= 1;
         var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
         SprinkleAdded.Invoke(null, newEvent);
-        Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - Remaining {sprinkle.RemainingPasses}");
+        // FIXME: Should the logging be done by EventLogger instead?
+        Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource.Name}");
     }
-
-    public static void StateEnteredHandler(object sender, StateEnteredEvent data)
+    
+    private static void AddSprinkle(SprinkleState sprinkle, Actor actor)
     {
-        if (!Enabled)
-        {
-            return;
-        }
-        
-        AddRandomSprinkle(data.State, data.Actor, data.TimeStamp);
-        UpdateAvailableSprinkles(data.State);
-        LastTimestamp = data.TimeStamp;
+        var sprinkleTime = TimeUtils.PickDateFromTimeframes(SprinkleTimeMap[sprinkle]);
+        OnSprinkleAdd(sprinkle, actor, sprinkleTime);
     }
-
-    public static void ResetAvailableSprinkles()
-    {
-        UpcomingSprinkles = new HashSet<SprinkleState>(UsedSprinkles);
-        foreach (var sprinkle in UpcomingSprinkles)
-        {
-            sprinkle.RemainingPasses = sprinkle.MaxPasses;
-        }
-        UsedSprinkles = new();
-        AvailableSprinkles = new();
-    }
-
-    public static void ResetSprinklerState()
-    {
-        AvailableSprinkles = new();
-        UpcomingSprinkles = new();
-    }
-
+    
     public static void LoadSprinklerState(SprinkleState newSprinkle)
     {
-        UpcomingSprinkles.Add(newSprinkle);
+        Sprinkles.Add(newSprinkle);
+    }
+
+    public static void RunSprinkling(ActorFrame filledActorFrame)
+    {
+        // Create possible timeframes for each sprinkle
+        foreach (var sprinkle in Sprinkles)
+        {
+            // Reset map of sprinkle timeframes
+            SprinkleTimeMap[sprinkle] = new();
+
+            DateTime? startTime = null;
+            bool currentlySkipped = false;
+            var firstTimeChange = filledActorFrame.VisitedStack.First().Item2;
+            foreach (var stateTimePair in filledActorFrame.VisitedStack)
+            {
+                // Handle skipping
+                if (sprinkle.SkipStart != null && sprinkle.SkipEnd != null)
+                {
+                    if (!currentlySkipped && sprinkle.SkipStart.Contains(stateTimePair.Item1))
+                    {
+                        if (startTime != null)
+                        {
+                            SprinkleTimeMap[sprinkle].Add(new TimeFrame((DateTime)startTime, stateTimePair.Item2));
+                            startTime = null;
+                        }
+                        currentlySkipped = true;
+                        continue;
+                    }
+                    
+                    if (currentlySkipped && sprinkle.SkipEnd.Contains(stateTimePair.Item1))
+                    {
+                        startTime = stateTimePair.Item2;
+                        currentlySkipped = false;
+                    }
+                }
+
+                // Handle beginning and ending of allowed range
+                if (startTime == null && sprinkle.BeginAfter.Contains(stateTimePair.Item1))
+                {
+                    startTime = stateTimePair.Item2;
+                }
+
+                else if (startTime != null && sprinkle.StopBefore.Contains(stateTimePair.Item1))
+                {
+                    SprinkleTimeMap[sprinkle].Add(new TimeFrame((DateTime)startTime, stateTimePair.Item2));
+                    startTime = null;
+                }
+            }
+        }
+
+        // Add each sprinkle in random time of created timeframes
+        foreach (var sprinkle in Sprinkles)
+        {
+            if (!SprinkleTimeMap[sprinkle].Any())
+            {
+                throw new InvalidSprinklerState("Sprinkle must have at least one timeframe created");
+            }
+
+            for (int i = 0; i < sprinkle.Passes; i++)
+            {
+                AddSprinkle(sprinkle, filledActorFrame.Actor);
+            }
+        }
     }
 }
