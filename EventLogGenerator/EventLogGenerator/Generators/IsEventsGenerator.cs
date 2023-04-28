@@ -662,8 +662,6 @@ public static class IsEventsGenerator
             SprinkleService.RunSprinkling(filledActorFrame);
         }
         
-        // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
-
         // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
 
         // TODO: Add student activity to receive points from homework && attendance marking
@@ -675,5 +673,7 @@ public static class IsEventsGenerator
         // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
         
         // TODO: Add activities for file/folder manipulation (adding, removal, ...). For Teacher, sprinkle in some deletion of student materials after adding them
+
+        // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
     }
 }

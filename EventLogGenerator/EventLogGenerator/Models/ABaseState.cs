@@ -1,6 +1,18 @@
-﻿namespace EventLogGenerator.Models;
+﻿using EventLogGenerator.Models.Enums;
+
+namespace EventLogGenerator.Models;
 
 public class ABaseState
 {
-    // FIXME: Implement redundant parts of ProcessState and SprinkleState
+    // Activity to be performed
+    public EActivityType ActivityType;
+
+    // Resource to be performed with
+    public Resource Resource;
+
+    protected ABaseState(EActivityType activityType, Resource resource)
+    {
+        ActivityType = activityType;
+        Resource = resource;
+    }
 }

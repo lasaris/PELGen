@@ -7,12 +7,6 @@ namespace EventLogGenerator.Models;
 
 public class SprinkleState : ABaseState
 {
-    // Activity to be performed
-    public EActivityType ActivityType;
-
-    // Resource to be performed with
-    public Resource Resource;
-
     // States after which sprinkle can be performed
     public HashSet<ProcessState> BeginAfter;
 
@@ -28,12 +22,12 @@ public class SprinkleState : ABaseState
     // How much likely is the sprinkle going to be used right after the BeginAfter state
     public Dictionary<ProcessState, float>? AfterStateChances;
 
-    // How many passes for this state remain
+    // How many passes should this sprinkle be able to perform
     public int Passes;
 
     public SprinkleState(EActivityType activityType, Resource resource, HashSet<ProcessState> beginAfter,
         HashSet<ProcessState> stopBefore, HashSet<ProcessState>? skipStart = null, HashSet<ProcessState>? skipEnd = null,
-        Dictionary<ProcessState, float>? afterStateChances = null, int passes = 1)
+        Dictionary<ProcessState, float>? afterStateChances = null, int passes = 1) : base(activityType, resource)
     {
         // Cannot sprinkle between same state
         if (beginAfter.Intersect(stopBefore).Any())
@@ -87,8 +81,6 @@ public class SprinkleState : ABaseState
             }
         }
 
-        ActivityType = activityType;
-        Resource = resource;
         BeginAfter = beginAfter;
         StopBefore = stopBefore;
         SkipStart = skipStart;

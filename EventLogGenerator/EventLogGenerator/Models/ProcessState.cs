@@ -5,12 +5,6 @@ namespace EventLogGenerator.Models;
 
 public class ProcessState : ABaseState
 {
-    // Activity for given state
-    public EActivityType ActivityType;
-
-    // Resource used to accomplish activity of the state
-    public Resource Resource;
-
     // Rules which apply for given state and which lead to the next
     public StateRules Rules;
 
@@ -24,10 +18,8 @@ public class ProcessState : ABaseState
     public bool IsFinishing;
 
     public ProcessState(EActivityType activity, Resource resource, StateRules rules, TimeFrame timeFrame,
-        bool isFinishing = false)
+        bool isFinishing = false) : base(activity, resource)
     {
-        ActivityType = activity;
-        Resource = resource;
         Rules = rules;
         TimeFrame = timeFrame;
         IsFinishing = isFinishing;
