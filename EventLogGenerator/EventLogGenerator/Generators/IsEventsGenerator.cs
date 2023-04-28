@@ -74,9 +74,9 @@ public static class IsEventsGenerator
         var materialsWeek4 = new Resource("slides-week04.pdf");
         var materialsWeek5 = new Resource("slides-week05.pdf");
         var materialsWeek6 = new Resource("slides-week06.pdf");
-        var hw1 = new Resource("Homework 1");
-        var hw2 = new Resource("Homework 2");
-        var hw3 = new Resource("Homework 3");
+        var hw1 = new Resource("homework-1.zip");
+        var hw2 = new Resource("homework-2.zip");
+        var hw3 = new Resource("homework-3.zip");
         var ropot1 = new Resource("Ropot week 1");
         var ropot2 = new Resource("Ropot week 2");
         var ropot3 = new Resource("Ropot week 3");
@@ -133,27 +133,48 @@ public static class IsEventsGenerator
                 new Dictionary<EActivityType, float>() { { EActivityType.ReceiveAttendance, 0.8f } }, enrolledCourseSet);
 
 
-        var submitHomeworkRules = new StateRules(true, 1, 0, null, enrolledCourseSet);
+        var submitHomeworkRules = new StateRules(true, -1, 0, null, enrolledCourseSet);
 
         var submitHomework1 = new ProcessState(
-            EActivityType.SubmitHomework,
+            EActivityType.CreateFile,
             hw1,
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15), ETimeFrameDistribution.Exponential)
         );
 
         var submitHomework2 = new ProcessState(
-            EActivityType.SubmitHomework,
+            EActivityType.CreateFile,
             hw2,
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29), ETimeFrameDistribution.Exponential)
         );
 
         var submitHomework3 = new ProcessState(
-            EActivityType.SubmitHomework,
+            EActivityType.CreateFile,
             hw3,
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
+        );
+        
+        var removeHomework1 = new ProcessState(
+            EActivityType.DeleteFile,
+            hw1,
+            submitHomeworkRules,
+            new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15))
+        );
+        
+        var removeHomework2 = new ProcessState(
+            EActivityType.DeleteFile,
+            hw2,
+            submitHomeworkRules,
+            new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29))
+        );
+        
+        var removeHomework3 = new ProcessState(
+            EActivityType.DeleteFile,
+            hw3,
+            submitHomeworkRules,
+            new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12))
         );
         
         var timeFrameRopot1 =
@@ -474,7 +495,8 @@ public static class IsEventsGenerator
         saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
         submitRopot2.AddFollowingStates((submitHomework1, 1f));
         // hw 1
-        submitHomework1.AddFollowingStates((openRopot3, 1f));
+        submitHomework1.AddFollowingStates((openRopot3, 0.95f), (removeHomework1, 0.05f));
+        removeHomework1.AddFollowingStates((submitHomework1, 1f));
         // ropot 3
         openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
         saveRopot3.AddFollowingStates((submitRopot3, 0.85f), (saveRopot3, 0.15f));
@@ -484,7 +506,8 @@ public static class IsEventsGenerator
         saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
         submitRopot4.AddFollowingStates((submitHomework2, 1f));
         // hw 2
-        submitHomework2.AddFollowingStates((openRopot5, 1f));
+        submitHomework2.AddFollowingStates((openRopot5, 0.95f), (removeHomework2, 0.05f));
+        removeHomework2.AddFollowingStates((submitHomework2, 1f));
         // ropot 5
         openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
         saveRopot5.AddFollowingStates((submitRopot5, 0.85f), (saveRopot5, 0.15f));
@@ -494,7 +517,9 @@ public static class IsEventsGenerator
         saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
         submitRopot6.AddFollowingStates((submitHomework3, 1f));
         // hw 3
-        submitHomework3.AddFollowingStates((registerTerm1, 0.9f), (registerTerm2, 0.05f), (registerTerm3, 0.05f));
+        submitHomework3.AddFollowingStates((registerTerm1, 0.85f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (removeHomework3, 0.05f));
+        removeHomework3.AddFollowingStates((submitHomework3, 1f));
+
         // exams
         registerTerm1.AddFollowingStates((passCourse, 0.65f), (failExam1, 0.35f));
         registerTerm2.AddFollowingStates((passCourse, 0.65f), (failExam2, 0.35f));
@@ -654,13 +679,11 @@ public static class IsEventsGenerator
         
         // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
 
-        // TODO: Add RemoveFile activity for student -> implement trace when student looks at his submitted homework -> removes it -> resubmits it
-        
         // TODO: Add activity for students to read their homework file after submitting it (cannot be done after deadline)
         
         // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
         
-        // TODO: Add activities for file/folder manipulation (adding, removal, ...). For Teacher, sprinkle in some deletion of student materials after adding them
+        // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
     }

@@ -7,7 +7,8 @@ public enum EActivityType
     RegisterSeminarGroup,
     ReceiveAttendance,
     ReadFile,
-    SubmitHomework,
+    DeleteFile,
+    CreateFile,
     ReceivePoints,
     // Ropot activities
     OpenRopot,

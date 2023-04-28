@@ -8,14 +8,15 @@ public class DynamicSprinkleState : ABaseState
     // States after which this sprinkle can be triggered
     public HashSet<ProcessState> BeginAfter;
 
+    // TODO: Refactor to offset that can also be negative
     // The max time after BeginAfter state that this sprinkle can be added
-    public TimeSpan EndLimit;
+    public TimeSpan MaxOffset;
 
     // Chosen distribution for adding this sprinkle
     public ETimeFrameDistribution TimeDistribution;
 
     public DynamicSprinkleState(EActivityType activityType, Resource resource, HashSet<ProcessState> beginAfter,
-        TimeSpan endLimit, ETimeFrameDistribution timeDistribution = ETimeFrameDistribution.Uniform) : base(activityType, resource)
+        TimeSpan maxOffset, ETimeFrameDistribution timeDistribution = ETimeFrameDistribution.Uniform) : base(activityType, resource)
     {
         if (!beginAfter.Any())
         {
@@ -23,7 +24,7 @@ public class DynamicSprinkleState : ABaseState
         }
         
         BeginAfter = beginAfter;
-        EndLimit = endLimit;
+        MaxOffset = maxOffset;
         TimeDistribution = timeDistribution;
         
         SprinkleService.LoadDynamicSrpinkleState(this);

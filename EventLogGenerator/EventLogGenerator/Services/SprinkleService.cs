@@ -20,7 +20,7 @@ public static class SprinkleService
 
     // Sprinkles currently ready to be sprinkled into the process
     public static HashSet<SprinkleState> Sprinkles = new();
-    
+
     // Dynamic srinkles currently ready to be sprinkled into the process
     public static HashSet<DynamicSprinkleState> DynamicSprinkles = new();
 
@@ -34,7 +34,7 @@ public static class SprinkleService
         // FIXME: Should the logging be done by EventLogger instead?
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource.Name}");
     }
-    
+
     private static void OnDynamicSprinkleAdd(DynamicSprinkleState sprinkle, Actor actor, DateTime timeStamp)
     {
         var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
@@ -51,7 +51,9 @@ public static class SprinkleService
 
     private static void AddDynamicSprinkle(DynamicSprinkleState dynamicSprinkle, Actor actor, DateTime start)
     {
-        var dynamicTimeFrame = new TimeFrame(start, start + dynamicSprinkle.EndLimit, dynamicSprinkle.TimeDistribution); 
+        TimeFrame dynamicTimeFrame = dynamicSprinkle.MaxOffset.Ticks > 0
+            ? new TimeFrame(start, start + dynamicSprinkle.MaxOffset, dynamicSprinkle.TimeDistribution)
+            : new TimeFrame(start + dynamicSprinkle.MaxOffset, start, dynamicSprinkle.TimeDistribution);
         var sprinkleTime = dynamicTimeFrame.PickTimeByDistribution();
         OnDynamicSprinkleAdd(dynamicSprinkle, actor, sprinkleTime);
     }
@@ -60,7 +62,7 @@ public static class SprinkleService
     {
         Sprinkles.Add(newSprinkle);
     }
-    
+
     public static void LoadDynamicSrpinkleState(DynamicSprinkleState newSprinkle)
     {
         DynamicSprinkles.Add(newSprinkle);
@@ -124,7 +126,7 @@ public static class SprinkleService
                 AddSprinkle(sprinkle, filledActorFrame.Actor);
             }
         }
-        
+
         // Execute dynamic sprinkles
         // FIXME: This could theoretically be unified with normal sprinkles which go through the visited stack
         foreach (var sprinkle in DynamicSprinkles)
