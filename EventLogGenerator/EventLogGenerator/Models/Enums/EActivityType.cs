@@ -6,7 +6,7 @@ public enum EActivityType
     EnrollCourse,
     RegisterSeminarGroup,
     AttendSeminar,
-    ReadStudyMaterials,
+    ReadFile,
     SubmitHomework,
     OpenRopot,
     SaveRopot,

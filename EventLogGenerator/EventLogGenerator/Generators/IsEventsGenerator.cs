@@ -67,12 +67,12 @@ public static class IsEventsGenerator
         var seminarWeek4 = new Resource("Seminar week 4");
         var seminarWeek5 = new Resource("Seminar week 5");
         var seminarWeek6 = new Resource("Seminar week 6");
-        var materialsWeek1 = new Resource("Study materials week 1");
-        var materialsWeek2 = new Resource("Study materials week 2");
-        var materialsWeek3 = new Resource("Study materials week 3");
-        var materialsWeek4 = new Resource("Study materials week 4");
-        var materialsWeek5 = new Resource("Study materials week 5");
-        var materialsWeek6 = new Resource("Study materials week 6");
+        var materialsWeek1 = new Resource("slides-week01.pdf");
+        var materialsWeek2 = new Resource("slides-week02.pdf");
+        var materialsWeek3 = new Resource("slides-week03.pdf");
+        var materialsWeek4 = new Resource("slides-week04.pdf");
+        var materialsWeek5 = new Resource("slides-week05.pdf");
+        var materialsWeek6 = new Resource("slides-week06.pdf");
         var hw1 = new Resource("Homework 1");
         var hw2 = new Resource("Homework 2");
         var hw3 = new Resource("Homework 3");
@@ -236,7 +236,7 @@ public static class IsEventsGenerator
         var saveRopotFollowing = new Dictionary<EActivityType, float>()
             { { EActivityType.SubmitRopot, 0.6f }, { EActivityType.SaveRopot, 0.4f } };
         var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
-        var viewRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ReadStudyMaterials, 0.5f } };
+        var viewRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ReadFile, 0.5f } };
 
         var openRopotRulesSeminar1 =
             new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { attendSeminar1 });
@@ -546,7 +546,7 @@ public static class IsEventsGenerator
 
         // Create sprinkles
         var readStudyMaterials1 = new SprinkleState(
-            EActivityType.ReadStudyMaterials,
+            EActivityType.ReadFile,
             materialsWeek1,
             new HashSet<ProcessState>() { registerSeminarGroup1, registerSeminarGroup2, registerSeminarGroup3 },
             endCourseSet,
@@ -555,7 +555,7 @@ public static class IsEventsGenerator
         );
         
         var readStudyMaterials2 = new SprinkleState(
-            EActivityType.ReadStudyMaterials,
+            EActivityType.ReadFile,
             materialsWeek2,
             new HashSet<ProcessState>(){submitRopot1},
             endCourseSet,
@@ -564,7 +564,7 @@ public static class IsEventsGenerator
         );
         
         var readStudyMaterials3 = new SprinkleState(
-            EActivityType.ReadStudyMaterials,
+            EActivityType.ReadFile,
             materialsWeek3,
             new HashSet<ProcessState>(){submitRopot2},
             endCourseSet,
@@ -573,7 +573,7 @@ public static class IsEventsGenerator
         );
         
         var readStudyMaterials4 = new SprinkleState(
-            EActivityType.ReadStudyMaterials,
+            EActivityType.ReadFile,
             materialsWeek4,
             new HashSet<ProcessState>(){submitRopot3},
             endCourseSet,
@@ -582,7 +582,7 @@ public static class IsEventsGenerator
         );
         
         var readStudyMaterials5 = new SprinkleState(
-            EActivityType.ReadStudyMaterials,
+            EActivityType.ReadFile,
             materialsWeek5,
             new HashSet<ProcessState>(){submitRopot4},
             endCourseSet,
@@ -591,7 +591,7 @@ public static class IsEventsGenerator
         );
         
         var readStudyMaterials6 = new SprinkleState(
-            EActivityType.ReadStudyMaterials,
+            EActivityType.ReadFile,
             materialsWeek6,
             new HashSet<ProcessState>(){submitRopot5},
             endCourseSet,
@@ -661,13 +661,19 @@ public static class IsEventsGenerator
             var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
             SprinkleService.RunSprinkling(filledActorFrame);
         }
-
-        // TODO: Implement Good vs. Bad student Actor
-
+        
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
 
         // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
 
-        // TODO: Add activity to receive points from homework
+        // TODO: Add student activity to receive points from homework && attendance marking
+        
+        // TODO: Add RemoveFile activity for student -> implement trace when student looks at his submitted homework -> removes it -> resubmits it
+        
+        // TODO: Add activity for students to read their homework file after submitting it (cannot be done after deadline)
+        
+        // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
+        
+        // TODO: Add activities for file/folder manipulation (adding, removal, ...). For Teacher, sprinkle in some deletion of student materials after adding them
     }
 }
