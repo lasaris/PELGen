@@ -17,13 +17,13 @@ public static class SprinkleService
 
     // Define event for state entering that uses the delegate above
     public static event SprinkleAddedhandler SprinkleAdded;
-    
+
     // Sprinkles currently ready to be sprinkled into the process
     public static HashSet<SprinkleState> Sprinkles = new();
 
     // Maps sprinkles to available timeframes for given actorframe
     public static Dictionary<SprinkleState, List<TimeFrame>> SprinkleTimeMap = new();
-    
+
     private static void OnSprinkleAdd(SprinkleState sprinkle, Actor actor, DateTime timeStamp)
     {
         var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
@@ -31,13 +31,13 @@ public static class SprinkleService
         // FIXME: Should the logging be done by EventLogger instead?
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource.Name}");
     }
-    
+
     private static void AddSprinkle(SprinkleState sprinkle, Actor actor)
     {
         var sprinkleTime = TimeUtils.PickDateFromTimeframes(SprinkleTimeMap[sprinkle]);
         OnSprinkleAdd(sprinkle, actor, sprinkleTime);
     }
-    
+
     public static void LoadSprinklerState(SprinkleState newSprinkle)
     {
         Sprinkles.Add(newSprinkle);
@@ -52,28 +52,25 @@ public static class SprinkleService
             SprinkleTimeMap[sprinkle] = new();
 
             DateTime? startTime = null;
-            bool currentlySkipped = false;
-            var firstTimeChange = filledActorFrame.VisitedStack.First().Item2;
+            bool isSkipped = false;
             foreach (var stateTimePair in filledActorFrame.VisitedStack)
             {
                 // Handle skipping
                 if (sprinkle.SkipStart != null && sprinkle.SkipEnd != null)
                 {
-                    if (!currentlySkipped && sprinkle.SkipStart.Contains(stateTimePair.Item1))
+                    if (!isSkipped && sprinkle.SkipStart.Contains(stateTimePair.Item1))
                     {
                         if (startTime != null)
                         {
                             SprinkleTimeMap[sprinkle].Add(new TimeFrame((DateTime)startTime, stateTimePair.Item2));
                             startTime = null;
+                            isSkipped = true;
                         }
-                        currentlySkipped = true;
-                        continue;
                     }
-                    
-                    if (currentlySkipped && sprinkle.SkipEnd.Contains(stateTimePair.Item1))
+                    else if (isSkipped && sprinkle.SkipEnd.Contains(stateTimePair.Item1))
                     {
                         startTime = stateTimePair.Item2;
-                        currentlySkipped = false;
+                        isSkipped = false;
                     }
                 }
 
