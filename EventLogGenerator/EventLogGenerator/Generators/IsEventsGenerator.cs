@@ -40,18 +40,18 @@ public static class IsEventsGenerator
         List<Actor> secondThird = students.GetRange(third, third);
         var thirdOffset = TimeSpan.FromDays(2);
         List<Actor> thirdThird = students.GetRange(third * 2, students.Count - third * 2);
-        
+
         // Set the offset on each group of students
         foreach (Actor student in firstThird)
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, firstOffset);
         }
-        
+
         foreach (Actor student in secondThird)
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, secondOffset);
         }
-        
+
         foreach (Actor student in thirdThird)
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, thirdOffset);
@@ -130,7 +130,8 @@ public static class IsEventsGenerator
 
         var materialRules =
             new StateRules(false, -1, -1,
-                new Dictionary<EActivityType, float>() { { EActivityType.ReceiveAttendance, 0.8f } }, enrolledCourseSet);
+                new Dictionary<EActivityType, float>() { { EActivityType.ReceiveAttendance, 0.8f } },
+                enrolledCourseSet);
 
 
         var submitHomeworkRules = new StateRules(true, -1, 0, null, enrolledCourseSet);
@@ -155,28 +156,49 @@ public static class IsEventsGenerator
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
         );
-        
+
         var removeHomework1 = new ProcessState(
             EActivityType.DeleteFile,
             hw1,
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15))
         );
-        
+
         var removeHomework2 = new ProcessState(
             EActivityType.DeleteFile,
             hw2,
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29))
         );
-        
+
         var removeHomework3 = new ProcessState(
             EActivityType.DeleteFile,
             hw3,
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12))
         );
-        
+
+        var readHomework1 = new ProcessState(
+            EActivityType.ReadFile,
+            hw1,
+            submitHomeworkRules,
+            new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15))
+        );
+
+        var readHomework2 = new ProcessState(
+            EActivityType.ReadFile,
+            hw2,
+            submitHomeworkRules,
+            new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29))
+        );
+
+        var readHomework3 = new ProcessState(
+            EActivityType.ReadFile,
+            hw3,
+            submitHomeworkRules,
+            new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12))
+        );
+
         var timeFrameRopot1 =
             new TimeFrame(new DateTime(2023, 1, 03, 12, 00, 00), new DateTime(2023, 1, 03, 12, 15, 00));
         var timeFrameRopot2 =
@@ -367,18 +389,18 @@ public static class IsEventsGenerator
             submitRopotRulesSeminar6,
             timeFrameRopot6
         );
-        
+
         var attendSeminar1 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek1,
-            new HashSet<ProcessState>(){openRopot1}, 
+            new HashSet<ProcessState>() { openRopot1 },
             TimeSpan.FromDays(1)
         );
 
         var attendSeminar2 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek2,
-            new HashSet<ProcessState>(){openRopot2},
+            new HashSet<ProcessState>() { openRopot2 },
             TimeSpan.FromDays(1),
             ETimeFrameDistribution.ReverseExponential
         );
@@ -386,7 +408,7 @@ public static class IsEventsGenerator
         var attendSeminar3 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek3,
-            new HashSet<ProcessState>(){openRopot3},
+            new HashSet<ProcessState>() { openRopot3 },
             TimeSpan.FromDays(1),
             ETimeFrameDistribution.ReverseExponential
         );
@@ -394,7 +416,7 @@ public static class IsEventsGenerator
         var attendSeminar4 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek4,
-            new HashSet<ProcessState>(){openRopot4},
+            new HashSet<ProcessState>() { openRopot4 },
             TimeSpan.FromDays(1),
             ETimeFrameDistribution.ReverseExponential
         );
@@ -402,7 +424,7 @@ public static class IsEventsGenerator
         var attendSeminar5 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek5,
-            new HashSet<ProcessState>(){openRopot5},
+            new HashSet<ProcessState>() { openRopot5 },
             TimeSpan.FromDays(1),
             ETimeFrameDistribution.ReverseExponential
         );
@@ -410,7 +432,7 @@ public static class IsEventsGenerator
         var attendSeminar6 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek6,
-            new HashSet<ProcessState>(){openRopot6},
+            new HashSet<ProcessState>() { openRopot6 },
             TimeSpan.FromDays(1),
             ETimeFrameDistribution.ReverseExponential
         );
@@ -495,7 +517,8 @@ public static class IsEventsGenerator
         saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
         submitRopot2.AddFollowingStates((submitHomework1, 1f));
         // hw 1
-        submitHomework1.AddFollowingStates((openRopot3, 0.95f), (removeHomework1, 0.05f));
+        submitHomework1.AddFollowingStates((openRopot3, 0.8f), (readHomework1, 0.2f));
+        readHomework1.AddFollowingStates((openRopot3, 0.8f), (removeHomework1, 0.2f));
         removeHomework1.AddFollowingStates((submitHomework1, 1f));
         // ropot 3
         openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
@@ -506,7 +529,8 @@ public static class IsEventsGenerator
         saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
         submitRopot4.AddFollowingStates((submitHomework2, 1f));
         // hw 2
-        submitHomework2.AddFollowingStates((openRopot5, 0.95f), (removeHomework2, 0.05f));
+        submitHomework2.AddFollowingStates((openRopot5, 0.8f), (readHomework2, 0.2f));
+        readHomework2.AddFollowingStates((openRopot5, 0.8f), (removeHomework2, 0.2f));
         removeHomework2.AddFollowingStates((submitHomework2, 1f));
         // ropot 5
         openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
@@ -517,7 +541,8 @@ public static class IsEventsGenerator
         saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
         submitRopot6.AddFollowingStates((submitHomework3, 1f));
         // hw 3
-        submitHomework3.AddFollowingStates((registerTerm1, 0.85f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (removeHomework3, 0.05f));
+        submitHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (readHomework3, 0.2f));
+        readHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (removeHomework3, 0.2f));
         removeHomework3.AddFollowingStates((submitHomework3, 1f));
 
         // exams
@@ -544,101 +569,101 @@ public static class IsEventsGenerator
             openRopotSet,
             submitRopotSet
         );
-        
+
         var readStudyMaterials2 = new SprinkleState(
             EActivityType.ReadFile,
             materialsWeek2,
-            new HashSet<ProcessState>(){submitRopot1},
+            new HashSet<ProcessState>() { submitRopot1 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var readStudyMaterials3 = new SprinkleState(
             EActivityType.ReadFile,
             materialsWeek3,
-            new HashSet<ProcessState>(){submitRopot2},
+            new HashSet<ProcessState>() { submitRopot2 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var readStudyMaterials4 = new SprinkleState(
             EActivityType.ReadFile,
             materialsWeek4,
-            new HashSet<ProcessState>(){submitRopot3},
+            new HashSet<ProcessState>() { submitRopot3 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var readStudyMaterials5 = new SprinkleState(
             EActivityType.ReadFile,
             materialsWeek5,
-            new HashSet<ProcessState>(){submitRopot4},
+            new HashSet<ProcessState>() { submitRopot4 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var readStudyMaterials6 = new SprinkleState(
             EActivityType.ReadFile,
             materialsWeek6,
-            new HashSet<ProcessState>(){submitRopot5},
+            new HashSet<ProcessState>() { submitRopot5 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var viewRopot1 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot1,
-            new HashSet<ProcessState>(){submitRopot1},
+            new HashSet<ProcessState>() { submitRopot1 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var viewRopot2 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot2,
-            new HashSet<ProcessState>(){submitRopot2},
+            new HashSet<ProcessState>() { submitRopot2 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var viewRopot3 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot3,
-            new HashSet<ProcessState>(){submitRopot3},
+            new HashSet<ProcessState>() { submitRopot3 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var viewRopot4 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot4,
-            new HashSet<ProcessState>(){submitRopot4},
+            new HashSet<ProcessState>() { submitRopot4 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var viewRopot5 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot5,
-            new HashSet<ProcessState>(){submitRopot5},
+            new HashSet<ProcessState>() { submitRopot5 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
         );
-        
+
         var viewRopot6 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot6,
-            new HashSet<ProcessState>(){submitRopot6},
+            new HashSet<ProcessState>() { submitRopot6 },
             endCourseSet,
             openRopotSet,
             submitRopotSet
@@ -647,16 +672,16 @@ public static class IsEventsGenerator
         var receivePointsHomework1 = new DynamicSprinkleState(
             EActivityType.ReceivePoints,
             hw1,
-            new HashSet<ProcessState>(){submitHomework1},
-            TimeSpan.FromDays(10),
+            new HashSet<ProcessState>() { submitHomework1 },
+            TimeSpan.FromDays(7),
             ETimeFrameDistribution.Linear
         );
-        
+
         var receivePointsHomework2 = new DynamicSprinkleState(
             EActivityType.ReceivePoints,
             hw2,
-            new HashSet<ProcessState>(){submitHomework2},
-            TimeSpan.FromDays(10),
+            new HashSet<ProcessState>() { submitHomework2 },
+            TimeSpan.FromDays(7),
             ETimeFrameDistribution.Linear
         );
 
@@ -664,7 +689,7 @@ public static class IsEventsGenerator
             EActivityType.ReceivePoints,
             hw3,
             new HashSet<ProcessState>() { submitHomework3 },
-            TimeSpan.FromDays(10),
+            TimeSpan.FromDays(7),
             ETimeFrameDistribution.Linear
         );
 
@@ -676,13 +701,11 @@ public static class IsEventsGenerator
             var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
             SprinkleService.RunSprinkling(filledActorFrame);
         }
-        
+
         // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
 
-        // TODO: Add activity for students to read their homework file after submitting it (cannot be done after deadline)
-        
         // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
-        
+
         // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
