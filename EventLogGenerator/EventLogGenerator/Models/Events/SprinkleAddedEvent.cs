@@ -2,13 +2,13 @@
 
 public class SprinkleAddedEvent : EventArgs
 {
-    public SprinkleState Sprinkle;
+    public ABaseState Sprinkle;
 
     public Actor Actor;
 
     public DateTime TimeStamp;
 
-    public SprinkleAddedEvent(SprinkleState state, Actor actor, DateTime timeStamp)
+    public SprinkleAddedEvent(ABaseState state, Actor actor, DateTime timeStamp)
     {
         Sprinkle = state;
         Actor = actor;

@@ -20,11 +20,22 @@ public static class SprinkleService
 
     // Sprinkles currently ready to be sprinkled into the process
     public static HashSet<SprinkleState> Sprinkles = new();
+    
+    // Dynamic srinkles currently ready to be sprinkled into the process
+    public static HashSet<DynamicSprinkleState> DynamicSprinkles = new();
 
     // Maps sprinkles to available timeframes for given actorframe
     public static Dictionary<SprinkleState, List<TimeFrame>> SprinkleTimeMap = new();
 
     private static void OnSprinkleAdd(SprinkleState sprinkle, Actor actor, DateTime timeStamp)
+    {
+        var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
+        SprinkleAdded.Invoke(null, newEvent);
+        // FIXME: Should the logging be done by EventLogger instead?
+        Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource.Name}");
+    }
+    
+    private static void OnDynamicSprinkleAdd(DynamicSprinkleState sprinkle, Actor actor, DateTime timeStamp)
     {
         var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
         SprinkleAdded.Invoke(null, newEvent);
@@ -38,9 +49,21 @@ public static class SprinkleService
         OnSprinkleAdd(sprinkle, actor, sprinkleTime);
     }
 
+    private static void AddDynamicSprinkle(DynamicSprinkleState dynamicSprinkle, Actor actor, DateTime start)
+    {
+        var dynamicTimeFrame = new TimeFrame(start, start + dynamicSprinkle.EndLimit, dynamicSprinkle.TimeDistribution); 
+        var sprinkleTime = dynamicTimeFrame.PickTimeByDistribution();
+        OnDynamicSprinkleAdd(dynamicSprinkle, actor, sprinkleTime);
+    }
+
     public static void LoadSprinklerState(SprinkleState newSprinkle)
     {
         Sprinkles.Add(newSprinkle);
+    }
+    
+    public static void LoadDynamicSrpinkleState(DynamicSprinkleState newSprinkle)
+    {
+        DynamicSprinkles.Add(newSprinkle);
     }
 
     public static void RunSprinkling(ActorFrame filledActorFrame)
@@ -99,6 +122,19 @@ public static class SprinkleService
             for (int i = 0; i < sprinkle.Passes; i++)
             {
                 AddSprinkle(sprinkle, filledActorFrame.Actor);
+            }
+        }
+        
+        // Execute dynamic sprinkles
+        // FIXME: This could theoretically be unified with normal sprinkles which go through the visited stack
+        foreach (var sprinkle in DynamicSprinkles)
+        {
+            foreach (var stateTimePair in filledActorFrame.VisitedStack)
+            {
+                if (sprinkle.BeginAfter.Contains(stateTimePair.Item1))
+                {
+                    AddDynamicSprinkle(sprinkle, filledActorFrame.Actor, stateTimePair.Item2);
+                }
             }
         }
     }

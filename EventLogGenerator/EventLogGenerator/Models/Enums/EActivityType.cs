@@ -8,12 +8,16 @@ public enum EActivityType
     AttendSeminar,
     ReadFile,
     SubmitHomework,
+    ReceivePoints,
+    // Ropot activities
     OpenRopot,
     SaveRopot,
     SubmitRopot,
     ViewRopot,
+    // Exam activities
     RegisterExamTerm,
     FailExam,
+    // Finishing activities
     PassCourse,
     FailCourse,
 }

@@ -1,5 +1,4 @@
 ﻿using EventLogGenerator.GenerationLogic;
-using EventLogGenerator.Models;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerator;
@@ -10,7 +9,7 @@ internal class Program
     public static void Main(string[] args)
     {
         RegisterSubscribers();
-        IsEventsGenerator.GenerateIsLogs(3);
+        IsEventsGenerator.GenerateIsLogs(5);
     }
 
     private static void RegisterSubscribers()

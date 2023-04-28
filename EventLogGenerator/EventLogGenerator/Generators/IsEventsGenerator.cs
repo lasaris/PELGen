@@ -23,6 +23,7 @@ public static class IsEventsGenerator
             .Select(_ => new Actor(EActorType.Student))
             .ToList();
 
+        // FIXME: This logic should be implemented somewhere else, not the scenario itself
         // Setup seminar offsets
         var seminarActivites = new HashSet<EActivityType>()
         {
@@ -39,18 +40,18 @@ public static class IsEventsGenerator
         List<Actor> secondThird = students.GetRange(third, third);
         var thirdOffset = TimeSpan.FromDays(2);
         List<Actor> thirdThird = students.GetRange(third * 2, students.Count - third * 2);
-
+        
         // Set the offset on each group of students
         foreach (Actor student in firstThird)
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, firstOffset);
         }
-
+        
         foreach (Actor student in secondThird)
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, secondOffset);
         }
-
+        
         foreach (Actor student in thirdThird)
         {
             ActorService.RegisterActivitiesOffset(student, seminarActivites, thirdOffset);
@@ -653,6 +654,30 @@ public static class IsEventsGenerator
             submitRopotSet
         );
 
+        var receivePointsHomework1 = new DynamicSprinkleState(
+            EActivityType.ReceivePoints,
+            hw1,
+            new HashSet<ProcessState>(){submitHomework1},
+            TimeSpan.FromDays(10),
+            ETimeFrameDistribution.Linear
+        );
+        
+        var receivePointsHomework2 = new DynamicSprinkleState(
+            EActivityType.ReceivePoints,
+            hw2,
+            new HashSet<ProcessState>(){submitHomework2},
+            TimeSpan.FromDays(10),
+            ETimeFrameDistribution.Linear
+        );
+        
+        var receivePointsHomework3 = new DynamicSprinkleState(
+            EActivityType.ReceivePoints,
+            hw3,
+            new HashSet<ProcessState>(){submitHomework3},
+            TimeSpan.FromDays(10),
+            ETimeFrameDistribution.Linear
+        );
+        
         foreach (var student in students)
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
