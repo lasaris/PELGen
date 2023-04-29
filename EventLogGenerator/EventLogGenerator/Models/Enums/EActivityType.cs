@@ -17,6 +17,7 @@ public enum EActivityType
     ViewRopot,
     // Exam activities
     RegisterExamTerm,
+    PassExam,
     FailExam,
     // Finishing activities
     PassCourse,

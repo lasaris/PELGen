@@ -347,7 +347,7 @@ public static class IsEventsGenerator
             saveRopotRulesSeminar6,
             timeFrameRopot6
         );
-
+        
         var submitRopot1 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot1,
@@ -479,6 +479,24 @@ public static class IsEventsGenerator
             exam3,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
             new TimeFrame(new DateTime(2023, 2, 25), new DateTime(2023, 2, 28)));
+        
+        var passExam1 = new ProcessState(
+            EActivityType.PassExam,
+            exam1,
+            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
+            new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20)));
+
+        var passExam2 = new ProcessState(
+            EActivityType.PassExam,
+            exam2,
+            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
+            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24)));
+
+        var passExam3 = new ProcessState(
+            EActivityType.PassExam,
+            exam3,
+            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
+            new TimeFrame(new DateTime(2023, 2, 25), new DateTime(2023, 2, 28)));
 
         // Finishing processes
         var passCourse = new ProcessState(
@@ -546,12 +564,15 @@ public static class IsEventsGenerator
         removeHomework3.AddFollowingStates((submitHomework3, 1f));
 
         // exams
-        registerTerm1.AddFollowingStates((passCourse, 0.65f), (failExam1, 0.35f));
-        registerTerm2.AddFollowingStates((passCourse, 0.65f), (failExam2, 0.35f));
-        registerTerm3.AddFollowingStates((passCourse, 0.65f), (failExam3, 0.35f));
+        registerTerm1.AddFollowingStates((passExam1, 0.65f), (failExam1, 0.35f));
+        registerTerm2.AddFollowingStates((passExam2, 0.65f), (failExam2, 0.35f));
+        registerTerm3.AddFollowingStates((passExam3, 0.65f), (failExam3, 0.35f));
         failExam1.AddFollowingStates((registerTerm2, 0.9f), (failCourse, 0.1f));
         failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
         failExam3.AddFollowingStates((failCourse, 1f));
+        passExam1.AddFollowingStates((passCourse, 1f));
+        passExam2.AddFollowingStates((passCourse, 1f));
+        passExam3.AddFollowingStates((passCourse, 1f));
 
         var endCourseSet = new HashSet<ProcessState>() { passCourse, failCourse };
 
@@ -709,5 +730,7 @@ public static class IsEventsGenerator
         // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
+        
+        // TODO: FIX times in transition (i.e. submit of ropot being instant after save/open of ropot)
     }
 }
