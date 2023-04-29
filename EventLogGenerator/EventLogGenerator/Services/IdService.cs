@@ -5,11 +5,18 @@
 /// </summary>
 public static class IdService
 {
+    private const uint BeginningId = 0;
+
     private static uint _lastActorId = 0;
 
     public static uint GetNewActorId()
     {
         _lastActorId++;
         return _lastActorId;
+    }
+
+    public static void ResetService()
+    {
+        _lastActorId = BeginningId;
     }
 }

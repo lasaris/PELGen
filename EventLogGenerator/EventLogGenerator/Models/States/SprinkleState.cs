@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography;
-using EventLogGenerator.Exceptions;
-using EventLogGenerator.Models.Enums;
+﻿using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerator.Models;

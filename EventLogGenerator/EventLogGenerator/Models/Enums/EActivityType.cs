@@ -6,10 +6,6 @@ public enum EActivityType
     EnrollCourse,
     RegisterSeminarGroup,
     ReceiveAttendance,
-    ReadFile,
-    DeleteFile,
-    CreateFile,
-    ReceivePoints,
     // Ropot activities
     OpenRopot,
     SaveRopot,
@@ -22,4 +18,16 @@ public enum EActivityType
     // Finishing activities
     PassCourse,
     FailCourse,
+    // Teacher activities
+    VisitStudentRecord,
+    CreateHomeworkVault,
+    GivePoints,
+    MarkAttendance,
+    CreateExamTerm,
+    GiveFinalGrade,
+    // File operations
+    ReadFile,
+    DeleteFile,
+    CreateFile,
+    ReceivePoints,
 }

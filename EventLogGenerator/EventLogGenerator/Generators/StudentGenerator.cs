@@ -6,9 +6,9 @@ using EventLogGenerator.Services;
 
 namespace EventLogGenerator;
 
-public static class IsEventsGenerator
+public static class StudentGenerator
 {
-    public static void GenerateIsLogs(int studentsCount = 0)
+    public static void GenerateLogs(int studentsCount = 0)
     {
         if (studentsCount < 1)
         {
@@ -16,7 +16,8 @@ public static class IsEventsGenerator
         }
 
         // Setup necessary services
-        FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp");
+        FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp", "student.csv");
+        IdService.ResetService();
 
         // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)
@@ -727,7 +728,7 @@ public static class IsEventsGenerator
 
         // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
 
-        // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
+        // TODO: For Teacher, sprinkle in some deletion of student materials after adding them 
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
         

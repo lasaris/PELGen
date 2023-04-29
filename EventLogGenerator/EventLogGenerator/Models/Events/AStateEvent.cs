@@ -2,13 +2,13 @@
 
 public abstract class AStateEvent : EventArgs
 {
-    public ProcessState State;
+    public ABaseState State;
 
     public Actor Actor;
 
     public DateTime TimeStamp;
 
-    protected AStateEvent(ProcessState state, Actor actor, DateTime timeStamp)
+    protected AStateEvent(ABaseState state, Actor actor, DateTime timeStamp)
     {
         State = state;
         Actor = actor;

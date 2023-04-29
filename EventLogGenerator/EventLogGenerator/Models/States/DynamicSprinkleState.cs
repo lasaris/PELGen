@@ -8,7 +8,6 @@ public class DynamicSprinkleState : ABaseState
     // States after which this sprinkle can be triggered
     public HashSet<ProcessState> BeginAfter;
 
-    // TODO: Refactor to offset that can also be negative
     // The max time after BeginAfter state that this sprinkle can be added
     public TimeSpan MaxOffset;
 

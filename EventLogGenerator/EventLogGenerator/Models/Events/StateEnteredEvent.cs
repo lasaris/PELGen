@@ -2,7 +2,7 @@
 
 public class StateEnteredEvent : AStateEvent
 {
-    public StateEnteredEvent(ProcessState state, Actor actor, DateTime timeStamp) : base(state, actor, timeStamp)
+    public StateEnteredEvent(ABaseState state, Actor actor, DateTime timeStamp) : base(state, actor, timeStamp)
     {
     }
 }

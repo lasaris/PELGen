@@ -1,9 +1,6 @@
-﻿using System.Data;
-using EventLogGenerator.Exceptions;
+﻿using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
-using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Utilities;
-using Constants = EventLogGenerator.GenerationLogic.Constants;
 
 namespace EventLogGenerator.Services;
 
@@ -27,17 +24,13 @@ public static class SprinkleService
     // Maps sprinkles to available timeframes for given actorframe
     public static Dictionary<SprinkleState, List<TimeFrame>> SprinkleTimeMap = new();
 
-    private static void OnSprinkleAdd(SprinkleState sprinkle, Actor actor, DateTime timeStamp)
-    {
-        var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
-        SprinkleAdded.Invoke(null, newEvent);
-        // FIXME: Should the logging be done by EventLogger instead?
-        Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource.Name}");
-    }
+    // Keeps track of sprinkles that were added by the service
+    public static List<(ABaseState, DateTime)> SprinkleStack = new();
 
-    private static void OnDynamicSprinkleAdd(DynamicSprinkleState sprinkle, Actor actor, DateTime timeStamp)
+    private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp)
     {
         var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
+        SprinkleStack.Add((sprinkle, timeStamp));
         SprinkleAdded.Invoke(null, newEvent);
         // FIXME: Should the logging be done by EventLogger instead?
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource.Name}");
@@ -55,7 +48,7 @@ public static class SprinkleService
             ? new TimeFrame(start, start + dynamicSprinkle.MaxOffset, dynamicSprinkle.TimeDistribution)
             : new TimeFrame(start + dynamicSprinkle.MaxOffset, start, dynamicSprinkle.TimeDistribution);
         var sprinkleTime = dynamicTimeFrame.PickTimeByDistribution();
-        OnDynamicSprinkleAdd(dynamicSprinkle, actor, sprinkleTime);
+        OnSprinkleAdd(dynamicSprinkle, actor, sprinkleTime);
     }
 
     public static void LoadSprinklerState(SprinkleState newSprinkle)

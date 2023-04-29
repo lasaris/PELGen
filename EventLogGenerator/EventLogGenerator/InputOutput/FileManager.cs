@@ -5,6 +5,16 @@ public static class FileManager
     public static string OutputFileName = "output.csv";
 
     public static string OutputFolderName = "generated";
+    
+    private static void AppendLine(string line)
+    {
+        string outPath = Path.Combine(OutputFolderName, OutputFileName);
+
+        using (StreamWriter writer = new StreamWriter(outPath, true))
+        {
+            writer.WriteLine(line);
+        }
+    }
 
     /// <summary>
     /// Creates new CSV file and appends given header to it
@@ -14,17 +24,28 @@ public static class FileManager
     /// <param name="filename">name of newly created file</param>
     public static void SetupNewCsvFile(string headerLine, string? filename = null)
     {
-        filename ??= OutputFileName;
+        OutputFileName = filename ?? OutputFileName;
         Directory.CreateDirectory(OutputFolderName);
-        if (File.Exists(Path.Combine(OutputFolderName, filename)))
+        if (File.Exists(Path.Combine(OutputFolderName, OutputFileName)))
         {
             Console.WriteLine("EXISTS");
-            using (StreamWriter sw = new StreamWriter(Path.Combine(OutputFolderName, filename)))
+            using (StreamWriter sw = new StreamWriter(Path.Combine(OutputFolderName, OutputFileName)))
             {
                 sw.Write("");
             }
         }
-        AppendLine(headerLine, filename);
+
+        AppendLine(headerLine);
+    }
+
+    public static void SetOutputCsvPath(string filePath)
+    {
+        if (!File.Exists(filePath))
+        {
+            throw new ArgumentException("File must exist!");
+        }
+        
+        OutputFileName = filePath;
     }
 
     /// <summary>
@@ -33,10 +54,9 @@ public static class FileManager
     /// <param name="line">valid CSV line of data for given file</param>
     /// <param name="filename">name of file that line should be appended to</param>
     /// <exception cref="ArgumentException">Thrown on invalid filename, file format or line data format</exception>
-    public static void AppendLineToCsv(string line, string? filename = null)
+    public static void AppendLineToCsv(string line)
     {
-        filename ??= OutputFileName;
-        string outPath = Path.Combine(OutputFolderName, filename);
+        string outPath = Path.Combine(OutputFolderName, OutputFileName);
 
         if (!File.Exists(outPath))
         {
@@ -51,27 +71,17 @@ public static class FileManager
             {
                 throw new ArgumentException("Given CSV file has no header");
             }
-        
+
             var columnCount = headerLine.Split(',').Length;
             var lineColumnCount = line.Split(',').Length;
 
             if (columnCount != lineColumnCount)
             {
-                throw new ArgumentException($"Given CSV file has {columnCount} columns, but in file there were {lineColumnCount} given");
+                throw new ArgumentException(
+                    $"Given CSV file has {columnCount} columns, but in file there were {lineColumnCount} given");
             }
         }
 
-        AppendLine(line, filename);
-    }
-    
-    private static void AppendLine(string line, string? filename = null)
-    {
-        filename ??= OutputFileName;
-        string outPath = Path.Combine(OutputFolderName, filename);
-
-        using (StreamWriter writer = new StreamWriter(outPath, true))
-        {
-            writer.WriteLine(line);
-        }
+        AppendLine(line);
     }
 }
