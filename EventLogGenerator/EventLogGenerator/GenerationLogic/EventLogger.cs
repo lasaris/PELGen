@@ -10,6 +10,7 @@ namespace EventLogGenerator.GenerationLogic;
 /// </summary>
 public static class EventLogger
 {
+    // FIXME: This function should not be needed since StateEnteredEvent already takes generalized ABaseState
     public static void SprinkleAddedHandler(object sender, SprinkleAddedEvent data)
     {
         var processStateFromSprinkle = StateUtils.TransformSprinkleToState(data.Sprinkle);
@@ -28,6 +29,9 @@ public static class EventLogger
         sb.Append(data.State.Resource.Name + ",");
         sb.Append(data.TimeStamp);
 
+        // Note in logs collector
+        Collector.AddLog(data.Actor.Id, data.State, data.TimeStamp);
+        
         // Write string to CSV file
         FileManager.AppendLineToCsv(sb.ToString());
     }

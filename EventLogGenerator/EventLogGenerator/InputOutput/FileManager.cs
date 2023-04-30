@@ -28,7 +28,6 @@ public static class FileManager
         Directory.CreateDirectory(OutputFolderName);
         if (File.Exists(Path.Combine(OutputFolderName, OutputFileName)))
         {
-            Console.WriteLine("EXISTS");
             using (StreamWriter sw = new StreamWriter(Path.Combine(OutputFolderName, OutputFileName)))
             {
                 sw.Write("");

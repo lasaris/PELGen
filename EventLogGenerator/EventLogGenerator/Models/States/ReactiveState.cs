@@ -11,11 +11,11 @@ public class ReactiveState : ABaseState
     // Actor that reacts to other state
     public Actor ReactingActor;
 
-    protected ReactiveState(EActivityType activityType, Resource resource, ABaseState reactTo, Actor reactingActor) : base(activityType, resource)
+    public ReactiveState(EActivityType activityType, Resource resource, ABaseState reactTo, Actor reactingActor) : base(activityType, resource)
     {
         ReactTo = reactTo;
         ReactingActor = reactingActor;
 
-        ReactiveStateService.LoadSprinklerState(this);
+        ReactiveStateService.LoadFixedState(this);
     }
 }

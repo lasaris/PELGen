@@ -18,5 +18,6 @@ internal class Program
         StateEvaluator.StateEntered += EventLogger.StateEnteredHandler;
         SprinkleService.SprinkleAdded += EventLogger.SprinkleAddedHandler;
         ReactiveStateService.StateEntered += EventLogger.StateEnteredHandler;
+        FixedTimeStateService.StateEntered += EventLogger.StateEnteredHandler;
     }
 }

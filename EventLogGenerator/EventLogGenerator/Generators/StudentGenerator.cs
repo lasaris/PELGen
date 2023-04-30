@@ -8,7 +8,7 @@ namespace EventLogGenerator;
 
 public static class StudentGenerator
 {
-    public static void GenerateLogs(int studentsCount = 0)
+    public static void GenerateLogs(int studentsCount = 1)
     {
         if (studentsCount < 1)
         {
@@ -18,6 +18,7 @@ public static class StudentGenerator
         // Setup necessary services
         FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp", "student.csv");
         IdService.ResetService();
+        SprinkleService.ResetService();
 
         // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)

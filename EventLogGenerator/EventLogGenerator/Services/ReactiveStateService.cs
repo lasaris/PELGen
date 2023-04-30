@@ -40,8 +40,15 @@ public static class ReactiveStateService
         }
     }
 
-    public static void LoadSprinklerState(ReactiveState reactiveState)
+    public static void LoadFixedState(ReactiveState reactiveState)
     {
         ReactiveStates.Add(reactiveState);
     }
+
+    public static void ResetService()
+    {
+        ReactiveStates = new();
+    }
+    
+    // TODO: This service could technically save List of last ActorFrames created (i.e. from student generator) and then apply some rules to them when running
 }

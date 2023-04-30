@@ -133,4 +133,12 @@ public static class SprinkleService
             }
         }
     }
+    
+    public static void ResetService()
+    {
+        Sprinkles = new();
+        DynamicSprinkles = new();
+        SprinkleTimeMap = new();
+        SprinkleStack = new();
+    }
 }
