@@ -84,7 +84,7 @@ public static class StateEvaluator
             
             var nextState = SelectWeightedState(weightedStates);
             var jumpTime = nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime);
-            var actorOffset = ActorService.GetActorActivityOffset(CurrentActorFrame.Actor, currentState.ActivityType);;
+            var actorOffset = ActorService.GetActorActivityOffset(CurrentActorFrame.Actor, nextState.ActivityType);;
             JumpNextState(nextState, jumpTime, actorOffset);
         }
 

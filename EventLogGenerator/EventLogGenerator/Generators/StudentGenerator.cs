@@ -97,7 +97,6 @@ public static class StudentGenerator
         };
 
         // Useful properties
-        var semesterStart = new DateTime(2023, 1, 1);
         var semesterEnd = new DateTime(2023, 3, 1);
 
         // Prepare states
@@ -220,7 +219,6 @@ public static class StudentGenerator
         var saveRopotFollowing = new Dictionary<EActivityType, float>()
             { { EActivityType.SubmitRopot, 0.6f }, { EActivityType.SaveRopot, 0.4f } };
         var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
-        var viewRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ReadFile, 0.5f } };
 
         var openRopotRulesSeminar1 =
             new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
@@ -355,42 +353,42 @@ public static class StudentGenerator
             EActivityType.SubmitRopot,
             ropot1,
             submitRopotRulesSeminar1,
-            timeFrameRopot1
+            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
         var submitRopot2 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot2,
             submitRopotRulesSeminar2,
-            timeFrameRopot2
+            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
         var submitRopot3 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot3,
             submitRopotRulesSeminar3,
-            timeFrameRopot3
+            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
         var submitRopot4 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot4,
             submitRopotRulesSeminar4,
-            timeFrameRopot4
+            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
         var submitRopot5 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot5,
             submitRopotRulesSeminar5,
-            timeFrameRopot5
+            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
         var submitRopot6 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot6,
             submitRopotRulesSeminar6,
-            timeFrameRopot6
+            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
         var attendSeminar1 = new DynamicSprinkleState(
@@ -400,7 +398,7 @@ public static class StudentGenerator
             TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
-
+        
         var attendSeminar2 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek2,
@@ -408,7 +406,7 @@ public static class StudentGenerator
             TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
-
+        
         var attendSeminar3 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek3,
@@ -416,7 +414,7 @@ public static class StudentGenerator
             TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
-
+        
         var attendSeminar4 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek4,
@@ -424,7 +422,7 @@ public static class StudentGenerator
             TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
-
+        
         var attendSeminar5 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek5,
@@ -432,7 +430,7 @@ public static class StudentGenerator
             TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
-
+        
         var attendSeminar6 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek6,
@@ -726,8 +724,6 @@ public static class StudentGenerator
             var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
             SprinkleService.RunSprinkling(filledActorFrame);
         }
-
-        // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
 
         // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
 

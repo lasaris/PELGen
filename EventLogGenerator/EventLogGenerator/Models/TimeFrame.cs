@@ -19,6 +19,26 @@ public class TimeFrame
         End = end;
         Distribution = distribution;
     }
+    
+    private double WeightFunctionLinear(long ticks, long range)
+    {
+        return (double)(ticks - Start.Ticks) / range;
+    }
+
+    private double WeightFunctionReverseLinear(long ticks, long range)
+    {
+        return 1 - (double)(ticks - Start.Ticks) / range;
+    }
+
+    private double WeightFunctionExponential(long ticks, long range, double exponent = 2.0f)
+    {
+        return Math.Pow((double)(ticks - Start.Ticks) / range, exponent);
+    }
+
+    private double WeightFunctionReverseExponential(long ticks, long range, double exponent = 0.5f)
+    {
+        return Math.Pow((double)(ticks - Start.Ticks) / range, exponent);
+    }
 
     public DateTime PickTimeByDistribution(DateTime? newStartLimit = null)
     {
@@ -26,9 +46,14 @@ public class TimeFrame
         {
             throw new ArgumentException("Cannot have limit of start after the end of current time");
         }
-
+        
         DateTime pickedDateTime;
         Random random = new Random();
+        
+        // FIXME: This is just ugly, but "Start" is used in Weighted functions later so it is necessary (at least before refactoring)
+        DateTime oldStart = new DateTime(Start.Ticks);
+        // Pick new Start if old is earlier than newStartLimit
+        Start = (newStartLimit != null && newStartLimit > Start) ? (DateTime)newStartLimit : Start;
         long range = (End - Start).Ticks;
         long randomTicks = (Start + TimeSpan.FromTicks((long)(random.NextDouble() * range))).Ticks;
         switch (Distribution)
@@ -68,28 +93,15 @@ public class TimeFrame
             throw new Exception($"Generated wrong time. Start: {Start}; End: {End}; Generated: {pickedDateTime}");
         }
 
-        // FIXME: Maybe handle the picked DateTime differently? Instead of adding 1, just pick randomly by given strategy in interval <startLimit, picked>?
-        // The 1 in MathMax means that 2 states will differ with at least 1 tick
-        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Max(newStartLimit.Value.Ticks + TimeSpan.FromSeconds(1).Ticks, pickedDateTime.Ticks));
+        Start = oldStart;
+        return pickedDateTime;
     }
 
-    private double WeightFunctionLinear(long ticks, long range)
+    public TimeFrame GetTimeFrameWithOffset(TimeSpan? startOffset = null, TimeSpan? endOffset = null)
     {
-        return (double)(ticks - Start.Ticks) / range;
-    }
+        var newStart = startOffset == null ? Start : Start + (TimeSpan) startOffset;
+        var newEnd = endOffset == null ? End : End + (TimeSpan) endOffset;
 
-    private double WeightFunctionReverseLinear(long ticks, long range)
-    {
-        return 1 - (double)(ticks - Start.Ticks) / range;
-    }
-
-    private double WeightFunctionExponential(long ticks, long range, double exponent = 2.0f)
-    {
-        return Math.Pow((double)(ticks - Start.Ticks) / range, exponent);
-    }
-
-    private double WeightFunctionReverseExponential(long ticks, long range, double exponent = 0.5f)
-    {
-        return Math.Pow((double)(ticks - Start.Ticks) / range, exponent);
+        return new TimeFrame(newStart, newEnd);
     }
 }
