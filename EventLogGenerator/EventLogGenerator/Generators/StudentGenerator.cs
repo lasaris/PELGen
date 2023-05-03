@@ -19,6 +19,7 @@ public static class StudentGenerator
         FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp", "student.csv");
         IdService.ResetService();
         SprinkleService.ResetService();
+        Collector.CreateCollectorMap();
 
         // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)

@@ -1,4 +1,5 @@
 ﻿using EventLogGenerator.Models;
+using EventLogGenerator.Models.Enums;
 
 namespace EventLogGenerator.Services;
 
@@ -13,6 +14,9 @@ public static class ReactiveStateService
     // Sprinkles currently ready to be sprinkled into the process
     public static HashSet<ReactiveState> ReactiveStates = new();
 
+    // Maps IDs of actors that are reacted to actors that are reacting to them
+    public static Dictionary<uint, Actor> ReactingActorsMap = new();
+
     private static void OnReactionAdd(ReactiveState state, Actor actor, DateTime timeStamp)
     {
         var newEvent = new StateEnteredEvent(state, actor, timeStamp);
@@ -21,20 +25,67 @@ public static class ReactiveStateService
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Reactive state {state.ActivityType} - {state.Resource.Name}");
     }
 
-    private static void AddReactiveState(ReactiveState reactiveState, DateTime reactionTime)
+    private static void AddReactiveState(ReactiveState reactiveState, DateTime reactionTime, uint actorId)
     {
-        OnReactionAdd(reactiveState, reactiveState.ReactingActor, reactionTime);
+        OnReactionAdd(reactiveState, ReactingActorsMap[actorId], reactionTime);
     }
 
-    public static void RunReactiveStates(ActorFrame filledActorFrame)
+    public static void RunReactiveStates(Dictionary<uint, List<(ABaseState, DateTime)>> idToStatesMap,
+        List<Actor> actors)
     {
-        foreach (var stateTimePair in filledActorFrame.VisitedStack)
+        // FIXME: Generalize, perhaps by adding extra parameter and intiializing ReactingActorsMap?
+        foreach (var actorStatePair in idToStatesMap)
         {
-            foreach (var reactiveState in ReactiveStates)
+            var seminarGroupId = -1;
+
+            foreach (var stateTimePair in actorStatePair.Value)
             {
-                if (stateTimePair.Item1.Equals(reactiveState.ReactTo))
+                switch (stateTimePair.Item1.Resource.Name)
                 {
-                    AddReactiveState(reactiveState, stateTimePair.Item2);
+                    case "Seminar group 1":
+                        seminarGroupId = 1;
+                        break;
+                    case "Seminar group 2":
+                        seminarGroupId = 2;
+                        break;
+                    case "Seminar group 3":
+                        seminarGroupId = 3;
+                        break;
+                }
+            }
+
+            if (seminarGroupId == -1)
+            {
+                throw new ArgumentException("Every student must be signed to seminar group");
+            }
+
+            switch (seminarGroupId)
+            {
+                case 1:
+                    ReactingActorsMap[actorStatePair.Key] = actors[0];
+                    break;
+                case 2:
+                    ReactingActorsMap[actorStatePair.Key] = actors[1];
+                    break;
+                case 3:
+                    ReactingActorsMap[actorStatePair.Key] = actors[2];
+                    break;
+            }
+        }
+        
+        // Adding the reactive states
+        foreach (var actorStatesPair in idToStatesMap)
+        {
+            foreach (var stateTimePair in actorStatesPair.Value)
+            {
+                foreach (var state in ReactiveStates)
+                {
+                    if (state.ReactTo == stateTimePair.Item1.ActivityType)
+                    {
+                        // Assign same resource to the reacting state
+                        state.Resource = stateTimePair.Item1.Resource;
+                        AddReactiveState(state, stateTimePair.Item2, actorStatesPair.Key);
+                    }
                 }
             }
         }
@@ -48,7 +99,6 @@ public static class ReactiveStateService
     public static void ResetService()
     {
         ReactiveStates = new();
+        ReactingActorsMap = new();
     }
-    
-    // TODO: This service could technically save List of last ActorFrames created (i.e. from student generator) and then apply some rules to them when running
 }
