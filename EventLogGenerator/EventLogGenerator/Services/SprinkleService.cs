@@ -1,5 +1,6 @@
 ﻿using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
+using EventLogGenerator.Models.States;
 using EventLogGenerator.Utilities;
 
 namespace EventLogGenerator.Services;
@@ -20,6 +21,9 @@ public static class SprinkleService
 
     // Dynamic srinkles currently ready to be sprinkled into the process
     public static HashSet<DynamicSprinkleState> DynamicSprinkles = new();
+    
+    // Interval sprinkles with time distribution
+    public static HashSet<IntervalSprinkleState> IntervalSprinkleStates = new();
 
     // Maps sprinkles to available timeframes for given actorframe
     public static Dictionary<SprinkleState, List<TimeFrame>> SprinkleTimeMap = new();
@@ -51,6 +55,12 @@ public static class SprinkleService
         OnSprinkleAdd(dynamicSprinkle, actor, sprinkleTime);
     }
 
+    private static void AddIntervalSprinkle(IntervalSprinkleState sprinkle, Actor actor)
+    {
+        var pickedTime = sprinkle.TimeInterval.PickTimeByDistribution();
+        OnSprinkleAdd(sprinkle, actor, pickedTime);
+    }
+
     public static void LoadSprinklerState(SprinkleState newSprinkle)
     {
         Sprinkles.Add(newSprinkle);
@@ -59,6 +69,19 @@ public static class SprinkleService
     public static void LoadDynamicSrpinkleState(DynamicSprinkleState newSprinkle)
     {
         DynamicSprinkles.Add(newSprinkle);
+    }
+    
+    public static void LoadIntervalSprinkleState(IntervalSprinkleState sprinkle)
+    {
+        IntervalSprinkleStates.Add(sprinkle);
+    }
+
+    public static void RunIntervalSprinkles(Actor actor)
+    {
+        foreach (var sprinkle in IntervalSprinkleStates)
+        {
+            AddIntervalSprinkle(sprinkle, actor);
+        }
     }
 
     public static void RunSprinkling(ActorFrame filledActorFrame)

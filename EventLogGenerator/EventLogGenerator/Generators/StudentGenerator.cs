@@ -730,7 +730,7 @@ public static class StudentGenerator
 
         // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
 
-        // TODO: For Teacher, sprinkle in some deletion of student materials after adding them 
+        // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
         

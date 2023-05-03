@@ -2,6 +2,7 @@
 using EventLogGenerator.InputOutput;
 using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
+using EventLogGenerator.Models.States;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerator;
@@ -27,10 +28,16 @@ public static class TeacherGenerator
         var vaultHomework2 = new Resource("Homework vault 2");
         var vaultHomework3 = new Resource("Homework vault 3");
 
+        var materialsWeek1 = new Resource("slides-week01.pdf");
+        var materialsWeek2 = new Resource("slides-week02.pdf");
+        var materialsWeek3 = new Resource("slides-week03.pdf");
+        var materialsWeek4 = new Resource("slides-week04.pdf");
+        var materialsWeek5 = new Resource("slides-week05.pdf");
+        var materialsWeek6 = new Resource("slides-week06.pdf");
+
+        var studentCourseRecord = new Resource("Student course record");
+
         var placeholder = new Resource("Fill me please");
-
-
-        // TODO: Sprinkling afterwards
 
         // Fixed time states
 
@@ -52,6 +59,42 @@ public static class TeacherGenerator
             new DateTime(2023, 2, 6)
         );
 
+        var createStudyMaterials1 = new FixedTimeState(
+            EActivityType.CreateFile,
+            materialsWeek1,
+            new DateTime(2022, 12, 24)
+        );
+
+        var createStudyMaterials2 = new FixedTimeState(
+            EActivityType.CreateFile,
+            materialsWeek2,
+            new DateTime(2023, 1, 03)
+        );
+
+        var createStudyMaterials3 = new FixedTimeState(
+            EActivityType.CreateFile,
+            materialsWeek3,
+            new DateTime(2023, 1, 10)
+        );
+
+        var createStudyMaterials4 = new FixedTimeState(
+            EActivityType.CreateFile,
+            materialsWeek4,
+            new DateTime(2023, 1, 17)
+        );
+
+        var createStudyMaterials5 = new FixedTimeState(
+            EActivityType.CreateFile,
+            materialsWeek5,
+            new DateTime(2023, 1, 24)
+        );
+
+        var createStudyMaterials6 = new FixedTimeState(
+            EActivityType.CreateFile,
+            materialsWeek6,
+            new DateTime(2023, 1, 31)
+        );
+
         // Reactive states
 
         var givePointsHomework = new ReactiveState(
@@ -71,14 +114,30 @@ public static class TeacherGenerator
             placeholder,
             EActivityType.FailExam
         );
-        
+
         var giveFinalGrade2 = new ReactiveState(
             EActivityType.GiveFinalGrade,
             placeholder,
             EActivityType.PassExam
         );
 
+        // Teacher sprinkles
+
+        var viewStudentRecord = new IntervalSprinkleState(
+            EActivityType.VisitStudentRecord,
+            studentCourseRecord,
+            new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2023, 3, 1))
+        );
+
+        // FIXME: Instead of parsing teachers[0], there should be some general strategy implemented for each fixed state/all of them
+        // to tell, which actors should participate (i.e. parsing all actors and then EStrategy.First,
+        // which would suggest all fixed states are run by the fist teacher only)
         FixedTimeStateService.RunFixedStates(teachers[0]);
         ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), teachers);
+        
+        foreach (var actor in teachers)
+        {
+            SprinkleService.RunIntervalSprinkles(actor);
+        }
     }
 }
