@@ -397,14 +397,15 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek1,
             new HashSet<ProcessState>() { openRopot1 },
-            TimeSpan.FromDays(1)
+            TimeSpan.FromHours(2),
+            ETimeFrameDistribution.ReverseExponential
         );
 
         var attendSeminar2 = new DynamicSprinkleState(
             EActivityType.ReceiveAttendance,
             seminarWeek2,
             new HashSet<ProcessState>() { openRopot2 },
-            TimeSpan.FromDays(1),
+            TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
 
@@ -412,7 +413,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek3,
             new HashSet<ProcessState>() { openRopot3 },
-            TimeSpan.FromDays(1),
+            TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
 
@@ -420,7 +421,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek4,
             new HashSet<ProcessState>() { openRopot4 },
-            TimeSpan.FromDays(1),
+            TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
 
@@ -428,7 +429,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek5,
             new HashSet<ProcessState>() { openRopot5 },
-            TimeSpan.FromDays(1),
+            TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
 
@@ -436,7 +437,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek6,
             new HashSet<ProcessState>() { openRopot6 },
-            TimeSpan.FromDays(1),
+            TimeSpan.FromHours(2),
             ETimeFrameDistribution.ReverseExponential
         );
 
@@ -726,14 +727,10 @@ public static class StudentGenerator
             SprinkleService.RunSprinkling(filledActorFrame);
         }
 
-        // TODO: Create process for teacher Actor, use ActorFrame to model activities like Recieve points (by student) -> Give points (by teacher)
-
         // TODO: Add DynamicTimeFrame i.e. we want to submit ropot 5 minutes after opening it and have some minimum time spent on it
 
         // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
-        
-        // TODO: FIX times in transition (i.e. submit of ropot being instant after save/open of ropot)
     }
 }

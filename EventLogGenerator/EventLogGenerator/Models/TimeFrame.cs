@@ -70,7 +70,7 @@ public class TimeFrame
 
         // FIXME: Maybe handle the picked DateTime differently? Instead of adding 1, just pick randomly by given strategy in interval <startLimit, picked>?
         // The 1 in MathMax means that 2 states will differ with at least 1 tick
-        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Max(newStartLimit.Value.Ticks + 1, pickedDateTime.Ticks));
+        return (newStartLimit == null) ? pickedDateTime : new DateTime(Math.Max(newStartLimit.Value.Ticks + TimeSpan.FromSeconds(1).Ticks, pickedDateTime.Ticks));
     }
 
     private double WeightFunctionLinear(long ticks, long range)
