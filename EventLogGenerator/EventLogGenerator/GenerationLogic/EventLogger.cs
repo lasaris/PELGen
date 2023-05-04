@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using EventLogGenerator.InputOutput;
 using EventLogGenerator.Models;
+using EventLogGenerator.Models.Events;
 using EventLogGenerator.Utilities;
 
 namespace EventLogGenerator.GenerationLogic;
@@ -28,6 +29,10 @@ public static class EventLogger
         sb.Append(data.State.ActivityType + ",");
         sb.Append(data.State.Resource.Name + ",");
         sb.Append(data.TimeStamp);
+        if (data.Additional != null)
+        {
+            sb.Append("," + data.Additional);
+        }
 
         // Note in logs collector
         Collector.AddLog(data.Actor.Id, data.State, data.TimeStamp);

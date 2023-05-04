@@ -1,4 +1,6 @@
-﻿namespace EventLogGenerator.Models;
+﻿using EventLogGenerator.Models.States;
+
+namespace EventLogGenerator.Models.Events;
 
 public class SprinkleAddedEvent : EventArgs
 {

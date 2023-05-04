@@ -1,4 +1,4 @@
-﻿namespace EventLogGenerator.Models;
+﻿namespace EventLogGenerator.Models.Events;
 
 public class StateExitedEvent : AStateEvent
 {

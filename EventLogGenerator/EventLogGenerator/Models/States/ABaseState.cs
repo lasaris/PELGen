@@ -1,6 +1,6 @@
 ﻿using EventLogGenerator.Models.Enums;
 
-namespace EventLogGenerator.Models;
+namespace EventLogGenerator.Models.States;
 
 public class ABaseState
 {

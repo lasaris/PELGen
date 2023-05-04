@@ -1,5 +1,6 @@
 ﻿using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
+using EventLogGenerator.Models.Events;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerator.GenerationLogic;

@@ -1,4 +1,5 @@
 ﻿using EventLogGenerator.Models;
+using EventLogGenerator.Models.States;
 
 namespace EventLogGenerator.GenerationLogic;
 

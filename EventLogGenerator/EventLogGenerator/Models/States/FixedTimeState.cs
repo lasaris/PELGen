@@ -1,5 +1,6 @@
 ﻿using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
+using EventLogGenerator.Models.States;
 
 namespace EventLogGenerator.Services;
 

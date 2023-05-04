@@ -1,5 +1,6 @@
 ﻿using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
+using EventLogGenerator.Models.Events;
 using EventLogGenerator.Models.States;
 using EventLogGenerator.Utilities;
 
@@ -84,6 +85,7 @@ public static class SprinkleService
         }
     }
 
+    // FIXME: Ideally remove the dependencies on actor frame and make it more generalized (like reactive states)
     public static void RunSprinkling(ActorFrame filledActorFrame)
     {
         // Create possible timeframes for each sprinkle

@@ -74,10 +74,11 @@ public static class FileManager
             var columnCount = headerLine.Split(',').Length;
             var lineColumnCount = line.Split(',').Length;
 
-            if (columnCount != lineColumnCount)
+            // FIXME: Is this optimal?
+            while (columnCount > lineColumnCount)
             {
-                throw new ArgumentException(
-                    $"Given CSV file has {columnCount} columns, but in file there were {lineColumnCount} given");
+                line += ",NULL";
+                ++lineColumnCount;
             }
         }
 
