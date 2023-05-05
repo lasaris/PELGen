@@ -1,4 +1,6 @@
-﻿namespace EventLogGenerator.Models;
+﻿using EventLogGenerator.Services;
+
+namespace EventLogGenerator.Models;
 
 public class TimeFrame
 {
@@ -48,38 +50,37 @@ public class TimeFrame
         }
         
         DateTime pickedDateTime;
-        Random random = new Random();
         
         // FIXME: This is just ugly, but "Start" is used in Weighted functions later so it is necessary (at least before refactoring)
         DateTime oldStart = new DateTime(Start.Ticks);
         // Pick new Start if old is earlier than newStartLimit
         Start = (newStartLimit != null && newStartLimit > Start) ? (DateTime)newStartLimit : Start;
         long range = (End - Start).Ticks;
-        long randomTicks = (Start + TimeSpan.FromTicks((long)(random.NextDouble() * range))).Ticks;
+        long randomTicks = (Start + TimeSpan.FromTicks((long)(RandomService.GetNextDouble() * range))).Ticks;
         switch (Distribution)
         {
             case ETimeFrameDistribution.Uniform:
-                long ticks = (long)(random.NextDouble() * range);
+                long ticks = (long)(RandomService.GetNextDouble() * range);
                 pickedDateTime = Start + TimeSpan.FromTicks(ticks);
                 break;
             
             case ETimeFrameDistribution.Linear:
-                long weightedTicksLinear = (long)(random.NextDouble() * range * WeightFunctionLinear(randomTicks, range));
+                long weightedTicksLinear = (long)(RandomService.GetNextDouble() * range * WeightFunctionLinear(randomTicks, range));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightedTicksLinear);
                 break;
             
             case ETimeFrameDistribution.ReverseLinear:
-                long weightedTicksReverseLinear = (long)(random.NextDouble() * range * WeightFunctionReverseLinear(randomTicks, range));
+                long weightedTicksReverseLinear = (long)(RandomService.GetNextDouble() * range * WeightFunctionReverseLinear(randomTicks, range));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightedTicksReverseLinear);
                 break;
             
             case ETimeFrameDistribution.Exponential:
-                long weightedTicksExponential = (long)(random.NextDouble() * range * WeightFunctionExponential(randomTicks, range));
+                long weightedTicksExponential = (long)(RandomService.GetNextDouble() * range * WeightFunctionExponential(randomTicks, range));
                 pickedDateTime =  Start + TimeSpan.FromTicks(weightedTicksExponential);
                 break;
 
             case ETimeFrameDistribution.ReverseExponential:
-                long weightetTicksReverseExponential = (long)(random.NextDouble() * range * WeightFunctionReverseExponential(randomTicks, range));
+                long weightetTicksReverseExponential = (long)(RandomService.GetNextDouble() * range * WeightFunctionReverseExponential(randomTicks, range));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightetTicksReverseExponential);
                 break;
 

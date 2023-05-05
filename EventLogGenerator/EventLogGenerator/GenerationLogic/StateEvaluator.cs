@@ -22,8 +22,6 @@ public static class StateEvaluator
     // The time when process has to be finished. Can be used as emergency limit
     public static DateTime? ProcessEnd { get; set; }
 
-    private static readonly Random Random = new();
-
     public static ActorFrame RunProcess(ProcessState initial)
     {
         // Check for desired state of evaluator
@@ -124,7 +122,7 @@ public static class StateEvaluator
     public static ProcessState SelectWeightedState(Dictionary<ProcessState, float> stateWeights)
     {
         float totalWeight = stateWeights.Values.Sum();
-        float randomWeight = (float)Random.NextDouble() * totalWeight;
+        float randomWeight = (float)RandomService.GetNextDouble() * totalWeight;
         float cumulativeWeight = 0f;
 
         foreach (var kvp in stateWeights)

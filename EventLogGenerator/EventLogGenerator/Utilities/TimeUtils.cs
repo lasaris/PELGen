@@ -1,4 +1,5 @@
 ﻿using EventLogGenerator.Models;
+using EventLogGenerator.Services;
 
 namespace EventLogGenerator.Utilities;
 
@@ -12,19 +13,16 @@ public static class TimeUtils
         }
 
         TimeSpan timeDifference = end - start;
-        long randomTicks = (long)(new Random().NextDouble() * timeDifference.Ticks);
+        long randomTicks = (long)(RandomService.GetNextDouble() * timeDifference.Ticks);
         
         return start + new TimeSpan(randomTicks);
     }
 
     public static DateTime PickDateFromTimeframes(List<TimeFrame> timeFrames)
     {
-        // TODO: Create RandomService with fixed seed
-        Random rand = new Random();
-
         List<DateTime> randomTimes = timeFrames.Select(frame => PickDateInInterval(frame.Start, frame.End)).ToList();
         
-        int randomIndex = rand.Next(timeFrames.Count);
+        int randomIndex = RandomService.GetNext(timeFrames.Count);
         return randomTimes[randomIndex];
     }
 }    
