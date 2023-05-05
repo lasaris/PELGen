@@ -28,12 +28,12 @@ public static class TeacherGenerator
         var vaultHomework2 = new Resource("Homework vault 2");
         var vaultHomework3 = new Resource("Homework vault 3");
 
-        var materialsWeek1 = new Resource("slides-week01.pdf");
-        var materialsWeek2 = new Resource("slides-week02.pdf");
-        var materialsWeek3 = new Resource("slides-week03.pdf");
-        var materialsWeek4 = new Resource("slides-week04.pdf");
-        var materialsWeek5 = new Resource("slides-week05.pdf");
-        var materialsWeek6 = new Resource("slides-week06.pdf");
+        var materialsWeek1 = new Resource("/um/slides-week01.pdf");
+        var materialsWeek2 = new Resource("/um/slides-week02.pdf");
+        var materialsWeek3 = new Resource("/um/slides-week03.pdf");
+        var materialsWeek4 = new Resource("/um/slides-week04.pdf");
+        var materialsWeek5 = new Resource("/um/slides-week05.pdf");
+        var materialsWeek6 = new Resource("/um/slides-week06.pdf");
 
         var studentCourseRecord = new Resource("Student course record");
 
@@ -142,5 +142,9 @@ public static class TeacherGenerator
         }
         
         // TODO: For all states, we should also log to which ID the reactions and interval sprinkles map to (something like "StudentId" column)
+        
+        // TODO: At fixed time create scan files for student exams
+        
+        // TODO: Activity of deleting ropot sessions
     }
 }

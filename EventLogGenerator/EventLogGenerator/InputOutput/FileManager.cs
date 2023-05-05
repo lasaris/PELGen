@@ -77,7 +77,7 @@ public static class FileManager
             // FIXME: Is this optimal?
             while (columnCount > lineColumnCount)
             {
-                line += ",NULL";
+                line += ",";
                 ++lineColumnCount;
             }
         }

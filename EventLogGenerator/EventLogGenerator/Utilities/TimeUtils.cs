@@ -19,6 +19,7 @@ public static class TimeUtils
 
     public static DateTime PickDateFromTimeframes(List<TimeFrame> timeFrames)
     {
+        // TODO: Create RandomService with fixed seed
         Random rand = new Random();
 
         List<DateTime> randomTimes = timeFrames.Select(frame => PickDateInInterval(frame.Start, frame.End)).ToList();
@@ -26,4 +27,4 @@ public static class TimeUtils
         int randomIndex = rand.Next(timeFrames.Count);
         return randomTimes[randomIndex];
     }
-}
+}    

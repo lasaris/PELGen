@@ -48,6 +48,9 @@ public static class ActorService
             return TimeSpan.Zero;
         }
         
-        return ActorOffsetMap[actor][activity];
+        // TODO: Fix offset => create timeframe for processStates dynamically based on registered seminar group
+        return TimeSpan.Zero;
+
+        // return ActorOffsetMap[actor][activity];
     }
 }

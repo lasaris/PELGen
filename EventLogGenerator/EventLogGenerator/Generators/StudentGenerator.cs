@@ -71,15 +71,15 @@ public static class StudentGenerator
         var seminarWeek4 = new Resource("Seminar week 4");
         var seminarWeek5 = new Resource("Seminar week 5");
         var seminarWeek6 = new Resource("Seminar week 6");
-        var materialsWeek1 = new Resource("slides-week01.pdf");
-        var materialsWeek2 = new Resource("slides-week02.pdf");
-        var materialsWeek3 = new Resource("slides-week03.pdf");
-        var materialsWeek4 = new Resource("slides-week04.pdf");
-        var materialsWeek5 = new Resource("slides-week05.pdf");
-        var materialsWeek6 = new Resource("slides-week06.pdf");
-        var hw1 = new Resource("homework-1.zip");
-        var hw2 = new Resource("homework-2.zip");
-        var hw3 = new Resource("homework-3.zip");
+        var materialsWeek1 = new Resource("/um/slides-week01.pdf");
+        var materialsWeek2 = new Resource("/um/slides-week02.pdf");
+        var materialsWeek3 = new Resource("/um/slides-week03.pdf");
+        var materialsWeek4 = new Resource("/um/slides-week04.pdf");
+        var materialsWeek5 = new Resource("/um/slides-week05.pdf");
+        var materialsWeek6 = new Resource("/um/slides-week06.pdf");
+        var hw1 = new Resource("/ode/homework-1.zip");
+        var hw2 = new Resource("/ode/homework-2.zip");
+        var hw3 = new Resource("/ode/homework-3.zip");
         var ropot1 = new Resource("Ropot week 1");
         var ropot2 = new Resource("Ropot week 2");
         var ropot3 = new Resource("Ropot week 3");
@@ -349,6 +349,7 @@ public static class StudentGenerator
             timeFrameRopot6
         );
         
+        // TODO: Implement as dynamic sprinkle after opening ropot (4-5 minutes after opening)
         var submitRopot1 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot1,
@@ -395,7 +396,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek1,
             new HashSet<ProcessState>() { openRopot1 },
-            TimeSpan.FromHours(2),
+            TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
         
@@ -403,7 +404,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek2,
             new HashSet<ProcessState>() { openRopot2 },
-            TimeSpan.FromHours(2),
+            TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
         
@@ -411,7 +412,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek3,
             new HashSet<ProcessState>() { openRopot3 },
-            TimeSpan.FromHours(2),
+            TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
         
@@ -419,7 +420,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek4,
             new HashSet<ProcessState>() { openRopot4 },
-            TimeSpan.FromHours(2),
+            TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
         
@@ -427,7 +428,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek5,
             new HashSet<ProcessState>() { openRopot5 },
-            TimeSpan.FromHours(2),
+            TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
         
@@ -435,7 +436,7 @@ public static class StudentGenerator
             EActivityType.ReceiveAttendance,
             seminarWeek6,
             new HashSet<ProcessState>() { openRopot6 },
-            TimeSpan.FromHours(2),
+            TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
 
@@ -692,6 +693,8 @@ public static class StudentGenerator
             submitRopotSet
         );
 
+        // TODO: Create as IntervalSprinkle (from given deadline of HW)
+        // TODO: Register offset for each seminar group. Each student in seminar group should receive homework at the same time.
         var receivePointsHomework1 = new DynamicSprinkleState(
             EActivityType.ReceivePoints,
             hw1,
@@ -726,7 +729,21 @@ public static class StudentGenerator
         }
 
         // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
+        
+        // TODO: For Student implement internet failure (open -> save -> reopen -> save -> submit). For Teacher, sprinkle some deletion of ROPOT sessions when student internet fails.
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
+        
+        // TODO: Implement autosave for ropots (every 1 minute)
+        
+        // TODO: Implement bad actor (add transitions to skip homework submission...). This depends on scenario rules, which define how many homeworks can be skipped.
+        
+        // TODO: Implement points for each homework, ropot, ... this is only internal for applying global scenario rules
+        
+        // TODO: Add OwnerId for file operations
+        
+        // TODO: Add "ReceiveAbsence" from seminar
+        
+        // TODO: Implement attendance marking simultaneously for all students and with marking absence
     }
 }
