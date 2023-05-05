@@ -29,6 +29,7 @@ public static class ReactiveStateService
 
     private static void AddReactiveState(ReactiveState reactiveState, DateTime reactionTime, uint actorId)
     {
+        // FIXME: The adding of additional column should be generalized. Perhaps not always you want to add additional ID as StudentId column data?
         OnReactionAdd(reactiveState, ReactingActorsMap[actorId], reactionTime, actorId.ToString());
     }
 

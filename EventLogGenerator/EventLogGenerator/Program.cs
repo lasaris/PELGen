@@ -9,7 +9,7 @@ internal class Program
     public static void Main(string[] args)
     {
         RegisterSubscribers();
-        StudentGenerator.GenerateLogs(20);
+        StudentGenerator.GenerateLogs(10);
         TeacherGenerator.GenerateLogs(3);
     }
 

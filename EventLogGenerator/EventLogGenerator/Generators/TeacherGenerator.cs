@@ -12,7 +12,7 @@ public static class TeacherGenerator
     public static void GenerateLogs(int teacherCount = 1)
     {
         // Setup services
-        FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp,StudentId", "teacher.csv");
+        FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp,StudentId,OwnerId", "teacher.csv");
         IdService.ResetService();
         SprinkleService.ResetService();
         ReactiveStateService.ResetService();
@@ -20,7 +20,7 @@ public static class TeacherGenerator
 
         // Prepare Actors
         List<Actor> teachers = Enumerable.Range(0, teacherCount)
-            .Select(_ => new Actor(EActorType.Student))
+            .Select(_ => new Actor(EActorType.Teacher))
             .ToList();
 
         // Define resources

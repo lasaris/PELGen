@@ -16,7 +16,7 @@ public static class StudentGenerator
         }
 
         // Setup necessary services
-        FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp", "student.csv");
+        FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp,OwnerId", "student.csv");
         IdService.ResetService();
         SprinkleService.ResetService();
         Collector.CreateCollectorMap();
@@ -739,8 +739,6 @@ public static class StudentGenerator
         // TODO: Implement bad actor (add transitions to skip homework submission...). This depends on scenario rules, which define how many homeworks can be skipped.
         
         // TODO: Implement points for each homework, ropot, ... this is only internal for applying global scenario rules
-        
-        // TODO: Add OwnerId for file operations
         
         // TODO: Add "ReceiveAbsence" from seminar
         
