@@ -108,6 +108,12 @@ public static class TeacherGenerator
             placeholder,
             EActivityType.ReceiveAttendance
         );
+        
+        var markSeminarAbsence = new ReactiveState(
+            EActivityType.MarkAbsence,
+            placeholder,
+            EActivityType.ReceiveAbsence
+        );
 
         var giveFinalGrade1 = new ReactiveState(
             EActivityType.GiveFinalGrade,

@@ -22,7 +22,7 @@ public static class SprinkleService
 
     // Dynamic srinkles currently ready to be sprinkled into the process
     public static HashSet<DynamicSprinkleState> DynamicSprinkles = new();
-    
+
     // Interval sprinkles with time distribution
     public static HashSet<IntervalSprinkleState> IntervalSprinkleStates = new();
 
@@ -31,6 +31,9 @@ public static class SprinkleService
 
     // Keeps track of sprinkles that were added by the service
     public static List<(ABaseState, DateTime)> SprinkleStack = new();
+    
+    // Track dynamic sprinkle mutexes
+    public static HashSet<DynamicSprinkleMutex> DynamicSprinkleMutexes = new();
 
     private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp)
     {
@@ -71,10 +74,24 @@ public static class SprinkleService
     {
         DynamicSprinkles.Add(newSprinkle);
     }
-    
+
     public static void LoadIntervalSprinkleState(IntervalSprinkleState sprinkle)
     {
         IntervalSprinkleStates.Add(sprinkle);
+    }
+    
+    public static void LoadDynamicSrpinkleMutex(DynamicSprinkleMutex dynamicSprinkleMutex)
+    {
+        if (!DynamicSprinkles.Contains(dynamicSprinkleMutex.FirstState)
+            || !DynamicSprinkles.Contains(dynamicSprinkleMutex.SecondState))
+        {
+            throw new ArgumentException(
+                "Dynamic sprinkle mutex must contain states that are registerd in Sprinkle service");
+        }
+
+        DynamicSprinkles.Remove(dynamicSprinkleMutex.FirstState);
+        DynamicSprinkles.Remove(dynamicSprinkleMutex.SecondState);
+        DynamicSprinkleMutexes.Add(dynamicSprinkleMutex);
     }
 
     public static void RunIntervalSprinkles(Actor actor)
@@ -157,8 +174,22 @@ public static class SprinkleService
                 }
             }
         }
+
+        // Execute dynamic sprinkle mutexes
+        foreach (var mutex in DynamicSprinkleMutexes)
+        {
+            foreach (var stateTimePair in filledActorFrame.VisitedStack)
+            {
+                var sprinkle = mutex.PickState();
+                
+                if (sprinkle.BeginAfter.Contains(stateTimePair.Item1))
+                {
+                    AddDynamicSprinkle(sprinkle, filledActorFrame.Actor, stateTimePair.Item2);
+                }
+            }
+        }
     }
-    
+
     public static void ResetService()
     {
         Sprinkles = new();

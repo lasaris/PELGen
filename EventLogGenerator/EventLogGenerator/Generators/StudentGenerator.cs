@@ -2,6 +2,7 @@
 using EventLogGenerator.InputOutput;
 using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
+using EventLogGenerator.Models.States;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerator;
@@ -439,6 +440,62 @@ public static class StudentGenerator
             TimeSpan.FromHours(1),
             ETimeFrameDistribution.ReverseExponential
         );
+        
+        var absentSeminar1 = new DynamicSprinkleState(
+            EActivityType.ReceiveAbsence,
+            seminarWeek1,
+            new HashSet<ProcessState>() { openRopot1 },
+            TimeSpan.FromHours(1),
+            ETimeFrameDistribution.ReverseExponential
+        );
+        
+        var absentSeminar2 = new DynamicSprinkleState(
+            EActivityType.ReceiveAbsence,
+            seminarWeek2,
+            new HashSet<ProcessState>() { openRopot2 },
+            TimeSpan.FromHours(1),
+            ETimeFrameDistribution.ReverseExponential
+        );
+        
+        var absentSeminar3 = new DynamicSprinkleState(
+            EActivityType.ReceiveAbsence,
+            seminarWeek3,
+            new HashSet<ProcessState>() { openRopot3 },
+            TimeSpan.FromHours(1),
+            ETimeFrameDistribution.ReverseExponential
+        );
+        
+        var absentSeminar4 = new DynamicSprinkleState(
+            EActivityType.ReceiveAbsence,
+            seminarWeek4,
+            new HashSet<ProcessState>() { openRopot4 },
+            TimeSpan.FromHours(1),
+            ETimeFrameDistribution.ReverseExponential
+        );
+        
+        var absentSeminar5 = new DynamicSprinkleState(
+            EActivityType.ReceiveAbsence,
+            seminarWeek5,
+            new HashSet<ProcessState>() { openRopot5 },
+            TimeSpan.FromHours(1),
+            ETimeFrameDistribution.ReverseExponential
+        );
+        
+        var absentSeminar6 = new DynamicSprinkleState(
+            EActivityType.ReceiveAbsence,
+            seminarWeek6,
+            new HashSet<ProcessState>() { openRopot6 },
+            TimeSpan.FromHours(1),
+            ETimeFrameDistribution.ReverseExponential
+        );
+        
+        // create mutexes for attendance and absence
+        var seminarAttendanceAbsenceMutex1 = new DynamicSprinkleMutex(attendSeminar1, absentSeminar1, 0.9f);
+        var seminarAttendanceAbsenceMutex2 = new DynamicSprinkleMutex(attendSeminar2, absentSeminar2, 0.9f);
+        var seminarAttendanceAbsenceMutex3 = new DynamicSprinkleMutex(attendSeminar3, absentSeminar3, 0.9f);
+        var seminarAttendanceAbsenceMutex4 = new DynamicSprinkleMutex(attendSeminar4, absentSeminar4, 0.9f);
+        var seminarAttendanceAbsenceMutex5 = new DynamicSprinkleMutex(attendSeminar5, absentSeminar5, 0.9f);
+        var seminarAttendanceAbsenceMutex6 = new DynamicSprinkleMutex(attendSeminar6, absentSeminar6, 0.9f);
 
         var examRules = new StateRules(false, 1, 0,
             new Dictionary<EActivityType, float>()
@@ -739,9 +796,7 @@ public static class StudentGenerator
         // TODO: Implement bad actor (add transitions to skip homework submission...). This depends on scenario rules, which define how many homeworks can be skipped.
         
         // TODO: Implement points for each homework, ropot, ... this is only internal for applying global scenario rules
-        
-        // TODO: Add "ReceiveAbsence" from seminar
-        
+
         // TODO: Implement attendance marking simultaneously for all students and with marking absence
     }
 }

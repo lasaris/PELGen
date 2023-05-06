@@ -6,6 +6,7 @@ public enum EActivityType
     EnrollCourse,
     RegisterSeminarGroup,
     ReceiveAttendance,
+    ReceiveAbsence,
     // Ropot activities
     OpenRopot,
     SaveRopot,
@@ -23,6 +24,7 @@ public enum EActivityType
     CreateHomeworkVault,
     GivePoints,
     MarkAttendance,
+    MarkAbsence,
     CreateExamTerm,
     GiveFinalGrade,
     // File operations
