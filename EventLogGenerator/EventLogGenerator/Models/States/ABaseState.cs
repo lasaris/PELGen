@@ -2,7 +2,7 @@
 
 namespace EventLogGenerator.Models.States;
 
-public class ABaseState
+public abstract class ABaseState
 {
     // Activity to be performed
     public EActivityType ActivityType;
