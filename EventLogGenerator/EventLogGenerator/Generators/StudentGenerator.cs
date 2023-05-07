@@ -207,17 +207,17 @@ public static class StudentGenerator
         );
 
         var timeFrameRopot1 =
-            new TimeFrame(new DateTime(2023, 1, 03, 12, 00, 00), new DateTime(2023, 1, 03, 12, 15, 00));
+            new TimeFrame(new DateTime(2023, 1, 03, 12, 4, 00), new DateTime(2023, 1, 03, 12, 5, 00));
         var timeFrameRopot2 =
-            new TimeFrame(new DateTime(2023, 1, 10, 12, 00, 00), new DateTime(2023, 1, 10, 12, 15, 00));
+            new TimeFrame(new DateTime(2023, 1, 10, 12, 4, 00), new DateTime(2023, 1, 10, 12, 5, 00));
         var timeFrameRopot3 =
-            new TimeFrame(new DateTime(2023, 1, 17, 12, 00, 00), new DateTime(2023, 1, 17, 12, 15, 00));
+            new TimeFrame(new DateTime(2023, 1, 17, 12, 4, 00), new DateTime(2023, 1, 17, 12, 5, 00));
         var timeFrameRopot4 =
-            new TimeFrame(new DateTime(2023, 1, 24, 12, 00, 00), new DateTime(2023, 1, 24, 12, 15, 00));
+            new TimeFrame(new DateTime(2023, 1, 24, 12, 4, 00), new DateTime(2023, 1, 24, 12, 5, 00));
         var timeFrameRopot5 =
-            new TimeFrame(new DateTime(2023, 1, 31, 12, 00, 00), new DateTime(2023, 1, 31, 12, 15, 00));
+            new TimeFrame(new DateTime(2023, 1, 31, 12, 4, 00), new DateTime(2023, 1, 31, 12, 5, 00));
         var timeFrameRopot6 =
-            new TimeFrame(new DateTime(2023, 2, 07, 12, 00, 00), new DateTime(2023, 2, 07, 12, 15, 00));
+            new TimeFrame(new DateTime(2023, 2, 07, 12, 4, 00), new DateTime(2023, 2, 07, 12, 5, 00));
 
         var openRopotFollowing = new Dictionary<EActivityType, float>()
             { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
@@ -354,47 +354,46 @@ public static class StudentGenerator
             timeFrameRopot6
         );
         
-        // TODO: Implement as dynamic sprinkle after opening ropot (4-5 minutes after opening)
         var submitRopot1 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot1,
             submitRopotRulesSeminar1,
-            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
+            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
         );
 
         var submitRopot2 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot2,
             submitRopotRulesSeminar2,
-            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
+            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
         );
 
         var submitRopot3 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot3,
             submitRopotRulesSeminar3,
-            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
+            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
         );
 
         var submitRopot4 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot4,
             submitRopotRulesSeminar4,
-            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
+            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
         );
 
         var submitRopot5 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot5,
             submitRopotRulesSeminar5,
-            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
+            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
         );
 
         var submitRopot6 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot6,
             submitRopotRulesSeminar6,
-            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
+            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
         );
         
         // Implement auto save of ropots
@@ -721,8 +720,7 @@ public static class StudentGenerator
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
         
-        // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (the mutex could have strategy to evaluate if ropoot was opened/submitted previously)
-        
-        // TODO: Implement attendance marking simultaneously for all students and with marking absence
+         // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (themutex could have strategy to evaluate if ropoot was opened/submitted previously)
+         // TODO: Implement attendance marking simultaneously for all students and with marking absence
     }
 }
