@@ -34,6 +34,9 @@ public static class SprinkleService
     
     // Track dynamic sprinkle mutexes
     public static HashSet<DynamicSprinkleMutex> DynamicSprinkleMutexes = new();
+    
+    // Track periodic sprinkles
+    public static HashSet<PeriodicSprinkleState> PeriodicSprinkles = new();
 
     private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp)
     {
@@ -65,14 +68,19 @@ public static class SprinkleService
         OnSprinkleAdd(sprinkle, actor, pickedTime);
     }
 
-    public static void LoadSprinklerState(SprinkleState newSprinkle)
+    private static void AddPeriodSprinkle(PeriodicSprinkleState sprinkle, Actor actor, DateTime timestamp)
     {
-        Sprinkles.Add(newSprinkle);
+        OnSprinkleAdd(sprinkle, actor, timestamp);
     }
 
-    public static void LoadDynamicSrpinkleState(DynamicSprinkleState newSprinkle)
+    public static void LoadSprinklerState(SprinkleState sprinkle)
     {
-        DynamicSprinkles.Add(newSprinkle);
+        Sprinkles.Add(sprinkle);
+    }
+
+    public static void LoadDynamicSrpinkleState(DynamicSprinkleState sprinkle)
+    {
+        DynamicSprinkles.Add(sprinkle);
     }
 
     public static void LoadIntervalSprinkleState(IntervalSprinkleState sprinkle)
@@ -92,6 +100,12 @@ public static class SprinkleService
         DynamicSprinkles.Remove(dynamicSprinkleMutex.FirstState);
         DynamicSprinkles.Remove(dynamicSprinkleMutex.SecondState);
         DynamicSprinkleMutexes.Add(dynamicSprinkleMutex);
+    }
+    
+    
+    public static void LoadPeriodicSprinkle(PeriodicSprinkleState sprinkle)
+    {
+        PeriodicSprinkles.Add(sprinkle);
     }
 
     public static void RunIntervalSprinkles(Actor actor)
@@ -186,6 +200,30 @@ public static class SprinkleService
                 if (sprinkle.BeginAfter.Contains(stateTimePair.Item1))
                 {
                     AddDynamicSprinkle(sprinkle, filledActorFrame.Actor, stateTimePair.Item2);
+                }
+            }
+        }
+        
+        // Execute periodic sprinkles
+        foreach (var sprinkle in PeriodicSprinkles)
+        {
+            DateTime? beginTime = null;
+            foreach (var stateTimePair in filledActorFrame.VisitedStack)
+            {
+                if (beginTime == null && sprinkle.BeginAfter.Contains(stateTimePair.Item1))
+                {
+                    beginTime = stateTimePair.Item2;
+                } else if (beginTime != null && sprinkle.StopBefore.Contains(stateTimePair.Item1))
+                {
+                    DateTime endTime = stateTimePair.Item2;
+                    List<DateTime> timeStamps = new();
+                    DateTime currentTime = (DateTime)beginTime + sprinkle.Period;
+                    while (currentTime < endTime)
+                    {
+                        AddPeriodSprinkle(sprinkle, filledActorFrame.Actor, currentTime);
+                        currentTime += sprinkle.Period;
+                    }
+                    beginTime = null;
                 }
             }
         }

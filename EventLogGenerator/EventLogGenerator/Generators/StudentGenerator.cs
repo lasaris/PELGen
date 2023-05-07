@@ -392,6 +392,57 @@ public static class StudentGenerator
             submitRopotRulesSeminar6,
             timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
+        
+        // Implement auto save of ropots
+        var autoSavePeriod = TimeSpan.FromMinutes(1);
+        
+        var autoSaveRopot1 = new PeriodicSprinkleState(
+            EActivityType.SaveRopot,
+            ropot1,
+            new HashSet<ProcessState>(){openRopot1},
+            new HashSet<ProcessState>(){submitRopot1},
+            autoSavePeriod
+        );
+        
+        var autoSaveRopot2 = new PeriodicSprinkleState(
+            EActivityType.SaveRopot,
+            ropot2,
+            new HashSet<ProcessState>(){openRopot2},
+            new HashSet<ProcessState>(){submitRopot2},
+            autoSavePeriod
+        );
+        
+        var autoSaveRopot3 = new PeriodicSprinkleState(
+            EActivityType.SaveRopot,
+            ropot3,
+            new HashSet<ProcessState>(){openRopot3},
+            new HashSet<ProcessState>(){submitRopot3},
+            autoSavePeriod
+        );
+        
+        var autoSaveRopot4 = new PeriodicSprinkleState(
+            EActivityType.SaveRopot,
+            ropot4,
+            new HashSet<ProcessState>(){openRopot4},
+            new HashSet<ProcessState>(){submitRopot4},
+            autoSavePeriod
+        );
+        
+        var autoSaveRopot5 = new PeriodicSprinkleState(
+            EActivityType.SaveRopot,
+            ropot5,
+            new HashSet<ProcessState>(){openRopot5},
+            new HashSet<ProcessState>(){submitRopot5},
+            autoSavePeriod
+        );
+        
+        var autoSaveRopot6 = new PeriodicSprinkleState(
+            EActivityType.SaveRopot,
+            ropot6,
+            new HashSet<ProcessState>(){openRopot6},
+            new HashSet<ProcessState>(){submitRopot6},
+            autoSavePeriod
+        );
 
         var examRules = new StateRules(false, 1, 0,
             new Dictionary<EActivityType, float>()
@@ -633,8 +684,6 @@ public static class StudentGenerator
         // TODO: For Student implement internet failure (open -> save -> reopen -> save -> submit). For Teacher, sprinkle some deletion of ROPOT sessions when student internet fails.
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
-        
-        // TODO: Implement autosave for ropots (every 1 minute)
         
         // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (the mutex could have strategy to evaluate if ropoot was opened/submitted previously)
         
