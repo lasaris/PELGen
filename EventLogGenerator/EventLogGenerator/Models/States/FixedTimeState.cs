@@ -9,10 +9,15 @@ public class FixedTimeState : ABaseState
     // Time at which state will be visited
     public DateTime VisitTime;
 
-    public FixedTimeState(EActivityType activityType, Resource resource, DateTime visitTime) : base(activityType, resource)
+    // State that must precede
+    public ProcessState? MustPrecede;
+
+    public FixedTimeState(EActivityType activityType, Resource resource, DateTime visitTime,
+        ProcessState? mustPrecede = null) : base(activityType, resource)
     {
         VisitTime = visitTime;
-
+        MustPrecede = mustPrecede;
+        
         FixedTimeStateService.LoadFixedState(this);
     }
 }

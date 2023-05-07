@@ -34,6 +34,18 @@ public static class FixedTimeStateService
             AddFixedState(state, actor);
         }
     }
+    
+    // FIXME: In ideal world, this would be probably abstracted to another state. FixedTimeState should have a single responsibility.
+    public static void RunFixedStatesWithPreceding(ActorFrame filledActorFrame)
+    {
+        foreach (var state in FixedTimeStates)
+        {
+            if (state.MustPrecede == null || filledActorFrame.VisitedMap.ContainsKey(state.MustPrecede))
+            {
+                AddFixedState(state, filledActorFrame.Actor);
+            }
+        }
+    }
 
     public static void LoadFixedState(FixedTimeState state)
     {

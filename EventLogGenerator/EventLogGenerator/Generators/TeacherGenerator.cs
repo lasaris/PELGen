@@ -16,6 +16,7 @@ public static class TeacherGenerator
         IdService.ResetService();
         SprinkleService.ResetService();
         ReactiveStateService.ResetService();
+        FixedTimeStateService.ResetService();
         Collector.CreateCollectorMap();
 
         // Prepare Actors

@@ -139,26 +139,29 @@ public static class StudentGenerator
 
 
         var submitHomeworkRules = new StateRules(true, -1, 0, null, enrolledCourseSet);
+        var deadlineHomework1 = new DateTime(2023, 1, 15);
+        var deadlineHomework2 = new DateTime(2023, 1, 29);
+        var deadlineHomework3 = new DateTime(2023, 2, 12);
 
         var submitHomework1 = new ProcessState(
             EActivityType.CreateFile,
             hw1,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15), ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 1, 9), deadlineHomework1, ETimeFrameDistribution.Exponential)
         );
 
         var submitHomework2 = new ProcessState(
             EActivityType.CreateFile,
             hw2,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29), ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 1, 23), deadlineHomework2, ETimeFrameDistribution.Exponential)
         );
 
         var submitHomework3 = new ProcessState(
             EActivityType.CreateFile,
             hw3,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12), ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 2, 6), deadlineHomework3, ETimeFrameDistribution.Exponential)
         );
 
         var removeHomework1 = new ProcessState(
@@ -680,31 +683,26 @@ public static class StudentGenerator
             submitRopotSet
         );
 
-        // TODO: Create as IntervalSprinkle (from given deadline of HW)
         // TODO: Register offset for each seminar group. Each student in seminar group should receive homework at the same time.
-        // Now it also happens that someone submits -> receives points -> deletes hw
-        var receivePointsHomework1 = new DynamicSprinkleState(
+        var receivePointsHomework1 = new FixedTimeState(
             EActivityType.ReceivePoints,
             hw1,
-            new HashSet<ProcessState>() { submitHomework1 },
-            TimeSpan.FromDays(7),
-            ETimeFrameDistribution.Linear
-        );
+            deadlineHomework1 + TimeSpan.FromDays(5),
+            submitHomework1
+            );
 
-        var receivePointsHomework2 = new DynamicSprinkleState(
+        var receivePointsHomework2 = new FixedTimeState(
             EActivityType.ReceivePoints,
             hw2,
-            new HashSet<ProcessState>() { submitHomework2 },
-            TimeSpan.FromDays(7),
-            ETimeFrameDistribution.Linear
+            deadlineHomework2 + TimeSpan.FromDays(5),
+            submitHomework2
         );
 
-        var receivePointsHomework3 = new DynamicSprinkleState(
+        var receivePointsHomework3 = new FixedTimeState(
             EActivityType.ReceivePoints,
             hw3,
-            new HashSet<ProcessState>() { submitHomework3 },
-            TimeSpan.FromDays(7),
-            ETimeFrameDistribution.Linear
+            deadlineHomework3 + TimeSpan.FromDays(5),
+            submitHomework3
         );
 
         foreach (var student in students)
@@ -714,6 +712,7 @@ public static class StudentGenerator
             StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 4, 1));
             var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
             SprinkleService.RunSprinkling(filledActorFrame);
+            FixedTimeStateService.RunFixedStatesWithPreceding(filledActorFrame);
         }
 
         // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
