@@ -393,110 +393,6 @@ public static class StudentGenerator
             timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5))
         );
 
-        var attendSeminar1 = new DynamicSprinkleState(
-            EActivityType.ReceiveAttendance,
-            seminarWeek1,
-            new HashSet<ProcessState>() { openRopot1 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var attendSeminar2 = new DynamicSprinkleState(
-            EActivityType.ReceiveAttendance,
-            seminarWeek2,
-            new HashSet<ProcessState>() { openRopot2 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var attendSeminar3 = new DynamicSprinkleState(
-            EActivityType.ReceiveAttendance,
-            seminarWeek3,
-            new HashSet<ProcessState>() { openRopot3 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var attendSeminar4 = new DynamicSprinkleState(
-            EActivityType.ReceiveAttendance,
-            seminarWeek4,
-            new HashSet<ProcessState>() { openRopot4 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var attendSeminar5 = new DynamicSprinkleState(
-            EActivityType.ReceiveAttendance,
-            seminarWeek5,
-            new HashSet<ProcessState>() { openRopot5 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var attendSeminar6 = new DynamicSprinkleState(
-            EActivityType.ReceiveAttendance,
-            seminarWeek6,
-            new HashSet<ProcessState>() { openRopot6 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var absentSeminar1 = new DynamicSprinkleState(
-            EActivityType.ReceiveAbsence,
-            seminarWeek1,
-            new HashSet<ProcessState>() { openRopot1 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var absentSeminar2 = new DynamicSprinkleState(
-            EActivityType.ReceiveAbsence,
-            seminarWeek2,
-            new HashSet<ProcessState>() { openRopot2 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var absentSeminar3 = new DynamicSprinkleState(
-            EActivityType.ReceiveAbsence,
-            seminarWeek3,
-            new HashSet<ProcessState>() { openRopot3 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var absentSeminar4 = new DynamicSprinkleState(
-            EActivityType.ReceiveAbsence,
-            seminarWeek4,
-            new HashSet<ProcessState>() { openRopot4 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var absentSeminar5 = new DynamicSprinkleState(
-            EActivityType.ReceiveAbsence,
-            seminarWeek5,
-            new HashSet<ProcessState>() { openRopot5 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        var absentSeminar6 = new DynamicSprinkleState(
-            EActivityType.ReceiveAbsence,
-            seminarWeek6,
-            new HashSet<ProcessState>() { openRopot6 },
-            TimeSpan.FromHours(1),
-            ETimeFrameDistribution.ReverseExponential
-        );
-        
-        // create mutexes for attendance and absence
-        var seminarAttendanceAbsenceMutex1 = new DynamicSprinkleMutex(attendSeminar1, absentSeminar1, 0.9f);
-        var seminarAttendanceAbsenceMutex2 = new DynamicSprinkleMutex(attendSeminar2, absentSeminar2, 0.9f);
-        var seminarAttendanceAbsenceMutex3 = new DynamicSprinkleMutex(attendSeminar3, absentSeminar3, 0.9f);
-        var seminarAttendanceAbsenceMutex4 = new DynamicSprinkleMutex(attendSeminar4, absentSeminar4, 0.9f);
-        var seminarAttendanceAbsenceMutex5 = new DynamicSprinkleMutex(attendSeminar5, absentSeminar5, 0.9f);
-        var seminarAttendanceAbsenceMutex6 = new DynamicSprinkleMutex(attendSeminar6, absentSeminar6, 0.9f);
-
         var examRules = new StateRules(false, 1, 0,
             new Dictionary<EActivityType, float>()
                 { { EActivityType.PassCourse, 0.5f }, { EActivityType.RegisterExamTerm, 0.5f } });
@@ -793,6 +689,8 @@ public static class StudentGenerator
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
         
         // TODO: Implement autosave for ropots (every 1 minute)
+        
+        // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (the mutex could have strategy to evaluate if ropoot was opened/submitted previously)
         
         // TODO: Implement bad actor (add transitions to skip homework submission...). This depends on scenario rules, which define how many homeworks can be skipped.
 
