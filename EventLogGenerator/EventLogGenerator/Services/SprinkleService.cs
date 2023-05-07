@@ -153,7 +153,8 @@ public static class SprinkleService
         {
             if (!SprinkleTimeMap[sprinkle].Any())
             {
-                throw new InvalidSprinklerState("Sprinkle must have at least one timeframe created");
+                // This means that currently the sprinkle cannot be applied
+                continue;
             }
 
             for (int i = 0; i < sprinkle.Passes; i++)

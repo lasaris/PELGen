@@ -477,39 +477,39 @@ public static class StudentGenerator
         enrollCourse.AddFollowingStates((registerSeminarGroup1, 1 / 3f), (registerSeminarGroup2, 1 / 3f),
             (registerSeminarGroup3, 1 / 3f));
         registerSeminarGroup1.AddFollowingStates((registerSeminarGroup2, 0.04f), (registerSeminarGroup3, 0.04f),
-            (openRopot1, 0.92f));
+            (openRopot1, 0.85f), (openRopot2, 0.05f));
         registerSeminarGroup2.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup3, 0.04f),
-            (openRopot1, 0.92f));
+            (openRopot1, 0.85f), (openRopot2, 0.05f));
         registerSeminarGroup3.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup2, 0.04f),
-            (openRopot1, 0.92f));
+            (openRopot1, 0.85f), (openRopot2, 0.05f));
         // ropot 1
         openRopot1.AddFollowingStates((saveRopot1, 0.8f), (submitRopot1, 0.2f));
         saveRopot1.AddFollowingStates((submitRopot1, 0.85f), (saveRopot1, 0.15f));
-        submitRopot1.AddFollowingStates((openRopot2, 1f));
+        submitRopot1.AddFollowingStates((openRopot2, 0.90f), (submitHomework1, 0.5f), (openRopot3, 0.05f));
         // ropot 2
         openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
         saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
-        submitRopot2.AddFollowingStates((submitHomework1, 0.95f), (openRopot3, 0.05f));
+        submitRopot2.AddFollowingStates((submitHomework1, 0.90f), (openRopot3, 0.05f), (openRopot4, 0.05f));
         // hw 1
-        submitHomework1.AddFollowingStates((openRopot3, 0.8f), (readHomework1, 0.2f));
+        submitHomework1.AddFollowingStates((openRopot3, 0.75f), (readHomework1, 0.2f), (openRopot4, 0.05f));
         readHomework1.AddFollowingStates((openRopot3, 0.8f), (removeHomework1, 0.2f));
         removeHomework1.AddFollowingStates((submitHomework1, 1f));
         // ropot 3
         openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
         saveRopot3.AddFollowingStates((submitRopot3, 0.85f), (saveRopot3, 0.15f));
-        submitRopot3.AddFollowingStates((openRopot4, 1f));
+        submitRopot3.AddFollowingStates((openRopot4, 0.90f), (submitHomework2, 0.05f), (openRopot5, 0.05f));
         // ropot 4
         openRopot4.AddFollowingStates((saveRopot4, 0.8f), (submitRopot4, 0.2f));
         saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
-        submitRopot4.AddFollowingStates((submitHomework2, 0.95f), ((openRopot5, 0.05f)));
+        submitRopot4.AddFollowingStates((submitHomework2, 0.90f), (openRopot5, 0.05f), (openRopot6, 0.05f));
         // hw 2
-        submitHomework2.AddFollowingStates((openRopot5, 0.8f), (readHomework2, 0.2f));
+        submitHomework2.AddFollowingStates((openRopot5, 0.75f), (readHomework2, 0.2f), (openRopot6, 0.05f));
         readHomework2.AddFollowingStates((openRopot5, 0.8f), (removeHomework2, 0.2f));
         removeHomework2.AddFollowingStates((submitHomework2, 1f));
         // ropot 5
         openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
         saveRopot5.AddFollowingStates((submitRopot5, 0.85f), (saveRopot5, 0.15f));
-        submitRopot5.AddFollowingStates((openRopot6, 1f));
+        submitRopot5.AddFollowingStates((openRopot6, 0.90f), (submitHomework3, 0.05f), (registerTerm1, 0.05f));
         // ropot 6
         openRopot6.AddFollowingStates((saveRopot6, 0.8f), (submitRopot6, 0.2f));
         saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
@@ -538,60 +538,6 @@ public static class StudentGenerator
             { submitRopot1, submitRopot2, submitRopot3, submitRopot4, submitRopot5, submitRopot6 };
 
         // Create sprinkles
-        var readStudyMaterials1 = new SprinkleState(
-            EActivityType.ReadFile,
-            materialsWeek1,
-            new HashSet<ProcessState>() { registerSeminarGroup1, registerSeminarGroup2, registerSeminarGroup3 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
-        );
-
-        var readStudyMaterials2 = new SprinkleState(
-            EActivityType.ReadFile,
-            materialsWeek2,
-            new HashSet<ProcessState>() { submitRopot1 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
-        );
-
-        var readStudyMaterials3 = new SprinkleState(
-            EActivityType.ReadFile,
-            materialsWeek3,
-            new HashSet<ProcessState>() { submitRopot2 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
-        );
-
-        var readStudyMaterials4 = new SprinkleState(
-            EActivityType.ReadFile,
-            materialsWeek4,
-            new HashSet<ProcessState>() { submitRopot3 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
-        );
-
-        var readStudyMaterials5 = new SprinkleState(
-            EActivityType.ReadFile,
-            materialsWeek5,
-            new HashSet<ProcessState>() { submitRopot4 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
-        );
-
-        var readStudyMaterials6 = new SprinkleState(
-            EActivityType.ReadFile,
-            materialsWeek6,
-            new HashSet<ProcessState>() { submitRopot5 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
-        );
-
         var viewRopot1 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot1,
@@ -692,8 +638,8 @@ public static class StudentGenerator
         
         // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (the mutex could have strategy to evaluate if ropoot was opened/submitted previously)
         
-        // TODO: Implement bad actor (add transitions to skip homework submission...). This depends on scenario rules, which define how many homeworks can be skipped.
-
         // TODO: Implement attendance marking simultaneously for all students and with marking absence
+        
+        // TODO: ReadStudyMaterials sprinkle based purely on time of study material creation
     }
 }
