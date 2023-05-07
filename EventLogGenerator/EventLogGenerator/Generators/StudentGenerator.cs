@@ -724,7 +724,5 @@ public static class StudentGenerator
         // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (the mutex could have strategy to evaluate if ropoot was opened/submitted previously)
         
         // TODO: Implement attendance marking simultaneously for all students and with marking absence
-        
-        // TODO: ReadStudyMaterials sprinkle based purely on time of study material creation
     }
 }
