@@ -593,7 +593,7 @@ public static class StudentGenerator
         // ropot 2
         openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
         saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
-        submitRopot2.AddFollowingStates((submitHomework1, 1f));
+        submitRopot2.AddFollowingStates((submitHomework1, 0.95f), (openRopot3, 0.05f));
         // hw 1
         submitHomework1.AddFollowingStates((openRopot3, 0.8f), (readHomework1, 0.2f));
         readHomework1.AddFollowingStates((openRopot3, 0.8f), (removeHomework1, 0.2f));
@@ -605,7 +605,7 @@ public static class StudentGenerator
         // ropot 4
         openRopot4.AddFollowingStates((saveRopot4, 0.8f), (submitRopot4, 0.2f));
         saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
-        submitRopot4.AddFollowingStates((submitHomework2, 1f));
+        submitRopot4.AddFollowingStates((submitHomework2, 0.95f), ((openRopot5, 0.05f)));
         // hw 2
         submitHomework2.AddFollowingStates((openRopot5, 0.8f), (readHomework2, 0.2f));
         readHomework2.AddFollowingStates((openRopot5, 0.8f), (removeHomework2, 0.2f));
@@ -617,7 +617,7 @@ public static class StudentGenerator
         // ropot 6
         openRopot6.AddFollowingStates((saveRopot6, 0.8f), (submitRopot6, 0.2f));
         saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
-        submitRopot6.AddFollowingStates((submitHomework3, 1f));
+        submitRopot6.AddFollowingStates((submitHomework3, 0.95f), (registerTerm1, 0.05f));
         // hw 3
         submitHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (readHomework3, 0.2f));
         readHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (removeHomework3, 0.2f));
@@ -752,6 +752,7 @@ public static class StudentGenerator
 
         // TODO: Create as IntervalSprinkle (from given deadline of HW)
         // TODO: Register offset for each seminar group. Each student in seminar group should receive homework at the same time.
+        // Now it also happens that someone submits -> receives points -> deletes hw
         var receivePointsHomework1 = new DynamicSprinkleState(
             EActivityType.ReceivePoints,
             hw1,
@@ -794,8 +795,6 @@ public static class StudentGenerator
         // TODO: Implement autosave for ropots (every 1 minute)
         
         // TODO: Implement bad actor (add transitions to skip homework submission...). This depends on scenario rules, which define how many homeworks can be skipped.
-        
-        // TODO: Implement points for each homework, ropot, ... this is only internal for applying global scenario rules
 
         // TODO: Implement attendance marking simultaneously for all students and with marking absence
     }
