@@ -227,6 +227,8 @@ public static class SprinkleService
                 }
             }
         }
+        
+        RunIntervalSprinkles(filledActorFrame.Actor);
     }
 
     public static void ResetService()
@@ -235,5 +237,6 @@ public static class SprinkleService
         DynamicSprinkles = new();
         SprinkleTimeMap = new();
         SprinkleStack = new();
+        IntervalSprinkleStates = new();
     }
 }

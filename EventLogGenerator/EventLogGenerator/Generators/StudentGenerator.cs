@@ -99,6 +99,7 @@ public static class StudentGenerator
 
         // Useful properties
         var semesterEnd = new DateTime(2023, 3, 1);
+        var examRegistrationEndTerm3 = new DateTime(2023, 2, 24);
 
         // Prepare states
         var enrollCourse = new ProcessState(
@@ -511,7 +512,7 @@ public static class StudentGenerator
             course,
             new StateRules(true, 1, 0, null, enrolledCourseSet,
                 new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
-            new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
+            new TimeFrame(examRegistrationEndTerm3, semesterEnd),
             true
         );
 
@@ -520,7 +521,7 @@ public static class StudentGenerator
             course,
             new StateRules(true, 1, 0, null, enrolledCourseSet,
                 new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
-            new TimeFrame(new DateTime(2023, 2, 8), semesterEnd),
+            new TimeFrame(examRegistrationEndTerm3, semesterEnd),
             true
         );
 
@@ -589,6 +590,42 @@ public static class StudentGenerator
             { submitRopot1, submitRopot2, submitRopot3, submitRopot4, submitRopot5, submitRopot6 };
 
         // Create sprinkles
+        var readStudyMaterials1 = new IntervalSprinkleState(
+            EActivityType.ReadFile,
+            materialsWeek1,
+            new TimeFrame(new DateTime(2023, 1, 2), examRegistrationEndTerm3)
+        );
+        
+        var readStudyMaterials2 = new IntervalSprinkleState(
+            EActivityType.ReadFile,
+            materialsWeek2,
+            new TimeFrame(new DateTime(2023, 1, 9), examRegistrationEndTerm3)
+        );
+        
+        var readStudyMaterials3 = new IntervalSprinkleState(
+            EActivityType.ReadFile,
+            materialsWeek3,
+            new TimeFrame(new DateTime(2023, 1, 16), examRegistrationEndTerm3)
+        );
+        
+        var readStudyMaterials4 = new IntervalSprinkleState(
+            EActivityType.ReadFile,
+            materialsWeek4,
+            new TimeFrame(new DateTime(2023, 1, 23), examRegistrationEndTerm3)
+        );
+        
+        var readStudyMaterials5 = new IntervalSprinkleState(
+            EActivityType.ReadFile,
+            materialsWeek5,
+            new TimeFrame(new DateTime(2023, 1, 30), examRegistrationEndTerm3)
+        );
+        
+        var readStudyMaterials6 = new IntervalSprinkleState(
+            EActivityType.ReadFile,
+            materialsWeek6,
+            new TimeFrame(new DateTime(2023, 2, 6), examRegistrationEndTerm3)
+        );
+        
         var viewRopot1 = new SprinkleState(
             EActivityType.ViewRopot,
             ropot1,
