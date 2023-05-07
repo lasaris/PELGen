@@ -218,7 +218,8 @@ public static class SprinkleService
                     DateTime endTime = stateTimePair.Item2;
                     List<DateTime> timeStamps = new();
                     DateTime currentTime = (DateTime)beginTime + sprinkle.Period;
-                    while (currentTime < endTime)
+                    // Dirty hack to compare the whole seconds
+                    while (currentTime.Ticks / TimeSpan.TicksPerSecond < endTime.Ticks / TimeSpan.TicksPerSecond)
                     {
                         AddPeriodSprinkle(sprinkle, filledActorFrame.Actor, currentTime);
                         currentTime += sprinkle.Period;
