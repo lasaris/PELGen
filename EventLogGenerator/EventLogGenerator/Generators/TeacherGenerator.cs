@@ -59,42 +59,59 @@ public static class TeacherGenerator
             vaultHomework3,
             new DateTime(2023, 2, 6)
         );
+        
+        // Create study materials process
 
-        var createStudyMaterials1 = new FixedTimeState(
+        var defaultRules = new StateRules(true);
+
+        var createStudyMaterials1 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek1,
-            new DateTime(2022, 12, 24)
+            defaultRules,
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 24, 0, 1, 0))
         );
 
-        var createStudyMaterials2 = new FixedTimeState(
+        var createStudyMaterials2 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek2,
-            new DateTime(2023, 1, 03)
+            defaultRules,
+            new TimeFrame(new DateTime(2023, 1, 03), new DateTime(2023, 1, 03, 0, 1, 0))
         );
 
-        var createStudyMaterials3 = new FixedTimeState(
+        var createStudyMaterials3 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek3,
-            new DateTime(2023, 1, 10)
+            defaultRules,
+            new TimeFrame(new DateTime(2023, 1, 10), new DateTime(2023, 1, 10, 0, 1, 0))
         );
 
-        var createStudyMaterials4 = new FixedTimeState(
+        var createStudyMaterials4 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek4,
-            new DateTime(2023, 1, 17)
+            defaultRules,
+            new TimeFrame(new DateTime(2023, 1, 17), new DateTime(2023, 1, 17, 0, 1, 0))
         );
 
-        var createStudyMaterials5 = new FixedTimeState(
+        var createStudyMaterials5 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek5,
-            new DateTime(2023, 1, 24)
+            defaultRules,
+            new TimeFrame(new DateTime(2023, 1, 24), new DateTime(2023, 1, 24, 0, 1, 0))
         );
 
-        var createStudyMaterials6 = new FixedTimeState(
+        var createStudyMaterials6 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek6,
-            new DateTime(2023, 1, 31)
+            defaultRules,
+            new TimeFrame(new DateTime(2023, 1, 31), new DateTime(2023, 1, 31, 0, 1, 0)),
+            true
         );
+        
+        createStudyMaterials1.AddFollowingStates((createStudyMaterials2, 1f));
+        createStudyMaterials2.AddFollowingStates((createStudyMaterials3, 1f));
+        createStudyMaterials3.AddFollowingStates((createStudyMaterials4, 1f));
+        createStudyMaterials4.AddFollowingStates((createStudyMaterials5, 1f));
+        createStudyMaterials5.AddFollowingStates((createStudyMaterials6, 1f));
 
         // Reactive states
 
@@ -135,10 +152,13 @@ public static class TeacherGenerator
             new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2023, 3, 1))
         );
 
-        // FIXME: Instead of parsing teachers[0], there should be some general strategy implemented for each fixed state/all of them
-        // to tell, which actors should participate (i.e. parsing all actors and then EStrategy.First,
-        // which would suggest all fixed states are run by the fist teacher only)
-        FixedTimeStateService.RunFixedStates(teachers[0]);
+        // FIXME: Instead of parsing teachers[0], there should be some general strategy
+        // to tell, which actors should participate (i.e. parsing all actors and then EStrategy.First)
+        var actorFrame = new ActorFrame(teachers[0], createStudyMaterials1);
+        // FIXME: StateEvaluator.RunProcess() can take these parameters
+        StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 2, 1));
+        var filledActorFrame = StateEvaluator.RunProcess(createStudyMaterials1);
+        
         ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), teachers);
         
         foreach (var actor in teachers)
