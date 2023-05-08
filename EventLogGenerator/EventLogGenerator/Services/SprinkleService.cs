@@ -38,6 +38,9 @@ public static class SprinkleService
     
     // Track periodic sprinkles
     public static HashSet<PeriodicSprinkleState> PeriodicSprinkles = new();
+    
+    // Track scenario sprinkles
+    public static HashSet<ScenarioSetSprinkle> ScenarioSprinkles = new();
 
     private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp, string? additional = null)
     {
@@ -113,6 +116,11 @@ public static class SprinkleService
     public static void LoadPeriodicSprinkle(PeriodicSprinkleState sprinkle)
     {
         PeriodicSprinkles.Add(sprinkle);
+    }
+    
+    public static void LoadScenarioSprinkle(ScenarioSetSprinkle sprinkle)
+    {
+        ScenarioSprinkles.Add(sprinkle);
     }
 
     public static void RunIntervalSprinkles(Actor actor)
@@ -236,6 +244,34 @@ public static class SprinkleService
                     {
                         AddPeriodSprinkle(sprinkle, filledActorFrame.Actor, currentTime);
                         currentTime += sprinkle.Period;
+                    }
+                    beginTime = null;
+                }
+            }
+        }
+        
+        // Sprinkle scenarios
+        foreach (var scenario in ScenarioSprinkles)
+        {
+            // Randomly skipped based on scenario chance to occur
+            if (RandomService.GetNextDouble() > scenario.ChanceToOccur)
+            {
+                continue;
+            }
+            
+            DateTime? beginTime = null;
+            foreach (var stateTimePair in filledActorFrame.VisitedStack)
+            {
+                if (beginTime == null && scenario.StartStates.Contains(stateTimePair.Item1))
+                {
+                    beginTime = stateTimePair.Item2;
+                } else if (beginTime != null && scenario.EndStates.Contains(stateTimePair.Item1))
+                {
+                    DateTime currentTime = (DateTime)beginTime;
+                    foreach (var stateOffsetPair in scenario.ScenarioSprinkleOffsets)
+                    {
+                        currentTime += stateOffsetPair.Item2;
+                        OnSprinkleAdd(stateOffsetPair.Item1, filledActorFrame.Actor, currentTime);
                     }
                     beginTime = null;
                 }

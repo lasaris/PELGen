@@ -210,6 +210,15 @@ public static class TeacherGenerator
             new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2023, 3, 1))
         );
 
+        var deleteIncompleteRopotSession = new ReactiveScenario(
+            new List<EActivityType>()
+            {
+                EActivityType.SaveRopot, EActivityType.OpenRopot
+            },
+            EActivityType.SaveRopot,
+            EActivityType.DeleteRopotSession
+        );
+
         // FIXME: Instead of parsing teachers[0], there should be some general strategy
         // to tell, which actors should participate (i.e. parsing all actors and then EStrategy.First)
         var actorFrame = new ActorFrame(teachers[0], createStudyMaterials1);
@@ -225,7 +234,5 @@ public static class TeacherGenerator
         }
         
         // TODO: At fixed time create scan files for student exams
-        
-        // TODO: Activity of deleting ropot sessions
     }
 }

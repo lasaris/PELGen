@@ -27,6 +27,7 @@ public enum EActivityType
     MarkAbsence,
     CreateExamTerm,
     GiveFinalGrade,
+    DeleteRopotSession,
     // File operations
     ReadFile,
     DeleteFile,

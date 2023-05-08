@@ -226,17 +226,17 @@ public static class StudentGenerator
         var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
 
         var openRopotRulesSeminar1 =
-            new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
+            new StateRules(true, 1, 0, openRopotFollowing);
         var openRopotRulesSeminar2 =
-            new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
+            new StateRules(true, 1, 0, openRopotFollowing);
         var openRopotRulesSeminar3 =
-            new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
+            new StateRules(true, 1, 0, openRopotFollowing);
         var openRopotRulesSeminar4 =
-            new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
+            new StateRules(true, 1, 0, openRopotFollowing);
         var openRopotRulesSeminar5 =
-            new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
+            new StateRules(true, 1, 0, openRopotFollowing);
         var openRopotRulesSeminar6 =
-            new StateRules(true, 1, 0, openRopotFollowing, new HashSet<ProcessState>() { });
+            new StateRules(true, 1, 0, openRopotFollowing);
 
         var openRopot1 = new ProcessState(
             EActivityType.OpenRopot,
@@ -703,7 +703,74 @@ public static class StudentGenerator
             deadlineHomework3 + TimeSpan.FromDays(5),
             submitHomework3
         );
-
+        
+        // Scenario sprinkles
+        var internetFailureRopot1 = new ScenarioSetSprinkle(
+            new HashSet<ProcessState>(){ openRopot1 },
+            new HashSet<ProcessState>(){ submitRopot1 },
+            new List<(ABaseState, TimeSpan)>()
+            {
+                (saveRopot1, TimeSpan.FromMinutes(1)),
+                (openRopot1, TimeSpan.FromMinutes(1)),
+            },
+            0.04f
+        );
+        
+        var internetFailureRopot2 = new ScenarioSetSprinkle(
+            new HashSet<ProcessState>(){ openRopot2 },
+            new HashSet<ProcessState>(){ submitRopot2 },
+            new List<(ABaseState, TimeSpan)>()
+            {
+                (saveRopot2, TimeSpan.FromMinutes(1)),
+                (openRopot2, TimeSpan.FromMinutes(1)),
+            },
+            0.04f
+        );
+        
+        var internetFailureRopot3 = new ScenarioSetSprinkle(
+            new HashSet<ProcessState>(){ openRopot3 },
+            new HashSet<ProcessState>(){ submitRopot3 },
+            new List<(ABaseState, TimeSpan)>()
+            {
+                (saveRopot3, TimeSpan.FromMinutes(1)),
+                (openRopot3, TimeSpan.FromMinutes(1)),
+            },
+            0.04f
+        );
+        
+        var internetFailureRopot4 = new ScenarioSetSprinkle(
+            new HashSet<ProcessState>(){ openRopot4 },
+            new HashSet<ProcessState>(){ submitRopot4 },
+            new List<(ABaseState, TimeSpan)>()
+            {
+                (saveRopot4, TimeSpan.FromMinutes(1)),
+                (openRopot4, TimeSpan.FromMinutes(1)),
+            },
+            0.04f
+        );
+        
+        var internetFailureRopot5 = new ScenarioSetSprinkle(
+            new HashSet<ProcessState>(){ openRopot5 },
+            new HashSet<ProcessState>(){ submitRopot5 },
+            new List<(ABaseState, TimeSpan)>()
+            {
+                (saveRopot5, TimeSpan.FromMinutes(1)),
+                (openRopot5, TimeSpan.FromMinutes(1)),
+            },
+            0.04f
+        );
+        
+        var internetFailureRopot6 = new ScenarioSetSprinkle(
+            new HashSet<ProcessState>(){ openRopot6 },
+            new HashSet<ProcessState>(){ submitRopot6 },
+            new List<(ABaseState, TimeSpan)>()
+            {
+                (saveRopot6, TimeSpan.FromMinutes(1)),
+                (openRopot6, TimeSpan.FromMinutes(1)),
+            },
+            0.04f
+        );
+        
         foreach (var student in students)
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
@@ -713,8 +780,6 @@ public static class StudentGenerator
             SprinkleService.RunSprinkling(filledActorFrame);
             FixedTimeStateService.RunFixedStatesWithPreceding(filledActorFrame);
         }
-
-        // TODO: For Student implement internet failure (open -> save -> reopen -> save -> submit). For Teacher, sprinkle some deletion of ROPOT sessions when student internet fails.
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
         

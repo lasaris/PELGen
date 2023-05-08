@@ -18,8 +18,11 @@ public static class ReactiveStateService
 
     // Maps IDs of actors that are reacted to actors that are reacting to them
     public static Dictionary<uint, Actor> ReactingActorsMap = new();
+    
+    // Stores reactive scnearios
+    public static HashSet<ReactiveScenario> ReactiveScenarios = new();
 
-    private static void OnReactionAdd(ReactiveState state, Actor actor, DateTime timeStamp, string? additional = null)
+    private static void OnStateEnter(ABaseState state, Actor actor, DateTime timeStamp, string? additional = null)
     {
         var newEvent = new StateEnteredEvent(state, actor, timeStamp, additional);
         StateEntered.Invoke(null, newEvent);
@@ -27,10 +30,10 @@ public static class ReactiveStateService
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Reactive state {state.ActivityType} - {state.Resource.Name}");
     }
 
-    private static void AddReactiveState(ReactiveState reactiveState, DateTime reactionTime, uint actorId)
+    private static void AddReactiveState(ABaseState reactiveState, DateTime reactionTime, uint actorId)
     {
         // FIXME: The adding of additional column should be generalized. Perhaps not always you want to add additional ID as StudentId column data?
-        OnReactionAdd(reactiveState, ReactingActorsMap[actorId], reactionTime, actorId.ToString());
+        OnStateEnter(reactiveState, ReactingActorsMap[actorId], reactionTime, actorId.ToString());
     }
 
     public static void RunReactiveStates(Dictionary<uint, List<(ABaseState, DateTime)>> idToStatesMap,
@@ -92,11 +95,60 @@ public static class ReactiveStateService
                 }
             }
         }
+        
+        // Execute reactive scenario
+        foreach (var actorStatesPair in idToStatesMap)
+        {
+            foreach (var scenario in ReactiveScenarios)
+            {
+                var stateTimePairs = actorStatesPair.Value;
+
+                int scenarioIndex = 0;
+                for (int i = 0; i < stateTimePairs.Count; i++)
+                {
+                    var stateTimePair = stateTimePairs[i];
+
+                    if (stateTimePair.Item1.ActivityType == scenario.MatchingPattern[scenarioIndex])
+                    {
+                        ++scenarioIndex;
+                    }
+                    else
+                    {
+                        scenarioIndex = 0;
+                    }
+
+                    // found the scenario to be matching
+                    if (scenarioIndex == scenario.MatchingPattern.Count)
+                    {
+                        int firstMatchedIndex = i - (scenarioIndex - 1);
+
+                        for (int j = firstMatchedIndex; j < firstMatchedIndex + scenario.MatchingPattern.Count; j++)
+                        {
+                            if (stateTimePairs[j].Item1.ActivityType == scenario.MatchTimeWith)
+                            {
+                                var newState = new DummyState(scenario.Reaction, stateTimePairs[j].Item1.Resource);
+                                
+                                // FIXME: This timeSpan offset for ropot session deletion is artificial and should be stored within scenario
+                                AddReactiveState(newState, stateTimePair.Item2 + TimeSpan.FromSeconds(20), actorStatesPair.Key);
+                                break;
+                            }
+                        }
+                        
+                        scenarioIndex = 0;
+                    }
+                }
+            }
+        }
     }
 
     public static void LoadFixedState(ReactiveState reactiveState)
     {
         ReactiveStates.Add(reactiveState);
+    }
+
+    public static void LoadReactiveScenario(ReactiveScenario reactiveScenario)
+    {
+        ReactiveScenarios.Add(reactiveScenario);
     }
 
     public static void ResetService()
