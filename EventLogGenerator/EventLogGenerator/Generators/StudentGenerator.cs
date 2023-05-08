@@ -31,35 +31,13 @@ public static class StudentGenerator
         // Setup seminar offsets
         var seminarActivites = new HashSet<EActivityType>()
         {
-            EActivityType.ReceiveAttendance,
             EActivityType.OpenRopot,
             EActivityType.SaveRopot,
             EActivityType.SubmitRopot,
-            EActivityType.ViewRopot
         };
-        int third = students.Count / 3;
         var firstOffset = TimeSpan.Zero;
-        List<Actor> firstThird = students.GetRange(0, third);
-        var secondOffset = TimeSpan.FromDays(1);
-        List<Actor> secondThird = students.GetRange(third, third);
-        var thirdOffset = TimeSpan.FromDays(2);
-        List<Actor> thirdThird = students.GetRange(third * 2, students.Count - third * 2);
-
-        // Set the offset on each group of students
-        foreach (Actor student in firstThird)
-        {
-            ActorService.RegisterActivitiesOffset(student, seminarActivites, firstOffset);
-        }
-
-        foreach (Actor student in secondThird)
-        {
-            ActorService.RegisterActivitiesOffset(student, seminarActivites, secondOffset);
-        }
-
-        foreach (Actor student in thirdThird)
-        {
-            ActorService.RegisterActivitiesOffset(student, seminarActivites, thirdOffset);
-        }
+        var secondOffset = TimeSpan.FromHours(2);
+        var thirdOffset = TimeSpan.FromHours(4);
 
         // Prepare Resources
         var course = new Resource("Our Course");
@@ -115,21 +93,36 @@ public static class StudentGenerator
             EActivityType.RegisterSeminarGroup,
             seminarGroup1,
             new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31)),
+            false,
+            (actor) =>
+            {
+                ActorService.SetActivitiesOffset(actor, seminarActivites, firstOffset);
+            }
         );
 
         var registerSeminarGroup2 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup2,
             new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31)),
+            false,
+            (actor) =>
+            {
+                ActorService.SetActivitiesOffset(actor, seminarActivites, secondOffset);
+            }
         );
 
         var registerSeminarGroup3 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup3,
             new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31))
+            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31)),
+            false,
+            (actor) =>
+            {
+                ActorService.SetActivitiesOffset(actor, seminarActivites, thirdOffset);
+            }
         );
 
         var materialRules =
@@ -539,7 +532,7 @@ public static class StudentGenerator
         // ropot 1
         openRopot1.AddFollowingStates((saveRopot1, 0.8f), (submitRopot1, 0.2f));
         saveRopot1.AddFollowingStates((submitRopot1, 0.85f), (saveRopot1, 0.15f));
-        submitRopot1.AddFollowingStates((openRopot2, 0.90f), (submitHomework1, 0.5f), (openRopot3, 0.05f));
+        submitRopot1.AddFollowingStates((openRopot2, 0.90f), (submitHomework1, 0.05f), (openRopot3, 0.05f));
         // ropot 2
         openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
         saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));

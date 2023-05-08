@@ -3,6 +3,8 @@ using EventLogGenerator.Models.States;
 
 namespace EventLogGenerator.Models;
 
+public delegate void AdditionalActionFunc(Actor currentActor);
+
 public class ProcessState : ABaseState
 {
     // Rules which apply for given state and which lead to the next
@@ -17,13 +19,16 @@ public class ProcessState : ABaseState
     // Indicates if process is finished with this state (can be multiple states)
     public bool IsFinishing;
 
+    public AdditionalActionFunc? Callback;
+
     public ProcessState(EActivityType activity, Resource resource, StateRules rules, TimeFrame timeFrame,
-        bool isFinishing = false) : base(activity, resource)
+        bool isFinishing = false, AdditionalActionFunc? callback = null) : base(activity, resource)
     {
         Rules = rules;
         TimeFrame = timeFrame;
         IsFinishing = isFinishing;
         FollowingMap = new();
+        Callback = callback;
     }
 
     public void AddFollowingState(ProcessState state, float chance)

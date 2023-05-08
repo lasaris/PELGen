@@ -93,7 +93,12 @@ public static class StateEvaluator
 
     private static void JumpNextState(ProcessState newState, DateTime jumpDate, TimeSpan actorOffset)
     {
-        // Update VisitedMap
+        // Perform callback function if possible
+        if (newState.Callback != null)
+        {
+            newState.Callback(CurrentActorFrame.Actor);
+        }
+            // Update VisitedMap
         if (CurrentActorFrame.VisitedMap.ContainsKey(CurrentActorFrame.CurrentState))
         {
             CurrentActorFrame.VisitedMap[CurrentActorFrame.CurrentState] += 1;
