@@ -2,9 +2,9 @@
 
 public static class RandomService
 {
-    private static int seed = 42;
+    private static readonly int _seed = 4269123;
     
-    private static Random _randomGenerator = new(42);
+    private static Random _randomGenerator = new(_seed);
 
     public static double GetNextDouble()
     {

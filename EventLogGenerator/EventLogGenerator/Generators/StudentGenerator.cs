@@ -455,58 +455,58 @@ public static class StudentGenerator
             EActivityType.RegisterExamTerm,
             exam1,
             examRules,
-            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 15))
+            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 19))
         );
 
         var registerTerm2 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam2,
             examRules,
-            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 20))
+            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 22))
         );
 
         var registerTerm3 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam3,
             examRules,
-            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 24))
+            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 26))
         );
 
         var failExam1 = new ProcessState(
             EActivityType.FailExam,
             exam1,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
-            new TimeFrame(new DateTime(2023, 2, 16, 12, 0, 0), new DateTime(2023, 2, 16, 12, 5, 0)));
+            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
 
         var failExam2 = new ProcessState(
             EActivityType.FailExam,
             exam2,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
-            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
+            new TimeFrame(new DateTime(2023, 2, 24, 12, 0, 0), new DateTime(2023, 2, 24, 12, 5, 0)));
 
         var failExam3 = new ProcessState(
             EActivityType.FailExam,
             exam3,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
-            new TimeFrame(new DateTime(2023, 2, 25, 12, 0, 0), new DateTime(2023, 2, 25, 12, 5, 0)));
+            new TimeFrame(new DateTime(2023, 2, 28, 12, 0, 0), new DateTime(2023, 2, 28, 12, 5, 0)));
         
         var passExam1 = new ProcessState(
             EActivityType.PassExam,
             exam1,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
-            new TimeFrame(new DateTime(2023, 2, 16, 12, 0, 0), new DateTime(2023, 2, 16, 12, 5, 0)));
+            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
 
         var passExam2 = new ProcessState(
             EActivityType.PassExam,
             exam2,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
-            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
+            new TimeFrame(new DateTime(2023, 2, 24, 12, 0, 0), new DateTime(2023, 2, 24, 12, 5, 0)));
 
         var passExam3 = new ProcessState(
             EActivityType.PassExam,
             exam3,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
-            new TimeFrame(new DateTime(2023, 2, 25, 12, 0, 0), new DateTime(2023, 2, 25, 12, 5, 0)));
+            new TimeFrame(new DateTime(2023, 2, 28, 12, 0, 0), new DateTime(2023, 2, 28, 12, 5, 0)));
 
         // Finishing processes
         var passCourse = new ProcessState(
@@ -714,8 +714,6 @@ public static class StudentGenerator
             FixedTimeStateService.RunFixedStatesWithPreceding(filledActorFrame);
         }
 
-        // TODO: For Teacher, sprinkle in some deletion of student materials after adding them
-        
         // TODO: For Student implement internet failure (open -> save -> reopen -> save -> submit). For Teacher, sprinkle some deletion of ROPOT sessions when student internet fails.
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
