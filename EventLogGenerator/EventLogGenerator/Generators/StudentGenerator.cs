@@ -476,37 +476,37 @@ public static class StudentGenerator
             EActivityType.FailExam,
             exam1,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
-            new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20)));
+            new TimeFrame(new DateTime(2023, 2, 16, 12, 0, 0), new DateTime(2023, 2, 16, 12, 5, 0)));
 
         var failExam2 = new ProcessState(
             EActivityType.FailExam,
             exam2,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
-            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24)));
+            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
 
         var failExam3 = new ProcessState(
             EActivityType.FailExam,
             exam3,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
-            new TimeFrame(new DateTime(2023, 2, 25), new DateTime(2023, 2, 28)));
+            new TimeFrame(new DateTime(2023, 2, 25, 12, 0, 0), new DateTime(2023, 2, 25, 12, 5, 0)));
         
         var passExam1 = new ProcessState(
             EActivityType.PassExam,
             exam1,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
-            new TimeFrame(new DateTime(2023, 2, 16), new DateTime(2023, 2, 20)));
+            new TimeFrame(new DateTime(2023, 2, 16, 12, 0, 0), new DateTime(2023, 2, 16, 12, 5, 0)));
 
         var passExam2 = new ProcessState(
             EActivityType.PassExam,
             exam2,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
-            new TimeFrame(new DateTime(2023, 2, 21), new DateTime(2023, 2, 24)));
+            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
 
         var passExam3 = new ProcessState(
             EActivityType.PassExam,
             exam3,
             new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
-            new TimeFrame(new DateTime(2023, 2, 25), new DateTime(2023, 2, 28)));
+            new TimeFrame(new DateTime(2023, 2, 25, 12, 0, 0), new DateTime(2023, 2, 25, 12, 5, 0)));
 
         // Finishing processes
         var passCourse = new ProcessState(

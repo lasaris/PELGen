@@ -1,5 +1,6 @@
-﻿using EventLogGenerator.Exceptions;
+﻿using EventLogGenerator.GenerationLogic;
 using EventLogGenerator.Models;
+using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Models.Events;
 using EventLogGenerator.Models.States;
 using EventLogGenerator.Utilities;
@@ -12,10 +13,10 @@ namespace EventLogGenerator.Services;
 public static class SprinkleService
 {
     // Delegate for handling event of entering state
-    public delegate void SprinkleAddedhandler(object sender, SprinkleAddedEvent data);
+    public delegate void StateEnteredHandler(object sender, StateEnteredEvent data);
 
     // Define event for state entering that uses the delegate above
-    public static event SprinkleAddedhandler SprinkleAdded;
+    public static event StateEnteredHandler SprinkleAdded;
 
     // Sprinkles currently ready to be sprinkled into the process
     public static HashSet<SprinkleState> Sprinkles = new();
@@ -38,9 +39,9 @@ public static class SprinkleService
     // Track periodic sprinkles
     public static HashSet<PeriodicSprinkleState> PeriodicSprinkles = new();
 
-    private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp)
+    private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp, string? additional = null)
     {
-        var newEvent = new SprinkleAddedEvent(sprinkle, actor, timeStamp);
+        var newEvent = new StateEnteredEvent(sprinkle, actor, timeStamp, additional);
         SprinkleStack.Add((sprinkle, timeStamp));
         SprinkleAdded.Invoke(null, newEvent);
         // FIXME: Should the logging be done by EventLogger instead?
@@ -62,10 +63,16 @@ public static class SprinkleService
         OnSprinkleAdd(dynamicSprinkle, actor, sprinkleTime);
     }
 
-    private static void AddIntervalSprinkle(IntervalSprinkleState sprinkle, Actor actor)
+    private static void AddIntervalSprinkle(IntervalSprinkleState sprinkle, Actor actor, string? additional = null)
     {
         var pickedTime = sprinkle.TimeInterval.PickTimeByDistribution();
-        OnSprinkleAdd(sprinkle, actor, pickedTime);
+        if (additional == null)
+        {
+            OnSprinkleAdd(sprinkle, actor, pickedTime);
+        } else 
+        {
+            OnSprinkleAdd(sprinkle, actor, pickedTime, additional);
+        }
     }
 
     private static void AddPeriodSprinkle(PeriodicSprinkleState sprinkle, Actor actor, DateTime timestamp)
@@ -112,7 +119,13 @@ public static class SprinkleService
     {
         foreach (var sprinkle in IntervalSprinkleStates)
         {
-            AddIntervalSprinkle(sprinkle, actor);
+            string? additional = null;
+            // FIXME: This is hardcoded and should be somehow abstracted
+            if (sprinkle.ActivityType == EActivityType.VisitStudentRecord)
+            {
+                additional = RandomService.GetNext((int)Collector.GetLastCollectionMaxId()).ToString();
+            }
+            AddIntervalSprinkle(sprinkle, actor, additional);
         }
     }
 

@@ -129,8 +129,6 @@ public static class TeacherGenerator
         );
 
         // Teacher sprinkles
-
-        // TODO: This state should also have an student ID
         var viewStudentRecord = new IntervalSprinkleState(
             EActivityType.VisitStudentRecord,
             studentCourseRecord,
@@ -147,8 +145,6 @@ public static class TeacherGenerator
         {
             SprinkleService.RunIntervalSprinkles(actor);
         }
-        
-        // TODO: For all states, we should also log to which ID the reactions and interval sprinkles map to (something like "StudentId" column)
         
         // TODO: At fixed time create scan files for student exams
         

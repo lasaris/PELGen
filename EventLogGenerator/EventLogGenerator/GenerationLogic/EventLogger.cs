@@ -11,15 +11,6 @@ namespace EventLogGenerator.GenerationLogic;
 /// </summary>
 public static class EventLogger
 {
-    // FIXME: This function should not be needed since StateEnteredEvent already takes generalized ABaseState
-    public static void SprinkleAddedHandler(object sender, SprinkleAddedEvent data)
-    {
-        var processStateFromSprinkle = StateUtils.TransformSprinkleToState(data.Sprinkle);
-        var newProcessStateEvent = new StateEnteredEvent(processStateFromSprinkle, data.Actor, data.TimeStamp);
-
-        StateEnteredHandler(sender, newProcessStateEvent);
-    }
-
     public static void StateEnteredHandler(object sender, StateEnteredEvent data)
     {
         // Prepare string

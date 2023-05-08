@@ -26,6 +26,11 @@ public static class Collector
         return CreatedLogs[LastIndex - 1];
     }
 
+    public static uint GetLastCollectionMaxId()
+    {
+        return CreatedLogs[LastIndex - 1].Keys.Max();
+    }
+
     public static Dictionary<uint, List<(ABaseState, DateTime)>> GetProcessMap(int index)
     {
         if (index > LastIndex || index < 0)
