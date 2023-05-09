@@ -24,7 +24,8 @@ public static class FixedTimeStateService
 
     private static void AddFixedState(FixedTimeState state, Actor actor)
     {
-        OnReactionAdd(state, actor, state.VisitTime);
+        var timeWithActorOffset = state.VisitTime + ActorService.GetActorActivityOffset(actor, state.ActivityType);
+        OnReactionAdd(state, actor, timeWithActorOffset);
     }
 
     public static void RunFixedStates(Actor actor)

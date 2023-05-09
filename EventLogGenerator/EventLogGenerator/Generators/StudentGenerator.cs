@@ -100,6 +100,7 @@ public static class StudentGenerator
             (actor) =>
             {
                 ActorService.SetActivitiesOffset(actor, seminarActivites, firstOffset);
+                ActorService.SetActivitiesOffset(actor, new HashSet<EActivityType>() { EActivityType.ReceivePoints }, TimeSpan.Zero);
             }
         );
 
@@ -112,6 +113,7 @@ public static class StudentGenerator
             (actor) =>
             {
                 ActorService.SetActivitiesOffset(actor, seminarActivites, secondOffset);
+                ActorService.SetActivitiesOffset(actor, new HashSet<EActivityType>() { EActivityType.ReceivePoints }, TimeSpan.FromDays(1));
             }
         );
 
@@ -124,6 +126,7 @@ public static class StudentGenerator
             (actor) =>
             {
                 ActorService.SetActivitiesOffset(actor, seminarActivites, thirdOffset);
+                ActorService.SetActivitiesOffset(actor, new HashSet<EActivityType>() { EActivityType.ReceivePoints }, TimeSpan.FromDays(2));
             }
         );
 
@@ -677,7 +680,6 @@ public static class StudentGenerator
             submitRopotSet
         );
 
-        // TODO: Register offset for each seminar group. Each student in seminar group should receive homework at the same time.
         var receivePointsHomework1 = new FixedTimeState(
             EActivityType.ReceivePoints,
             hw1,
