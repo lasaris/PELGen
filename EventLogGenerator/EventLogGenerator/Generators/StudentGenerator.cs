@@ -34,6 +34,8 @@ public static class StudentGenerator
             EActivityType.OpenRopot,
             EActivityType.SaveRopot,
             EActivityType.SubmitRopot,
+            EActivityType.ReceiveAttendance,
+            EActivityType.ReceiveAbsence,
         };
         var firstOffset = TimeSpan.Zero;
         var secondOffset = TimeSpan.FromHours(2);
@@ -764,6 +766,49 @@ public static class StudentGenerator
             0.04f
         );
         
+        // Conditional sprinkles for attendance marking
+        var attendanceSeminar1 = new ConditionalSprinkle(
+            openRopot1,
+            new DummyState(EActivityType.ReceiveAttendance, seminarWeek1),
+            new DummyState(EActivityType.ReceiveAbsence, seminarWeek1),
+            TimeSpan.FromHours(1)
+        );
+        
+        var attendanceSeminar2 = new ConditionalSprinkle(
+            openRopot2,
+            new DummyState(EActivityType.ReceiveAttendance, seminarWeek2),
+            new DummyState(EActivityType.ReceiveAbsence, seminarWeek2),
+            TimeSpan.FromHours(1)
+        );
+        
+        var attendanceSeminar3 = new ConditionalSprinkle(
+            openRopot3,
+            new DummyState(EActivityType.ReceiveAttendance, seminarWeek3),
+            new DummyState(EActivityType.ReceiveAbsence, seminarWeek3),
+            TimeSpan.FromHours(1)
+        );
+        
+        var attendanceSeminar4 = new ConditionalSprinkle(
+            openRopot4,
+            new DummyState(EActivityType.ReceiveAttendance, seminarWeek4),
+            new DummyState(EActivityType.ReceiveAbsence, seminarWeek4),
+            TimeSpan.FromHours(1)
+        );
+        
+        var attendanceSeminar5 = new ConditionalSprinkle(
+            openRopot5,
+            new DummyState(EActivityType.ReceiveAttendance, seminarWeek5),
+            new DummyState(EActivityType.ReceiveAbsence, seminarWeek5),
+            TimeSpan.FromHours(1)
+        );
+        
+        var attendanceSeminar6 = new ConditionalSprinkle(
+            openRopot6,
+            new DummyState(EActivityType.ReceiveAttendance, seminarWeek6),
+            new DummyState(EActivityType.ReceiveAbsence, seminarWeek6),
+            TimeSpan.FromHours(1)
+        );
+
         foreach (var student in students)
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
@@ -775,8 +820,5 @@ public static class StudentGenerator
         }
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
-        
-         // TODO: FIX absence from seminar should mean that ropot was not opened/saved/submitted (themutex could have strategy to evaluate if ropoot was opened/submitted previously)
-         // TODO: Implement attendance marking simultaneously for all students and with marking absence
     }
 }

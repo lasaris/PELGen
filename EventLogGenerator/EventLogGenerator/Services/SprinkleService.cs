@@ -41,6 +41,9 @@ public static class SprinkleService
     
     // Track scenario sprinkles
     public static HashSet<ScenarioSetSprinkle> ScenarioSprinkles = new();
+    
+    // Track conditional sprinkles
+    public static HashSet<ConditionalSprinkle> ConditionalSprinkles = new();
 
     private static void OnSprinkleAdd(ABaseState sprinkle, Actor actor, DateTime timeStamp, string? additional = null)
     {
@@ -121,6 +124,11 @@ public static class SprinkleService
     public static void LoadScenarioSprinkle(ScenarioSetSprinkle sprinkle)
     {
         ScenarioSprinkles.Add(sprinkle);
+    }
+    
+    public static void LoadConditionalSprinkle(ConditionalSprinkle sprinkle)
+    {
+        ConditionalSprinkles.Add(sprinkle);
     }
 
     public static void RunIntervalSprinkles(Actor actor)
@@ -278,6 +286,27 @@ public static class SprinkleService
             }
         }
         
+        // Sprinkle conditionals
+        foreach (var sprinkle in ConditionalSprinkles)
+        {
+            if (filledActorFrame.VisitedMap.ContainsKey(sprinkle.StateToOccur))
+            {
+                foreach (var stateTimePair in filledActorFrame.VisitedStack)
+                {
+                    if (stateTimePair.Item1 == sprinkle.StateToOccur)
+                    {
+                        OnSprinkleAdd(sprinkle.PositiveState, filledActorFrame.Actor, stateTimePair.Item2 + sprinkle.TimeOffset);
+                    }
+                }
+            }
+            else
+            {
+                var ourTheoreticalTime = sprinkle.StateToOccur.TimeFrame.PickTimeByDistribution();
+                ourTheoreticalTime += ActorService.GetActorActivityOffset(filledActorFrame.Actor, sprinkle.StateToOccur.ActivityType);
+                OnSprinkleAdd(sprinkle.NegativeState, filledActorFrame.Actor, ourTheoreticalTime + sprinkle.TimeOffset);
+            }
+        }
+        
         RunIntervalSprinkles(filledActorFrame.Actor);
     }
 
@@ -288,5 +317,7 @@ public static class SprinkleService
         SprinkleTimeMap = new();
         SprinkleStack = new();
         IntervalSprinkleStates = new();
+        ScenarioSprinkles = new();
+        ConditionalSprinkles = new();
     }
 }
