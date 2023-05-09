@@ -203,6 +203,64 @@ public static class TeacherGenerator
             EActivityType.PassExam
         );
 
+        var examScan1 = new Resource("/re/scan-exam1.png");
+        var examScan2 = new Resource("/re/scan-exam2.png");
+        var examScan3 = new Resource("/re/scan-exam3.png");
+        
+        var addScansPositive1 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.PassExam,
+            "Exam term 1",
+            examScan1,
+            - TimeSpan.FromMinutes(5)
+        );
+        
+        var addScansPositive2 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.PassExam,
+            "Exam term 2",
+            examScan2,
+            - TimeSpan.FromMinutes(5)
+        );
+        
+        var addScansPositive3 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.PassExam,
+            "Exam term 3",
+            examScan3,
+            - TimeSpan.FromMinutes(5)
+        );
+        
+        var addScansNegative1 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.FailExam,
+            "Exam term 1",
+            examScan1,
+            - TimeSpan.FromMinutes(5)
+        );
+        
+        var addScansNegative2 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.FailExam,
+            "Exam term 2",
+            examScan2,
+            - TimeSpan.FromMinutes(5)
+        );
+        
+        var addScansNegative3 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.FailExam,
+            "Exam term 3",
+            examScan3,
+            - TimeSpan.FromMinutes(5)
+        );
+
         // Teacher sprinkles
         var viewStudentRecord = new IntervalSprinkleState(
             EActivityType.VisitStudentRecord,
@@ -232,7 +290,5 @@ public static class TeacherGenerator
         {
             SprinkleService.RunIntervalSprinkles(actor);
         }
-        
-        // TODO: At fixed time create scan files for student exams
     }
 }

@@ -7,12 +7,21 @@ namespace EventLogGenerator.Models;
 public class ReactiveState : ABaseState
 {
     // Activity that should be reacted to
-    public EActivityType ReactTo;
-    
-    public ReactiveState(EActivityType activityType, Resource resource, EActivityType reactTo) :
-        base(activityType, resource)
+    public EActivityType ReactToActivity;
+
+    public string? ReactToResourceName;
+
+    public Resource? OwnResource;
+
+    public TimeSpan Offset;
+
+    public ReactiveState(EActivityType activityType, Resource resource, EActivityType reactToActivity,
+        string? reactToResourceName = null, Resource? ownResource = null, TimeSpan? offset = null) : base(activityType, resource)
     {
-        ReactTo = reactTo;
+        ReactToActivity = reactToActivity;
+        ReactToResourceName = reactToResourceName;
+        OwnResource = ownResource;
+        Offset = offset ?? TimeSpan.Zero;
 
         ReactiveStateService.LoadFixedState(this);
     }

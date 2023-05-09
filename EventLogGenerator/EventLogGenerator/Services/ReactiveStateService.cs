@@ -86,11 +86,17 @@ public static class ReactiveStateService
             {
                 foreach (var state in ReactiveStates)
                 {
-                    if (state.ReactTo == stateTimePair.Item1.ActivityType)
+                    if (state.ReactToActivity == stateTimePair.Item1.ActivityType)
                     {
+                        if (state.ReactToResourceName != null && stateTimePair.Item1.Resource.Name != state.ReactToResourceName)
+                        {
+                            continue;
+                        }
+                        
                         // Assign same resource to the reacting state
-                        state.Resource = stateTimePair.Item1.Resource;
-                        AddReactiveState(state, stateTimePair.Item2, actorStatesPair.Key);
+                        state.Resource = state.OwnResource ?? stateTimePair.Item1.Resource;
+                        var reactionTime = stateTimePair.Item2 + state.Offset;
+                        AddReactiveState(state, reactionTime, actorStatesPair.Key);
                     }
                 }
             }
