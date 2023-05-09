@@ -139,7 +139,7 @@ public static class SprinkleService
             // FIXME: This is hardcoded and should be somehow abstracted
             if (sprinkle.ActivityType == EActivityType.VisitStudentRecord)
             {
-                additional = RandomService.GetNext((int)Collector.GetLastCollectionMaxId()).ToString();
+                additional = Math.Max(RandomService.GetNext((int)Collector.GetLastCollectionMaxId()), 1).ToString();
             }
             AddIntervalSprinkle(sprinkle, actor, additional);
         }
