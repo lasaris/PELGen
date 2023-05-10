@@ -61,6 +61,9 @@ public static class StudentGenerator
         var hw1 = new Resource("/ode/homework-1.zip");
         var hw2 = new Resource("/ode/homework-2.zip");
         var hw3 = new Resource("/ode/homework-3.zip");
+        var notebookhw1 = new Resource("Homework 1");
+        var notebookhw2 = new Resource("Homework 2");
+        var notebookhw3 = new Resource("Homework 3");
         var ropot1 = new Resource("Ropot week 1");
         var ropot2 = new Resource("Ropot week 2");
         var ropot3 = new Resource("Ropot week 3");
@@ -682,91 +685,91 @@ public static class StudentGenerator
 
         var receivePointsHomework1 = new FixedTimeState(
             EActivityType.ReceivePoints,
-            hw1,
+            notebookhw1,
             deadlineHomework1 + TimeSpan.FromDays(5),
             submitHomework1
             );
 
         var receivePointsHomework2 = new FixedTimeState(
             EActivityType.ReceivePoints,
-            hw2,
+            notebookhw2,
             deadlineHomework2 + TimeSpan.FromDays(5),
             submitHomework2
         );
 
         var receivePointsHomework3 = new FixedTimeState(
             EActivityType.ReceivePoints,
-            hw3,
+            notebookhw3,
             deadlineHomework3 + TimeSpan.FromDays(5),
             submitHomework3
         );
         
-        // Scenario sprinkles
-        var internetFailureRopot1 = new ScenarioSetSprinkle(
-            new HashSet<ProcessState>(){ openRopot1 },
-            new HashSet<ProcessState>(){ submitRopot1 },
-            new List<(ABaseState, TimeSpan)>()
-            {
-                (saveRopot1, TimeSpan.FromMinutes(1)),
-                (openRopot1, TimeSpan.FromMinutes(1)),
-            },
-            0.04f
-        );
-        
-        var internetFailureRopot2 = new ScenarioSetSprinkle(
-            new HashSet<ProcessState>(){ openRopot2 },
-            new HashSet<ProcessState>(){ submitRopot2 },
-            new List<(ABaseState, TimeSpan)>()
-            {
-                (saveRopot2, TimeSpan.FromMinutes(1)),
-                (openRopot2, TimeSpan.FromMinutes(1)),
-            },
-            0.04f
-        );
-        
-        var internetFailureRopot3 = new ScenarioSetSprinkle(
-            new HashSet<ProcessState>(){ openRopot3 },
-            new HashSet<ProcessState>(){ submitRopot3 },
-            new List<(ABaseState, TimeSpan)>()
-            {
-                (saveRopot3, TimeSpan.FromMinutes(1)),
-                (openRopot3, TimeSpan.FromMinutes(1)),
-            },
-            0.04f
-        );
-        
-        var internetFailureRopot4 = new ScenarioSetSprinkle(
-            new HashSet<ProcessState>(){ openRopot4 },
-            new HashSet<ProcessState>(){ submitRopot4 },
-            new List<(ABaseState, TimeSpan)>()
-            {
-                (saveRopot4, TimeSpan.FromMinutes(1)),
-                (openRopot4, TimeSpan.FromMinutes(1)),
-            },
-            0.04f
-        );
-        
-        var internetFailureRopot5 = new ScenarioSetSprinkle(
-            new HashSet<ProcessState>(){ openRopot5 },
-            new HashSet<ProcessState>(){ submitRopot5 },
-            new List<(ABaseState, TimeSpan)>()
-            {
-                (saveRopot5, TimeSpan.FromMinutes(1)),
-                (openRopot5, TimeSpan.FromMinutes(1)),
-            },
-            0.04f
-        );
-        
-        var internetFailureRopot6 = new ScenarioSetSprinkle(
-            new HashSet<ProcessState>(){ openRopot6 },
-            new HashSet<ProcessState>(){ submitRopot6 },
-            new List<(ABaseState, TimeSpan)>()
-            {
-                (saveRopot6, TimeSpan.FromMinutes(1)),
-                (openRopot6, TimeSpan.FromMinutes(1)),
-            },
-            0.04f
-        );
+        // // Scenario sprinkles
+        // var internetFailureRopot1 = new ScenarioSetSprinkle(
+        //     new HashSet<ProcessState>(){ openRopot1 },
+        //     new HashSet<ProcessState>(){ submitRopot1 },
+        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
+        //     {
+        //         (saveRopot1, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //         (openRopot1, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //     },
+        //     0.04f
+        // );
+        //
+        // var internetFailureRopot2 = new ScenarioSetSprinkle(
+        //     new HashSet<ProcessState>(){ openRopot2 },
+        //     new HashSet<ProcessState>(){ submitRopot2 },
+        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
+        //     {
+        //         (saveRopot2, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //         (openRopot2, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //     },
+        //     0.04f
+        // );
+        //
+        // var internetFailureRopot3 = new ScenarioSetSprinkle(
+        //     new HashSet<ProcessState>(){ openRopot3 },
+        //     new HashSet<ProcessState>(){ submitRopot3 },
+        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
+        //     {
+        //         (saveRopot3, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //         (openRopot3, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //     },
+        //     0.04f
+        // );
+        //
+        // var internetFailureRopot4 = new ScenarioSetSprinkle(
+        //     new HashSet<ProcessState>(){ openRopot4 },
+        //     new HashSet<ProcessState>(){ submitRopot4 },
+        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
+        //     {
+        //         (saveRopot4, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //         (openRopot4, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //     },
+        //     0.04f
+        // );
+        //
+        // var internetFailureRopot5 = new ScenarioSetSprinkle(
+        //     new HashSet<ProcessState>(){ openRopot5 },
+        //     new HashSet<ProcessState>(){ submitRopot5 },
+        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
+        //     {
+        //         (saveRopot5, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //         (openRopot5, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //     },
+        //     0.04f
+        // );
+        //
+        // var internetFailureRopot6 = new ScenarioSetSprinkle(
+        //     new HashSet<ProcessState>(){ openRopot6 },
+        //     new HashSet<ProcessState>(){ submitRopot6 },
+        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
+        //     {
+        //         (saveRopot6, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //         (openRopot6, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
+        //     },
+        //     0.04f
+        // );
         
         // Conditional sprinkles for attendance marking
         var attendanceSeminar1 = new ConditionalSprinkle(

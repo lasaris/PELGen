@@ -278,7 +278,9 @@ public static class SprinkleService
                     DateTime currentTime = (DateTime)beginTime;
                     foreach (var stateOffsetPair in scenario.ScenarioSprinkleOffsets)
                     {
-                        currentTime += stateOffsetPair.Item2;
+                        var minTime = currentTime + stateOffsetPair.Item2;
+                        var maxTime = currentTime + stateOffsetPair.Item3;
+                        currentTime = TimeUtils.PickDateInInterval(minTime, maxTime);
                         OnSprinkleAdd(stateOffsetPair.Item1, filledActorFrame.Actor, currentTime);
                     }
                     beginTime = null;

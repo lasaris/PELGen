@@ -8,16 +8,17 @@ public class ScenarioSetSprinkle
 
     public HashSet<ProcessState> EndStates;
 
-    public List<(ABaseState, TimeSpan)> ScenarioSprinkleOffsets;
+    // Matches scenario state to its minimum and maximum offset from previous state
+    public List<(ABaseState, TimeSpan, TimeSpan)> ScenarioSprinkleOffsets;
 
     public float ChanceToOccur;
 
     public ScenarioSetSprinkle(HashSet<ProcessState> startStates, HashSet<ProcessState> endStates,
-        List<(ABaseState, TimeSpan)> scenarioSprinkleOffsets, float chanceToOccur)
+        List<(ABaseState, TimeSpan, TimeSpan)> scenarioSprinkleOffsets, float chanceToOccur)
     {
-        if (!startStates.Any() || !endStates.Any())
+        if (!startStates.Any() || !endStates.Any() || !scenarioSprinkleOffsets.Any())
         {
-            throw new ArgumentException("Begin and ending states must be filled");
+            throw new ArgumentException("Begin, end and scenario itself must be filled");
         }
         
         StartStates = startStates;

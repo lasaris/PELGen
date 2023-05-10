@@ -262,6 +262,7 @@ public static class TeacherGenerator
         );
 
         // Teacher sprinkles
+        // TODO: Have variable number of visits (25 - 50% of total number of students)
         var viewStudentRecord = new IntervalSprinkleState(
             EActivityType.VisitStudentRecord,
             studentCourseRecord,
