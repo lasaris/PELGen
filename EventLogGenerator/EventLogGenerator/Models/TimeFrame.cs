@@ -10,18 +10,21 @@ public class TimeFrame
 
     public ETimeFrameDistribution Distribution;
 
-    public TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform)
+    public HashSet<TimeFrame>? ExcludedTimes;
+
+    public TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
     {
         if (start >= end)
         {
             throw new ArgumentException("The end of TimeFrame must be chronologically later than the start");
         }
-
+        
         Start = start;
         End = end;
         Distribution = distribution;
+        ExcludedTimes = excludedTimes;
     }
-    
+
     private double WeightFunctionLinear(long ticks, long range)
     {
         return (double)(ticks - Start.Ticks) / range;
@@ -92,6 +95,18 @@ public class TimeFrame
         if (pickedDateTime < Start || pickedDateTime > End)
         {
             throw new Exception($"Generated wrong time. Start: {Start}; End: {End}; Generated: {pickedDateTime}");
+        }
+
+        // FIXME: This is a performance issue and better algorithm should be put in place
+        if (ExcludedTimes != null)
+        {
+            foreach (var time in ExcludedTimes)
+            {
+                if (pickedDateTime >= time.Start && pickedDateTime <= time.End)
+                {
+                    return PickTimeByDistribution();
+                }
+            }    
         }
 
         Start = oldStart;

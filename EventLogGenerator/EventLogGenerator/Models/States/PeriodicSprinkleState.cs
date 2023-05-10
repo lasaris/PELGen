@@ -14,11 +14,17 @@ public class PeriodicSprinkleState : ABaseState
     // Time between each sprinkle (beginAfter + Period = first sprinkle time of this state)
     public TimeSpan Period;
 
-    public PeriodicSprinkleState(EActivityType activityType, Resource resource, HashSet<ProcessState> beginAfter, HashSet<ProcessState> stopBefore, TimeSpan period) : base(activityType, resource)
+    // Alternative state, chance to occur, max occurences
+    public (ABaseState, float, int)? AlternativeState;
+
+    public PeriodicSprinkleState(EActivityType activityType, Resource resource, HashSet<ProcessState> beginAfter,
+        HashSet<ProcessState> stopBefore, TimeSpan period, (ABaseState, float, int)? alternativeState = null) :
+        base(activityType, resource)
     {
         BeginAfter = beginAfter;
         StopBefore = stopBefore;
         Period = period;
+        AlternativeState = alternativeState;
 
         SprinkleService.LoadPeriodicSprinkle(this);
     }

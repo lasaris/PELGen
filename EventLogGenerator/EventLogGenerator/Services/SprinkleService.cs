@@ -32,16 +32,16 @@ public static class SprinkleService
 
     // Keeps track of sprinkles that were added by the service
     public static List<(ABaseState, DateTime)> SprinkleStack = new();
-    
+
     // Track dynamic sprinkle mutexes
     public static HashSet<DynamicSprinkleMutex> DynamicSprinkleMutexes = new();
-    
+
     // Track periodic sprinkles
     public static HashSet<PeriodicSprinkleState> PeriodicSprinkles = new();
-    
+
     // Track scenario sprinkles
     public static HashSet<ScenarioSetSprinkle> ScenarioSprinkles = new();
-    
+
     // Track conditional sprinkles
     public static HashSet<ConditionalSprinkle> ConditionalSprinkles = new();
 
@@ -75,7 +75,8 @@ public static class SprinkleService
         if (additional == null)
         {
             OnSprinkleAdd(sprinkle, actor, pickedTime);
-        } else 
+        }
+        else
         {
             OnSprinkleAdd(sprinkle, actor, pickedTime, additional);
         }
@@ -100,7 +101,7 @@ public static class SprinkleService
     {
         IntervalSprinkleStates.Add(sprinkle);
     }
-    
+
     public static void LoadDynamicSrpinkleMutex(DynamicSprinkleMutex dynamicSprinkleMutex)
     {
         if (!DynamicSprinkles.Contains(dynamicSprinkleMutex.FirstState)
@@ -114,18 +115,18 @@ public static class SprinkleService
         DynamicSprinkles.Remove(dynamicSprinkleMutex.SecondState);
         DynamicSprinkleMutexes.Add(dynamicSprinkleMutex);
     }
-    
-    
+
+
     public static void LoadPeriodicSprinkle(PeriodicSprinkleState sprinkle)
     {
         PeriodicSprinkles.Add(sprinkle);
     }
-    
+
     public static void LoadScenarioSprinkle(ScenarioSetSprinkle sprinkle)
     {
         ScenarioSprinkles.Add(sprinkle);
     }
-    
+
     public static void LoadConditionalSprinkle(ConditionalSprinkle sprinkle)
     {
         ConditionalSprinkles.Add(sprinkle);
@@ -141,6 +142,7 @@ public static class SprinkleService
             {
                 additional = Math.Max(RandomService.GetNext((int)Collector.GetLastCollectionMaxId()), 1).ToString();
             }
+
             AddIntervalSprinkle(sprinkle, actor, additional);
         }
     }
@@ -225,14 +227,14 @@ public static class SprinkleService
             foreach (var stateTimePair in filledActorFrame.VisitedStack)
             {
                 var sprinkle = mutex.PickState();
-                
+
                 if (sprinkle.BeginAfter.Contains(stateTimePair.Item1))
                 {
                     AddDynamicSprinkle(sprinkle, filledActorFrame.Actor, stateTimePair.Item2);
                 }
             }
         }
-        
+
         // Execute periodic sprinkles
         foreach (var sprinkle in PeriodicSprinkles)
         {
@@ -242,22 +244,37 @@ public static class SprinkleService
                 if (beginTime == null && sprinkle.BeginAfter.Contains(stateTimePair.Item1))
                 {
                     beginTime = stateTimePair.Item2;
-                } else if (beginTime != null && sprinkle.StopBefore.Contains(stateTimePair.Item1))
+                }
+                else if (beginTime != null && sprinkle.StopBefore.Contains(stateTimePair.Item1))
                 {
                     DateTime endTime = stateTimePair.Item2;
                     List<DateTime> timeStamps = new();
                     DateTime currentTime = (DateTime)beginTime + sprinkle.Period;
+                    int pickedAlternativeCount = 0;
                     // Dirty hack to compare the whole seconds
-                    while (currentTime.Ticks / TimeSpan.TicksPerSecond < endTime.Ticks / TimeSpan.TicksPerSecond)
+                    var periodSeconds = (int)sprinkle.Period.TotalSeconds;
+                    var elapsedSeconds = (int)(endTime - currentTime).TotalSeconds;
+                    var numIterations = elapsedSeconds / periodSeconds;
+                    for (int i = 0; i < numIterations; i++)
                     {
-                        AddPeriodSprinkle(sprinkle, filledActorFrame.Actor, currentTime);
+                        var pickAlternative = (sprinkle.AlternativeState != null) && RandomService.GetNextDouble() < sprinkle.AlternativeState.Value.Item2;
+                        if (pickAlternative && pickedAlternativeCount < sprinkle.AlternativeState.Value.Item3 && i != 0 && i != numIterations - 1)
+                        {
+                            OnSprinkleAdd(sprinkle.AlternativeState.Value.Item1, filledActorFrame.Actor, currentTime);
+                            ++pickedAlternativeCount;
+                        }
+                        else
+                        {
+                            AddPeriodSprinkle(sprinkle, filledActorFrame.Actor, currentTime);
+                        }
                         currentTime += sprinkle.Period;
                     }
+
                     beginTime = null;
                 }
             }
         }
-        
+
         // Sprinkle scenarios
         foreach (var scenario in ScenarioSprinkles)
         {
@@ -266,14 +283,15 @@ public static class SprinkleService
             {
                 continue;
             }
-            
+
             DateTime? beginTime = null;
             foreach (var stateTimePair in filledActorFrame.VisitedStack)
             {
                 if (beginTime == null && scenario.StartStates.Contains(stateTimePair.Item1))
                 {
                     beginTime = stateTimePair.Item2;
-                } else if (beginTime != null && scenario.EndStates.Contains(stateTimePair.Item1))
+                }
+                else if (beginTime != null && scenario.EndStates.Contains(stateTimePair.Item1))
                 {
                     DateTime currentTime = (DateTime)beginTime;
                     foreach (var stateOffsetPair in scenario.ScenarioSprinkleOffsets)
@@ -283,11 +301,12 @@ public static class SprinkleService
                         currentTime = TimeUtils.PickDateInInterval(minTime, maxTime);
                         OnSprinkleAdd(stateOffsetPair.Item1, filledActorFrame.Actor, currentTime);
                     }
+
                     beginTime = null;
                 }
             }
         }
-        
+
         // Sprinkle conditionals
         foreach (var sprinkle in ConditionalSprinkles)
         {
@@ -297,18 +316,20 @@ public static class SprinkleService
                 {
                     if (stateTimePair.Item1 == sprinkle.StateToOccur)
                     {
-                        OnSprinkleAdd(sprinkle.PositiveState, filledActorFrame.Actor, stateTimePair.Item2 + sprinkle.TimeOffset);
+                        OnSprinkleAdd(sprinkle.PositiveState, filledActorFrame.Actor,
+                            stateTimePair.Item2 + sprinkle.TimeOffset);
                     }
                 }
             }
             else
             {
                 var ourTheoreticalTime = sprinkle.StateToOccur.TimeFrame.PickTimeByDistribution();
-                ourTheoreticalTime += ActorService.GetActorActivityOffset(filledActorFrame.Actor, sprinkle.StateToOccur.ActivityType);
+                ourTheoreticalTime +=
+                    ActorService.GetActorActivityOffset(filledActorFrame.Actor, sprinkle.StateToOccur.ActivityType);
                 OnSprinkleAdd(sprinkle.NegativeState, filledActorFrame.Actor, ourTheoreticalTime + sprinkle.TimeOffset);
             }
         }
-        
+
         RunIntervalSprinkles(filledActorFrame.Actor);
     }
 

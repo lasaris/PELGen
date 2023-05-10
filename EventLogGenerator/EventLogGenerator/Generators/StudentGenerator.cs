@@ -83,6 +83,18 @@ public static class StudentGenerator
         // Useful properties
         var semesterEnd = new DateTime(2023, 3, 1);
         var examRegistrationEndTerm3 = new DateTime(2023, 2, 24);
+        var timeFrameRopot1 =
+            new TimeFrame(new DateTime(2023, 1, 03, 12, 4, 00), new DateTime(2023, 1, 03, 12, 5, 00));
+        var timeFrameRopot2 =
+            new TimeFrame(new DateTime(2023, 1, 10, 12, 4, 00), new DateTime(2023, 1, 10, 12, 5, 00));
+        var timeFrameRopot3 =
+            new TimeFrame(new DateTime(2023, 1, 17, 12, 4, 00), new DateTime(2023, 1, 17, 12, 5, 00));
+        var timeFrameRopot4 =
+            new TimeFrame(new DateTime(2023, 1, 24, 12, 4, 00), new DateTime(2023, 1, 24, 12, 5, 00));
+        var timeFrameRopot5 =
+            new TimeFrame(new DateTime(2023, 1, 31, 12, 4, 00), new DateTime(2023, 1, 31, 12, 5, 00));
+        var timeFrameRopot6 =
+            new TimeFrame(new DateTime(2023, 2, 07, 12, 4, 00), new DateTime(2023, 2, 07, 12, 5, 00));
 
         // Prepare states
         var enrollCourse = new ProcessState(
@@ -148,21 +160,36 @@ public static class StudentGenerator
             EActivityType.CreateFile,
             hw1,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 9), deadlineHomework1, ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 1, 9), deadlineHomework1, ETimeFrameDistribution.Exponential, new HashSet<TimeFrame>()
+            {
+                timeFrameRopot1.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+                timeFrameRopot2.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+                timeFrameRopot3.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+            })
         );
 
         var submitHomework2 = new ProcessState(
             EActivityType.CreateFile,
             hw2,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 23), deadlineHomework2, ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 1, 23), deadlineHomework2, ETimeFrameDistribution.Exponential, new HashSet<TimeFrame>()
+            {
+                timeFrameRopot1.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+                timeFrameRopot2.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+                timeFrameRopot3.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+            })
         );
 
         var submitHomework3 = new ProcessState(
             EActivityType.CreateFile,
             hw3,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 2, 6), deadlineHomework3, ETimeFrameDistribution.Exponential)
+            new TimeFrame(new DateTime(2023, 2, 6), deadlineHomework3, ETimeFrameDistribution.Exponential, new HashSet<TimeFrame>()
+            {
+                timeFrameRopot1.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+                timeFrameRopot2.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+                timeFrameRopot3.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
+            })
         );
 
         var removeHomework1 = new ProcessState(
@@ -206,20 +233,7 @@ public static class StudentGenerator
             submitHomeworkRules,
             new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12))
         );
-
-        var timeFrameRopot1 =
-            new TimeFrame(new DateTime(2023, 1, 03, 12, 4, 00), new DateTime(2023, 1, 03, 12, 5, 00));
-        var timeFrameRopot2 =
-            new TimeFrame(new DateTime(2023, 1, 10, 12, 4, 00), new DateTime(2023, 1, 10, 12, 5, 00));
-        var timeFrameRopot3 =
-            new TimeFrame(new DateTime(2023, 1, 17, 12, 4, 00), new DateTime(2023, 1, 17, 12, 5, 00));
-        var timeFrameRopot4 =
-            new TimeFrame(new DateTime(2023, 1, 24, 12, 4, 00), new DateTime(2023, 1, 24, 12, 5, 00));
-        var timeFrameRopot5 =
-            new TimeFrame(new DateTime(2023, 1, 31, 12, 4, 00), new DateTime(2023, 1, 31, 12, 5, 00));
-        var timeFrameRopot6 =
-            new TimeFrame(new DateTime(2023, 2, 07, 12, 4, 00), new DateTime(2023, 2, 07, 12, 5, 00));
-
+        
         var openRopotFollowing = new Dictionary<EActivityType, float>()
             { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
         var saveRopotFollowing = new Dictionary<EActivityType, float>()
@@ -317,95 +331,103 @@ public static class StudentGenerator
             EActivityType.SaveRopot,
             ropot1,
             saveRopotRulesSeminar1,
-            timeFrameRopot1
+            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
         );
 
         var saveRopot2 = new ProcessState(
             EActivityType.SaveRopot,
             ropot2,
             saveRopotRulesSeminar2,
-            timeFrameRopot2
+            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
         );
 
         var saveRopot3 = new ProcessState(
             EActivityType.SaveRopot,
             ropot3,
             saveRopotRulesSeminar3,
-            timeFrameRopot3
+            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
         );
 
         var saveRopot4 = new ProcessState(
             EActivityType.SaveRopot,
             ropot4,
             saveRopotRulesSeminar4,
-            timeFrameRopot4
+            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
         );
 
         var saveRopot5 = new ProcessState(
             EActivityType.SaveRopot,
             ropot5,
             saveRopotRulesSeminar5,
-            timeFrameRopot5
+            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
         );
 
         var saveRopot6 = new ProcessState(
             EActivityType.SaveRopot,
             ropot6,
             saveRopotRulesSeminar6,
-            timeFrameRopot6
+            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
         );
         
         var submitRopot1 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot1,
             submitRopotRulesSeminar1,
-            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
+            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
         );
 
         var submitRopot2 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot2,
             submitRopotRulesSeminar2,
-            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
+            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
         );
 
         var submitRopot3 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot3,
             submitRopotRulesSeminar3,
-            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
+            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
         );
 
         var submitRopot4 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot4,
             submitRopotRulesSeminar4,
-            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
+            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
         );
 
         var submitRopot5 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot5,
             submitRopotRulesSeminar5,
-            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
+            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
         );
 
         var submitRopot6 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot6,
             submitRopotRulesSeminar6,
-            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5))
+            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
         );
         
         // Implement auto save of ropots
         var autoSavePeriod = TimeSpan.FromMinutes(1);
-        
+
+        var reopenRopot1 = new DummyState(EActivityType.OpenRopot, ropot1);
+        var reopenRopot2 = new DummyState(EActivityType.OpenRopot, ropot2);
+        var reopenRopot3 = new DummyState(EActivityType.OpenRopot, ropot3);
+        var reopenRopot4 = new DummyState(EActivityType.OpenRopot, ropot4);
+        var reopenRopot5 = new DummyState(EActivityType.OpenRopot, ropot5);
+        var reopenRopot6 = new DummyState(EActivityType.OpenRopot, ropot6);
+
         var autoSaveRopot1 = new PeriodicSprinkleState(
             EActivityType.SaveRopot,
             ropot1,
             new HashSet<ProcessState>(){openRopot1},
             new HashSet<ProcessState>(){submitRopot1},
-            autoSavePeriod
+            autoSavePeriod,
+            (reopenRopot1, 0.013f, 1)
         );
         
         var autoSaveRopot2 = new PeriodicSprinkleState(
@@ -413,7 +435,8 @@ public static class StudentGenerator
             ropot2,
             new HashSet<ProcessState>(){openRopot2},
             new HashSet<ProcessState>(){submitRopot2},
-            autoSavePeriod
+            autoSavePeriod,
+            (reopenRopot2, 0.013f, 1)
         );
         
         var autoSaveRopot3 = new PeriodicSprinkleState(
@@ -421,7 +444,8 @@ public static class StudentGenerator
             ropot3,
             new HashSet<ProcessState>(){openRopot3},
             new HashSet<ProcessState>(){submitRopot3},
-            autoSavePeriod
+            autoSavePeriod,
+            (reopenRopot3, 0.013f, 1)
         );
         
         var autoSaveRopot4 = new PeriodicSprinkleState(
@@ -429,7 +453,8 @@ public static class StudentGenerator
             ropot4,
             new HashSet<ProcessState>(){openRopot4},
             new HashSet<ProcessState>(){submitRopot4},
-            autoSavePeriod
+            autoSavePeriod,
+            (reopenRopot4, 0.013f, 1)
         );
         
         var autoSaveRopot5 = new PeriodicSprinkleState(
@@ -437,7 +462,8 @@ public static class StudentGenerator
             ropot5,
             new HashSet<ProcessState>(){openRopot5},
             new HashSet<ProcessState>(){submitRopot5},
-            autoSavePeriod
+            autoSavePeriod,
+            (reopenRopot5, 0.013f, 1)
         );
         
         var autoSaveRopot6 = new PeriodicSprinkleState(
@@ -445,7 +471,8 @@ public static class StudentGenerator
             ropot6,
             new HashSet<ProcessState>(){openRopot6},
             new HashSet<ProcessState>(){submitRopot6},
-            autoSavePeriod
+            autoSavePeriod,
+            (reopenRopot6, 0.013f, 1)
         );
 
         var examRules = new StateRules(false, 1, 0,
@@ -703,74 +730,7 @@ public static class StudentGenerator
             deadlineHomework3 + TimeSpan.FromDays(5),
             submitHomework3
         );
-        
-        // // Scenario sprinkles
-        // var internetFailureRopot1 = new ScenarioSetSprinkle(
-        //     new HashSet<ProcessState>(){ openRopot1 },
-        //     new HashSet<ProcessState>(){ submitRopot1 },
-        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
-        //     {
-        //         (saveRopot1, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //         (openRopot1, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //     },
-        //     0.04f
-        // );
-        //
-        // var internetFailureRopot2 = new ScenarioSetSprinkle(
-        //     new HashSet<ProcessState>(){ openRopot2 },
-        //     new HashSet<ProcessState>(){ submitRopot2 },
-        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
-        //     {
-        //         (saveRopot2, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //         (openRopot2, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //     },
-        //     0.04f
-        // );
-        //
-        // var internetFailureRopot3 = new ScenarioSetSprinkle(
-        //     new HashSet<ProcessState>(){ openRopot3 },
-        //     new HashSet<ProcessState>(){ submitRopot3 },
-        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
-        //     {
-        //         (saveRopot3, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //         (openRopot3, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //     },
-        //     0.04f
-        // );
-        //
-        // var internetFailureRopot4 = new ScenarioSetSprinkle(
-        //     new HashSet<ProcessState>(){ openRopot4 },
-        //     new HashSet<ProcessState>(){ submitRopot4 },
-        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
-        //     {
-        //         (saveRopot4, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //         (openRopot4, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //     },
-        //     0.04f
-        // );
-        //
-        // var internetFailureRopot5 = new ScenarioSetSprinkle(
-        //     new HashSet<ProcessState>(){ openRopot5 },
-        //     new HashSet<ProcessState>(){ submitRopot5 },
-        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
-        //     {
-        //         (saveRopot5, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //         (openRopot5, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //     },
-        //     0.04f
-        // );
-        //
-        // var internetFailureRopot6 = new ScenarioSetSprinkle(
-        //     new HashSet<ProcessState>(){ openRopot6 },
-        //     new HashSet<ProcessState>(){ submitRopot6 },
-        //     new List<(ABaseState, TimeSpan, TimeSpan)>()
-        //     {
-        //         (saveRopot6, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //         (openRopot6, TimeSpan.FromSeconds(30), TimeSpan.FromSeconds(50)),
-        //     },
-        //     0.04f
-        // );
-        
+
         // Conditional sprinkles for attendance marking
         var attendanceSeminar1 = new ConditionalSprinkle(
             openRopot1,
