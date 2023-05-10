@@ -785,5 +785,6 @@ public static class StudentGenerator
         }
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
+        // This could be applied if Collector collected the whole process of single actor and then dumped it into the log
     }
 }
