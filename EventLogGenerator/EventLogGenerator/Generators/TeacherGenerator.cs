@@ -39,6 +39,14 @@ public static class TeacherGenerator
         var studentCourseRecord = new Resource("Student course record");
 
         var placeholder = new Resource("Fill me please");
+        
+        // Prepare times
+        var createMaterialsPeriod1 = new TimeFrame((2023, 2, 13, 8, 0, 0), (2023, 2, 13, 9, 0, 0));
+        var createMaterialsPeriod2 = new TimeFrame((2023, 2, 27, 8, 0, 0), (2023, 2, 27, 9, 0, 0));
+        var createMaterialsPeriod3 = new TimeFrame((2023, 3, 13, 8, 0, 0), (2023, 3, 13, 9, 0, 0));
+        var createMaterialsPeriod4 = new TimeFrame((2023, 3, 27, 8, 0, 0), (2023, 3, 27, 9, 0, 0));
+        var createMaterialsPeriod5 = new TimeFrame((2023, 4, 10, 8, 0, 0), (2023, 4, 10, 9, 0, 0));
+        var createMaterialsPeriod6 = new TimeFrame((2023, 4, 24, 8, 0, 0), (2023, 4, 24, 9, 0, 0));
 
         // Fixed time states
 
@@ -64,55 +72,47 @@ public static class TeacherGenerator
 
         var defaultCompulsaryRules = new StateRules(true, -1);
         var defaultOptionalRules = new StateRules();
-        
-        // timeframes
-        var timeframeStudyMaterials1 = new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 24, 0, 30, 0));
-        var timeframeStudyMaterials2 = new TimeFrame(new DateTime(2023, 1, 03), new DateTime(2023, 1, 03, 0, 30, 0));
-        var timeframeStudyMaterials3 = new TimeFrame(new DateTime(2023, 1, 10), new DateTime(2023, 1, 10, 0, 30, 0));
-        var timeframeStudyMaterials4 = new TimeFrame(new DateTime(2023, 1, 17), new DateTime(2023, 1, 17, 0, 30, 0));
-        var timeframeStudyMaterials5 = new TimeFrame(new DateTime(2023, 1, 24), new DateTime(2023, 1, 24, 0, 30, 0));
-        var timeframeStudyMaterials6 = new TimeFrame(new DateTime(2023, 1, 31), new DateTime(2023, 1, 31, 0, 30, 0));
 
         var createStudyMaterials1 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek1,
             defaultCompulsaryRules,
-            timeframeStudyMaterials1
+            createMaterialsPeriod1
         );
 
         var createStudyMaterials2 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek2,
             defaultCompulsaryRules,
-            timeframeStudyMaterials2
+            createMaterialsPeriod2
         );
 
         var createStudyMaterials3 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek3,
             defaultCompulsaryRules,
-            timeframeStudyMaterials3
+            createMaterialsPeriod3
         );
 
         var createStudyMaterials4 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek4,
             defaultCompulsaryRules,
-            timeframeStudyMaterials4
+            createMaterialsPeriod4
         );
 
         var createStudyMaterials5 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek5,
             defaultCompulsaryRules,
-            timeframeStudyMaterials5
+            createMaterialsPeriod5
         );
 
         var createStudyMaterials6 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek6,
             defaultCompulsaryRules,
-            timeframeStudyMaterials6,
+            createMaterialsPeriod6,
             true
         );
         
@@ -120,42 +120,42 @@ public static class TeacherGenerator
             EActivityType.DeleteFile,
             materialsWeek1,
             defaultOptionalRules,
-            timeframeStudyMaterials1.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+            createMaterialsPeriod1.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials2 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek2,
             defaultOptionalRules,
-            timeframeStudyMaterials2.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+            createMaterialsPeriod2.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials3 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek3,
             defaultOptionalRules,
-            timeframeStudyMaterials3.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+            createMaterialsPeriod3.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials4 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek4,
             defaultOptionalRules,
-            timeframeStudyMaterials4.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+            createMaterialsPeriod4.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials5 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek5,
             defaultOptionalRules,
-            timeframeStudyMaterials5.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+            createMaterialsPeriod5.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials6 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek6,
             defaultOptionalRules,
-            timeframeStudyMaterials6.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+            createMaterialsPeriod6.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         createStudyMaterials1.AddFollowingStates((createStudyMaterials2, 0.6f), (removeStudyMaterials1, 0.4f));
@@ -214,6 +214,7 @@ public static class TeacherGenerator
             "Exam term 1",
             examScan1,
             - TimeSpan.FromMinutes(5)
+            // TODO: Add min-max offset for this activity
         );
         
         var addScansPositive2 = new ReactiveState(
@@ -290,5 +291,11 @@ public static class TeacherGenerator
         {
             SprinkleService.RunIntervalSprinkles(actor);
         }
+        
+        // TODO: Create resource for homework assignments
+
+        // TODO: Create random 6 digit number for student IDs (start at 600000) and teacher IDs (us researchers)
+        
+        // TODO: When attacking, view more homeworks (10) (manual job)
     }
 }

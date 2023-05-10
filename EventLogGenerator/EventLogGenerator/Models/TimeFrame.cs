@@ -12,17 +12,48 @@ public class TimeFrame
 
     public HashSet<TimeFrame>? ExcludedTimes;
 
-    public TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
+    public TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform,
+        HashSet<TimeFrame>? excludedTimes = null)
     {
         if (start >= end)
         {
             throw new ArgumentException("The end of TimeFrame must be chronologically later than the start");
         }
-        
+
         Start = start;
         End = end;
         Distribution = distribution;
         ExcludedTimes = excludedTimes;
+    }
+
+    public TimeFrame((int, int, int) start, (int, int, int) end,
+        ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
+        : this(new DateTime(start.Item1, start.Item2, start.Item3), new DateTime(end.Item1, end.Item2, end.Item3),
+            distribution)
+    {
+    }
+
+    public TimeFrame((int, int, int, int, int, int) start, (int, int, int) end,
+        ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
+        : this(new DateTime(start.Item1, start.Item2, start.Item3, start.Item4, start.Item5, start.Item6),
+            new DateTime(end.Item1, end.Item2, end.Item3), distribution)
+    {
+    }
+
+    public TimeFrame((int, int, int) start, (int, int, int, int, int, int) end,
+        ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
+        : this(new DateTime(start.Item1, start.Item2, start.Item3),
+            new DateTime(end.Item1, end.Item2, end.Item3, end.Item4, end.Item5, end.Item6),
+            distribution)
+    {
+    }
+
+    public TimeFrame((int, int, int, int, int, int) start, (int, int, int, int, int, int) end,
+        ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
+        : this(new DateTime(start.Item1, start.Item2, start.Item3, start.Item4, start.Item5, start.Item6),
+            new DateTime(end.Item1, end.Item2, end.Item3, end.Item4, end.Item5, end.Item6),
+            distribution)
+    {
     }
 
     private double WeightFunctionLinear(long ticks, long range)
@@ -51,9 +82,9 @@ public class TimeFrame
         {
             throw new ArgumentException("Cannot have limit of start after the end of current time");
         }
-        
+
         DateTime pickedDateTime;
-        
+
         // FIXME: This is just ugly, but "Start" is used in Weighted functions later so it is necessary (at least before refactoring)
         DateTime oldStart = new DateTime(Start.Ticks);
         // Pick new Start if old is earlier than newStartLimit
@@ -66,24 +97,28 @@ public class TimeFrame
                 long ticks = (long)(RandomService.GetNextDouble() * range);
                 pickedDateTime = Start + TimeSpan.FromTicks(ticks);
                 break;
-            
+
             case ETimeFrameDistribution.Linear:
-                long weightedTicksLinear = (long)(RandomService.GetNextDouble() * range * WeightFunctionLinear(randomTicks, range));
+                long weightedTicksLinear =
+                    (long)(RandomService.GetNextDouble() * range * WeightFunctionLinear(randomTicks, range));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightedTicksLinear);
                 break;
-            
+
             case ETimeFrameDistribution.ReverseLinear:
-                long weightedTicksReverseLinear = (long)(RandomService.GetNextDouble() * range * WeightFunctionReverseLinear(randomTicks, range));
+                long weightedTicksReverseLinear = (long)(RandomService.GetNextDouble() * range *
+                                                         WeightFunctionReverseLinear(randomTicks, range));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightedTicksReverseLinear);
                 break;
-            
+
             case ETimeFrameDistribution.Exponential:
-                long weightedTicksExponential = (long)(RandomService.GetNextDouble() * range * WeightFunctionExponential(randomTicks, range));
-                pickedDateTime =  Start + TimeSpan.FromTicks(weightedTicksExponential);
+                long weightedTicksExponential = (long)(RandomService.GetNextDouble() * range *
+                                                       WeightFunctionExponential(randomTicks, range));
+                pickedDateTime = Start + TimeSpan.FromTicks(weightedTicksExponential);
                 break;
 
             case ETimeFrameDistribution.ReverseExponential:
-                long weightetTicksReverseExponential = (long)(RandomService.GetNextDouble() * range * WeightFunctionReverseExponential(randomTicks, range));
+                long weightetTicksReverseExponential = (long)(RandomService.GetNextDouble() * range *
+                                                              WeightFunctionReverseExponential(randomTicks, range));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightetTicksReverseExponential);
                 break;
 
@@ -104,9 +139,9 @@ public class TimeFrame
             {
                 if (pickedDateTime >= time.Start && pickedDateTime <= time.End)
                 {
-                    return PickTimeByDistribution();
+                    return PickTimeByDistribution(newStartLimit);
                 }
-            }    
+            }
         }
 
         Start = oldStart;
@@ -115,8 +150,8 @@ public class TimeFrame
 
     public TimeFrame GetTimeFrameWithOffset(TimeSpan? startOffset = null, TimeSpan? endOffset = null)
     {
-        var newStart = startOffset == null ? Start : Start + (TimeSpan) startOffset;
-        var newEnd = endOffset == null ? End : End + (TimeSpan) endOffset;
+        var newStart = startOffset == null ? Start : Start + (TimeSpan)startOffset;
+        var newEnd = endOffset == null ? End : End + (TimeSpan)endOffset;
 
         return new TimeFrame(newStart, newEnd);
     }

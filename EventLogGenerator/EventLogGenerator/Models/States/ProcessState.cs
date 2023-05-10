@@ -30,6 +30,16 @@ public class ProcessState : ABaseState
         FollowingMap = new();
         Callback = callback;
     }
+    
+    public ProcessState(EActivityType activity, Resource resource, StateRules rules, DateTime start,
+        bool isFinishing = false, AdditionalActionFunc? callback = null) : base(activity, resource)
+    {
+        Rules = rules;
+        TimeFrame = new TimeFrame(start, start + TimeSpan.FromSeconds(1));
+        IsFinishing = isFinishing;
+        FollowingMap = new();
+        Callback = callback;
+    }
 
     public void AddFollowingState(ProcessState state, float chance)
     {

@@ -38,11 +38,11 @@ public static class StudentGenerator
             EActivityType.ReceiveAbsence,
         };
         var firstOffset = TimeSpan.Zero;
-        var secondOffset = TimeSpan.FromHours(2);
-        var thirdOffset = TimeSpan.FromHours(4);
+        var secondOffset = TimeSpan.FromDays(1) + TimeSpan.FromHours(4);
+        var thirdOffset = TimeSpan.FromDays(2) + TimeSpan.FromHours(6);
 
         // Prepare Resources
-        var course = new Resource("Our Course");
+        var course = new Resource("Process Mining Seminar");
         var seminarGroup1 = new Resource("Seminar group 1");
         var seminarGroup2 = new Resource("Seminar group 2");
         var seminarGroup3 = new Resource("Seminar group 3");
@@ -73,35 +73,87 @@ public static class StudentGenerator
         var exam1 = new Resource("Exam term 1");
         var exam2 = new Resource("Exam term 2");
         var exam3 = new Resource("Exam term 3");
+        var exam4 = new Resource("Exam term 4");
+        
+        // Prepare times
+        var courseRegistrationPeriod = new TimeFrame((2023, 1, 31, 17, 0, 0), (2023, 2, 12));
+        var seminarRegistrationPeriod = new TimeFrame((2023, 2, 1, 17, 0, 0), (2023, 2, 12));
 
-        var seminarResources = new HashSet<Resource>()
-        {
-            seminarWeek1, seminarWeek2, seminarWeek3, seminarWeek4, seminarWeek5, seminarWeek6,
-            ropot1, ropot2, ropot3, ropot4, ropot5, ropot6
-        };
+        var openRopotPeriod1 = new TimeFrame((2023, 2, 21, 10, 4, 0), (2023, 2, 21, 10, 5, 0)); 
+        var openRopotPeriod2 = new TimeFrame((2023, 3, 7, 10, 4, 0), (2023, 3, 7, 10, 5, 0)); 
+        var openRopotPeriod3 = new TimeFrame((2023, 3, 21, 10, 4, 0), (2023, 3, 21, 10, 5, 0)); 
+        var openRopotPeriod4 = new TimeFrame((2023, 4, 4, 10, 4, 0), (2023, 4, 4, 10, 5, 0)); 
+        var openRopotPeriod5 = new TimeFrame((2023, 4, 18, 10, 4, 0), (2023, 4, 18, 10, 5, 0)); 
+        var openRopotPeriod6 = new TimeFrame((2023, 5, 2, 10, 4, 0), (2023, 5, 2, 10, 5, 0));
+        
+        var saveRopotPeriod1 = new TimeFrame((2023, 2, 21, 10, 5, 15), (2023, 2, 21, 10, 10, 0)); 
+        var saveRopotPeriod2 = new TimeFrame((2023, 3, 7, 10, 5, 15), (2023, 3, 7, 10, 10, 0)); 
+        var saveRopotPeriod3 = new TimeFrame((2023, 3, 21, 10, 5, 15), (2023, 3, 21, 10, 10, 0)); 
+        var saveRopotPeriod4 = new TimeFrame((2023, 4, 4, 10, 5, 15), (2023, 4, 4, 10, 10, 0)); 
+        var saveRopotPeriod5 = new TimeFrame((2023, 4, 18, 10, 5, 15), (2023, 4, 18, 10, 10, 0)); 
+        var saveRopotPeriod6 = new TimeFrame((2023, 5, 2, 10, 5, 15), (2023, 5, 2, 10, 10, 0));
+        
+        var submitRopotPeriod1 = new TimeFrame((2023, 2, 21, 10, 9, 0), (2023, 2, 21, 10, 10, 0), ETimeFrameDistribution.Exponential); 
+        var submitRopotPeriod2 = new TimeFrame((2023, 3, 7, 10, 9, 0), (2023, 3, 7, 10, 10, 0), ETimeFrameDistribution.Exponential); 
+        var submitRopotPeriod3 = new TimeFrame((2023, 3, 21, 10, 9, 0), (2023, 3, 21, 10, 10, 0), ETimeFrameDistribution.Exponential); 
+        var submitRopotPeriod4 = new TimeFrame((2023, 4, 4, 10, 9, 0), (2023, 4, 4, 10, 10, 0), ETimeFrameDistribution.Exponential); 
+        var submitRopotPeriod5 = new TimeFrame((2023, 4, 18, 10, 9, 0), (2023, 4, 18, 10, 10, 0), ETimeFrameDistribution.Exponential); 
+        var submitRopotPeriod6 = new TimeFrame((2023, 5, 2, 10, 9, 0), (2023, 5, 2, 10, 10, 0), ETimeFrameDistribution.Exponential);
+
+        var viewRopotPeriod1 = new TimeFrame((2023, 2, 24), (2023, 3, 3));
+        var viewRopotPeriod2 = new TimeFrame((2023, 3, 10), (2023, 3, 17));
+        var viewRopotPeriod3 = new TimeFrame((2023, 3, 24), (2023, 3, 31));
+        var viewRopotPeriod4 = new TimeFrame((2023, 4, 7), (2023, 4, 14));
+        var viewRopotPeriod5 = new TimeFrame((2023, 4, 21), (2023, 4, 28));
+        var viewRopotPeriod6 = new TimeFrame((2023, 5, 5), (2023, 5, 12));
+
+        var submitHomeworkPeriod1 = new TimeFrame((2023, 3, 5), (2023, 3, 19), ETimeFrameDistribution.Exponential);
+        var submitHomeworkPeriod2 = new TimeFrame((2023, 4, 2), (2023, 4, 16), ETimeFrameDistribution.Exponential);
+        var submitHomeworkPeriod3 = new TimeFrame((2023, 4, 30), (2023, 5, 14), ETimeFrameDistribution.Exponential);
+
+        var receivePointsTime1 = new DateTime(2023, 3, 24, 16, 45, 10); 
+        var receivePointsTime2 = new DateTime(2023, 4, 21, 19, 21, 35); 
+        var receivePointsTime3 = new DateTime(2023, 5, 19, 17, 37, 55); 
+
+        var examRegistrationStart = new DateTime(2023, 5, 8, 17, 0, 0);
+        var examTime1 = new DateTime(2023, 5, 22, 9, 0, 0);
+        var examTime2 = new DateTime(2023, 5, 31, 14, 0, 0);
+        var examTime3 = new DateTime(2023, 6, 12, 10, 0, 0);
+        var examTime4 = new DateTime(2023, 6, 22, 14, 0, 0);
+
+        var examRegistrationPeriod1 = new TimeFrame(examRegistrationStart, examTime1, ETimeFrameDistribution.ReverseExponential);
+        var examRegistrationPeriod2 = new TimeFrame(examRegistrationStart, examTime2, ETimeFrameDistribution.ReverseExponential);
+        var examRegistrationPeriod3 = new TimeFrame(examRegistrationStart, examTime3, ETimeFrameDistribution.ReverseExponential);
+        var examRegistrationPeriod4 = new TimeFrame(examRegistrationStart, examTime4, ETimeFrameDistribution.ReverseExponential);
+        
+        var createMaterialsPeriod1 = new TimeFrame((2023, 2, 13, 8, 0, 0), (2023, 2, 13, 9, 0, 0));
+        var createMaterialsPeriod2 = new TimeFrame((2023, 2, 27, 8, 0, 0), (2023, 2, 27, 9, 0, 0));
+        var createMaterialsPeriod3 = new TimeFrame((2023, 3, 13, 8, 0, 0), (2023, 3, 13, 9, 0, 0));
+        var createMaterialsPeriod4 = new TimeFrame((2023, 3, 27, 8, 0, 0), (2023, 3, 27, 9, 0, 0));
+        var createMaterialsPeriod5 = new TimeFrame((2023, 4, 10, 8, 0, 0), (2023, 4, 10, 9, 0, 0));
+        var createMaterialsPeriod6 = new TimeFrame((2023, 4, 24, 8, 0, 0), (2023, 4, 24, 9, 0, 0));
+
+        var readStudyMaterialsPeriod1 = new TimeFrame(createMaterialsPeriod1.End, examTime4);
+        var readStudyMaterialsPeriod2 = new TimeFrame(createMaterialsPeriod2.End, examTime4);
+        var readStudyMaterialsPeriod3 = new TimeFrame(createMaterialsPeriod3.End, examTime4);
+        var readStudyMaterialsPeriod4 = new TimeFrame(createMaterialsPeriod4.End, examTime4);
+        var readStudyMaterialsPeriod5 = new TimeFrame(createMaterialsPeriod5.End, examTime4);
+        var readStudyMaterialsPeriod6 = new TimeFrame(createMaterialsPeriod6.End, examTime4);
+        
+        var createExamScanTime1 = new DateTime(2023, 5, 29, 10, 6, 10);
+        var createExamScanTime2 = new DateTime(2023, 6, 7, 9, 53, 28);
+        var createExamScanTime3 = new DateTime(2023, 6, 19, 14, 15, 54);
+        var createExamScanTime4 = new DateTime(2023, 6, 26, 8, 42, 49);
 
         // Useful properties
-        var semesterEnd = new DateTime(2023, 3, 1);
-        var examRegistrationEndTerm3 = new DateTime(2023, 2, 24);
-        var timeFrameRopot1 =
-            new TimeFrame(new DateTime(2023, 1, 03, 12, 4, 00), new DateTime(2023, 1, 03, 12, 5, 00));
-        var timeFrameRopot2 =
-            new TimeFrame(new DateTime(2023, 1, 10, 12, 4, 00), new DateTime(2023, 1, 10, 12, 5, 00));
-        var timeFrameRopot3 =
-            new TimeFrame(new DateTime(2023, 1, 17, 12, 4, 00), new DateTime(2023, 1, 17, 12, 5, 00));
-        var timeFrameRopot4 =
-            new TimeFrame(new DateTime(2023, 1, 24, 12, 4, 00), new DateTime(2023, 1, 24, 12, 5, 00));
-        var timeFrameRopot5 =
-            new TimeFrame(new DateTime(2023, 1, 31, 12, 4, 00), new DateTime(2023, 1, 31, 12, 5, 00));
-        var timeFrameRopot6 =
-            new TimeFrame(new DateTime(2023, 2, 07, 12, 4, 00), new DateTime(2023, 2, 07, 12, 5, 00));
+        var semesterEnd = new DateTime(2023, 7, 1);
 
         // Prepare states
         var enrollCourse = new ProcessState(
             EActivityType.EnrollCourse,
             course,
             new StateRules(true, 1, 0),
-            new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2022, 12, 24))
+            courseRegistrationPeriod
         );
 
         var enrolledCourseSet = new HashSet<ProcessState>() { enrollCourse };
@@ -109,8 +161,8 @@ public static class StudentGenerator
         var registerSeminarGroup1 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup1,
-            new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31)),
+            new StateRules(true, 1, 0),
+            seminarRegistrationPeriod,
             false,
             (actor) =>
             {
@@ -122,8 +174,8 @@ public static class StudentGenerator
         var registerSeminarGroup2 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup2,
-            new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31)),
+            new StateRules(true, 1, 0),
+            seminarRegistrationPeriod,
             false,
             (actor) =>
             {
@@ -135,8 +187,8 @@ public static class StudentGenerator
         var registerSeminarGroup3 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup3,
-            new StateRules(true, 1, 0, null, new HashSet<ProcessState>() { enrollCourse }),
-            new TimeFrame(new DateTime(2022, 12, 24), new DateTime(2022, 12, 31)),
+            new StateRules(true, 1, 0),
+            seminarRegistrationPeriod,
             false,
             (actor) =>
             {
@@ -145,276 +197,230 @@ public static class StudentGenerator
             }
         );
 
-        var materialRules =
-            new StateRules(false, -1, -1,
-                new Dictionary<EActivityType, float>() { { EActivityType.ReceiveAttendance, 0.8f } },
-                enrolledCourseSet);
-
-
-        var submitHomeworkRules = new StateRules(true, -1, 0, null, enrolledCourseSet);
-        var deadlineHomework1 = new DateTime(2023, 1, 15);
-        var deadlineHomework2 = new DateTime(2023, 1, 29);
-        var deadlineHomework3 = new DateTime(2023, 2, 12);
+        var submitHomeworkRules = new StateRules(true, -1, 0);
 
         var submitHomework1 = new ProcessState(
             EActivityType.CreateFile,
             hw1,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 9), deadlineHomework1, ETimeFrameDistribution.Exponential, new HashSet<TimeFrame>()
-            {
-                timeFrameRopot1.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-                timeFrameRopot2.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-                timeFrameRopot3.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-            })
-        );
+            submitHomeworkPeriod1
+            );
 
         var submitHomework2 = new ProcessState(
             EActivityType.CreateFile,
             hw2,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 23), deadlineHomework2, ETimeFrameDistribution.Exponential, new HashSet<TimeFrame>()
-            {
-                timeFrameRopot1.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-                timeFrameRopot2.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-                timeFrameRopot3.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-            })
+            submitHomeworkPeriod2
         );
 
         var submitHomework3 = new ProcessState(
             EActivityType.CreateFile,
             hw3,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 2, 6), deadlineHomework3, ETimeFrameDistribution.Exponential, new HashSet<TimeFrame>()
-            {
-                timeFrameRopot1.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-                timeFrameRopot2.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-                timeFrameRopot3.GetTimeFrameWithOffset(null, TimeSpan.FromHours(6)),
-            })
+            submitHomeworkPeriod3
         );
 
         var removeHomework1 = new ProcessState(
             EActivityType.DeleteFile,
             hw1,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15))
+            submitHomeworkPeriod1
         );
 
         var removeHomework2 = new ProcessState(
             EActivityType.DeleteFile,
             hw2,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29))
+            submitHomeworkPeriod2
         );
 
         var removeHomework3 = new ProcessState(
             EActivityType.DeleteFile,
             hw3,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12))
+            submitHomeworkPeriod3
         );
 
         var readHomework1 = new ProcessState(
             EActivityType.ReadFile,
             hw1,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 9), new DateTime(2023, 1, 15))
+            submitHomeworkPeriod1
         );
 
         var readHomework2 = new ProcessState(
             EActivityType.ReadFile,
             hw2,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 1, 23), new DateTime(2023, 1, 29))
+            submitHomeworkPeriod2
         );
 
         var readHomework3 = new ProcessState(
             EActivityType.ReadFile,
             hw3,
             submitHomeworkRules,
-            new TimeFrame(new DateTime(2023, 2, 6), new DateTime(2023, 2, 12))
+            submitHomeworkPeriod3
         );
         
-        var openRopotFollowing = new Dictionary<EActivityType, float>()
-            { { EActivityType.SubmitRopot, 0.7f }, { EActivityType.SaveRopot, 0.3f } };
-        var saveRopotFollowing = new Dictionary<EActivityType, float>()
-            { { EActivityType.SubmitRopot, 0.6f }, { EActivityType.SaveRopot, 0.4f } };
-        var submitRopotFollowing = new Dictionary<EActivityType, float>() { { EActivityType.ViewRopot, 0.9f } };
-
-        var openRopotRulesSeminar1 =
-            new StateRules(true, 1, 0, openRopotFollowing);
-        var openRopotRulesSeminar2 =
-            new StateRules(true, 1, 0, openRopotFollowing);
-        var openRopotRulesSeminar3 =
-            new StateRules(true, 1, 0, openRopotFollowing);
-        var openRopotRulesSeminar4 =
-            new StateRules(true, 1, 0, openRopotFollowing);
-        var openRopotRulesSeminar5 =
-            new StateRules(true, 1, 0, openRopotFollowing);
-        var openRopotRulesSeminar6 =
-            new StateRules(true, 1, 0, openRopotFollowing);
+        var openRopotRules = new StateRules(true, 2); 
 
         var openRopot1 = new ProcessState(
             EActivityType.OpenRopot,
             ropot1,
-            openRopotRulesSeminar1,
-            timeFrameRopot1
+            openRopotRules,
+            openRopotPeriod1
         );
 
         var openRopot2 = new ProcessState(
             EActivityType.OpenRopot,
             ropot2,
-            openRopotRulesSeminar2,
-            timeFrameRopot2
+            openRopotRules,
+            openRopotPeriod2
         );
 
         var openRopot3 = new ProcessState(
             EActivityType.OpenRopot,
             ropot3,
-            openRopotRulesSeminar3,
-            timeFrameRopot3
+            openRopotRules,
+            openRopotPeriod3
         );
 
         var openRopot4 = new ProcessState(
             EActivityType.OpenRopot,
             ropot4,
-            openRopotRulesSeminar4,
-            timeFrameRopot4
+            openRopotRules,
+            openRopotPeriod4
         );
 
         var openRopot5 = new ProcessState(
             EActivityType.OpenRopot,
             ropot5,
-            openRopotRulesSeminar5,
-            timeFrameRopot5
+            openRopotRules,
+            openRopotPeriod5
         );
 
         var openRopot6 = new ProcessState(
             EActivityType.OpenRopot,
             ropot6,
-            openRopotRulesSeminar6,
-            timeFrameRopot6
+            openRopotRules,
+            openRopotPeriod6
         );
 
         var saveRopotRulesSeminar1 =
-            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { openRopot1 });
+            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot1 });
         var saveRopotRulesSeminar2 =
-            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { openRopot2 });
+            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot2 });
         var saveRopotRulesSeminar3 =
-            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { openRopot3 });
+            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot3 });
         var saveRopotRulesSeminar4 =
-            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { openRopot4 });
+            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot4 });
         var saveRopotRulesSeminar5 =
-            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { openRopot5 });
+            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot5 });
         var saveRopotRulesSeminar6 =
-            new StateRules(false, 1, 3, saveRopotFollowing, new HashSet<ProcessState>() { openRopot6 });
+            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot6 });
 
         var submitRopotRulesSeminar1 =
-            new StateRules(true, 1, 0, submitRopotFollowing,
-                new HashSet<ProcessState>() { openRopot1 });
+            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot1 });
         var submitRopotRulesSeminar2 =
-            new StateRules(true, 1, 0, submitRopotFollowing,
-                new HashSet<ProcessState>() { openRopot2 });
+            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot2 });
         var submitRopotRulesSeminar3 =
-            new StateRules(true, 1, 0, submitRopotFollowing,
-                new HashSet<ProcessState>() { openRopot3 });
+            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot3 });
         var submitRopotRulesSeminar4 =
-            new StateRules(true, 1, 0, submitRopotFollowing,
-                new HashSet<ProcessState>() { openRopot4 });
+            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot4 });
         var submitRopotRulesSeminar5 =
-            new StateRules(true, 1, 0, submitRopotFollowing,
-                new HashSet<ProcessState>() { openRopot5 });
+            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot5 });
         var submitRopotRulesSeminar6 =
-            new StateRules(true, 1, 0, submitRopotFollowing,
-                new HashSet<ProcessState>() { openRopot6 });
+            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot6 });
 
         var saveRopot1 = new ProcessState(
             EActivityType.SaveRopot,
             ropot1,
             saveRopotRulesSeminar1,
-            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
+            saveRopotPeriod1
         );
 
         var saveRopot2 = new ProcessState(
             EActivityType.SaveRopot,
             ropot2,
             saveRopotRulesSeminar2,
-            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
+            saveRopotPeriod2
         );
 
         var saveRopot3 = new ProcessState(
             EActivityType.SaveRopot,
             ropot3,
             saveRopotRulesSeminar3,
-            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
+            saveRopotPeriod3
         );
 
         var saveRopot4 = new ProcessState(
             EActivityType.SaveRopot,
             ropot4,
             saveRopotRulesSeminar4,
-            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
+            saveRopotPeriod4
         );
 
         var saveRopot5 = new ProcessState(
             EActivityType.SaveRopot,
             ropot5,
             saveRopotRulesSeminar5,
-            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
+            saveRopotPeriod5
         );
 
         var saveRopot6 = new ProcessState(
             EActivityType.SaveRopot,
             ropot6,
             saveRopotRulesSeminar6,
-            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(1), TimeSpan.FromMinutes(4))
+            saveRopotPeriod6
         );
         
         var submitRopot1 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot1,
             submitRopotRulesSeminar1,
-            timeFrameRopot1.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
+            submitRopotPeriod1
         );
 
         var submitRopot2 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot2,
             submitRopotRulesSeminar2,
-            timeFrameRopot2.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
+            submitRopotPeriod2
         );
 
         var submitRopot3 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot3,
             submitRopotRulesSeminar3,
-            timeFrameRopot3.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
+            submitRopotPeriod3
         );
 
         var submitRopot4 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot4,
             submitRopotRulesSeminar4,
-            timeFrameRopot4.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
+            submitRopotPeriod4
         );
 
         var submitRopot5 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot5,
             submitRopotRulesSeminar5,
-            timeFrameRopot5.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
+            submitRopotPeriod5
         );
 
         var submitRopot6 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot6,
             submitRopotRulesSeminar6,
-            timeFrameRopot6.GetTimeFrameWithOffset(TimeSpan.FromMinutes(4), TimeSpan.FromMinutes(4))
+            submitRopotPeriod6
         );
         
         // Implement auto save of ropots
         var autoSavePeriod = TimeSpan.FromMinutes(1);
 
-        var reopenRopot1 = new DummyState(EActivityType.OpenRopot, ropot1);
+        // Deliberately left out option to fail internet on first ropot
+        // var reopenRopot1 = new DummyState(EActivityType.OpenRopot, ropot1);
         var reopenRopot2 = new DummyState(EActivityType.OpenRopot, ropot2);
         var reopenRopot3 = new DummyState(EActivityType.OpenRopot, ropot3);
         var reopenRopot4 = new DummyState(EActivityType.OpenRopot, ropot4);
@@ -426,8 +432,7 @@ public static class StudentGenerator
             ropot1,
             new HashSet<ProcessState>(){openRopot1},
             new HashSet<ProcessState>(){submitRopot1},
-            autoSavePeriod,
-            (reopenRopot1, 0.013f, 1)
+            autoSavePeriod
         );
         
         var autoSaveRopot2 = new PeriodicSprinkleState(
@@ -475,83 +480,106 @@ public static class StudentGenerator
             (reopenRopot6, 0.013f, 1)
         );
 
-        var examRules = new StateRules(false, 1, 0,
-            new Dictionary<EActivityType, float>()
-                { { EActivityType.PassCourse, 0.5f }, { EActivityType.RegisterExamTerm, 0.5f } });
+        var examRegistrationRules = new StateRules(false, 1, 0);
 
         var registerTerm1 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam1,
-            examRules,
-            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 19))
+            examRegistrationRules,
+            examRegistrationPeriod1
         );
 
         var registerTerm2 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam2,
-            examRules,
-            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 22))
+            examRegistrationRules,
+            examRegistrationPeriod2
         );
 
         var registerTerm3 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam3,
-            examRules,
-            new TimeFrame(new DateTime(2023, 2, 11), new DateTime(2023, 2, 26))
+            examRegistrationRules,
+            examRegistrationPeriod3
+        );
+        
+        var registerTerm4 = new ProcessState(
+            EActivityType.RegisterExamTerm,
+            exam4,
+            examRegistrationRules,
+            examRegistrationPeriod4
         );
 
         var failExam1 = new ProcessState(
             EActivityType.FailExam,
             exam1,
-            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
-            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
+            new StateRules(false, 1, 0),
+            createExamScanTime1
+        );
 
         var failExam2 = new ProcessState(
             EActivityType.FailExam,
             exam2,
-            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
-            new TimeFrame(new DateTime(2023, 2, 24, 12, 0, 0), new DateTime(2023, 2, 24, 12, 5, 0)));
+            new StateRules(false, 1, 0),
+            createExamScanTime2
+        );
 
         var failExam3 = new ProcessState(
             EActivityType.FailExam,
             exam3,
-            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
-            new TimeFrame(new DateTime(2023, 2, 28, 12, 0, 0), new DateTime(2023, 2, 28, 12, 5, 0)));
+            new StateRules(false, 1, 0),
+            createExamScanTime3
+        );
+        
+        var failExam4 = new ProcessState(
+            EActivityType.FailExam,
+            exam4,
+            new StateRules(false, 1, 0),
+            createExamScanTime4
+        );
         
         var passExam1 = new ProcessState(
             EActivityType.PassExam,
             exam1,
-            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm1 }),
-            new TimeFrame(new DateTime(2023, 2, 21, 12, 0, 0), new DateTime(2023, 2, 21, 12, 5, 0)));
+            new StateRules(false, 1, 0),
+            createExamScanTime1
+        );
 
         var passExam2 = new ProcessState(
             EActivityType.PassExam,
             exam2,
-            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm2 }),
-            new TimeFrame(new DateTime(2023, 2, 24, 12, 0, 0), new DateTime(2023, 2, 24, 12, 5, 0)));
+            new StateRules(false, 1, 0),
+            createExamScanTime2
+        );
 
         var passExam3 = new ProcessState(
             EActivityType.PassExam,
             exam3,
-            new StateRules(false, 1, 0, null, new HashSet<ProcessState>() { registerTerm3 }),
-            new TimeFrame(new DateTime(2023, 2, 28, 12, 0, 0), new DateTime(2023, 2, 28, 12, 5, 0)));
+            new StateRules(false, 1, 0),
+            createExamScanTime3
+        );
+        
+        var passExam4 = new ProcessState(
+            EActivityType.PassExam,
+            exam4,
+            new StateRules(false, 1, 0),
+            createExamScanTime4
+        );
 
         // Finishing processes
         var passCourse = new ProcessState(
             EActivityType.PassCourse,
             course,
-            new StateRules(true, 1, 0, null, enrolledCourseSet,
-                new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
-            new TimeFrame(examRegistrationEndTerm3, semesterEnd),
+            new StateRules(true, 1, 0),
+            new TimeFrame(examRegistrationStart, semesterEnd),
             true
         );
 
         var failCourse = new ProcessState(
             EActivityType.FailCourse,
             course,
-            new StateRules(true, 1, 0, null, enrolledCourseSet,
-                new HashSet<EActivityType>() { EActivityType.RegisterExamTerm }),
-            new TimeFrame(examRegistrationEndTerm3, semesterEnd),
+            new StateRules(true, 1, 0),
+            new TimeFrame(examRegistrationStart, semesterEnd),
             true
         );
 
@@ -602,132 +630,110 @@ public static class StudentGenerator
         removeHomework3.AddFollowingStates((submitHomework3, 1f));
 
         // exams
-        registerTerm1.AddFollowingStates((passExam1, 0.65f), (failExam1, 0.35f));
-        registerTerm2.AddFollowingStates((passExam2, 0.65f), (failExam2, 0.35f));
-        registerTerm3.AddFollowingStates((passExam3, 0.65f), (failExam3, 0.35f));
-        failExam1.AddFollowingStates((registerTerm2, 0.9f), (failCourse, 0.1f));
-        failExam2.AddFollowingStates((registerTerm3, 0.9f), (failCourse, 0.1f));
-        failExam3.AddFollowingStates((failCourse, 1f));
+        registerTerm1.AddFollowingStates((passExam1, 0.60f), (failExam1, 0.40f));
+        registerTerm2.AddFollowingStates((passExam2, 0.55f), (failExam2, 0.45f));
+        registerTerm3.AddFollowingStates((passExam3, 0.50f), (failExam3, 0.50f));
+        registerTerm4.AddFollowingStates((passExam4, 0.45f), (failExam4, 0.55f));
+        failExam1.AddFollowingStates((registerTerm2, 0.8f), (registerTerm3, 0.1f), (failCourse, 0.1f));
+        failExam2.AddFollowingStates((registerTerm3, 0.7f), (registerTerm4, 0.1f), (failCourse, 0.1f));
+        failExam3.AddFollowingStates((registerTerm4, 0.7f), (failCourse, 0.3f));
+        failExam4.AddFollowingStates((failCourse, 1f));
         passExam1.AddFollowingStates((passCourse, 1f));
         passExam2.AddFollowingStates((passCourse, 1f));
         passExam3.AddFollowingStates((passCourse, 1f));
-
-        var endCourseSet = new HashSet<ProcessState>() { passCourse, failCourse };
-
-        var openRopotSet = new HashSet<ProcessState>()
-            { openRopot1, openRopot2, openRopot3, openRopot4, openRopot5, openRopot6 };
-        var submitRopotSet = new HashSet<ProcessState>()
-            { submitRopot1, submitRopot2, submitRopot3, submitRopot4, submitRopot5, submitRopot6 };
-
+        passExam4.AddFollowingStates((passCourse, 1f));
+        
         // Create sprinkles
         var readStudyMaterials1 = new IntervalSprinkleState(
             EActivityType.ReadFile,
             materialsWeek1,
-            new TimeFrame(new DateTime(2023, 1, 2), examRegistrationEndTerm3)
+            readStudyMaterialsPeriod1
         );
         
         var readStudyMaterials2 = new IntervalSprinkleState(
             EActivityType.ReadFile,
             materialsWeek2,
-            new TimeFrame(new DateTime(2023, 1, 9), examRegistrationEndTerm3)
+            readStudyMaterialsPeriod2
         );
         
         var readStudyMaterials3 = new IntervalSprinkleState(
             EActivityType.ReadFile,
             materialsWeek3,
-            new TimeFrame(new DateTime(2023, 1, 16), examRegistrationEndTerm3)
+            readStudyMaterialsPeriod3
         );
         
         var readStudyMaterials4 = new IntervalSprinkleState(
             EActivityType.ReadFile,
             materialsWeek4,
-            new TimeFrame(new DateTime(2023, 1, 23), examRegistrationEndTerm3)
+            readStudyMaterialsPeriod4
         );
         
         var readStudyMaterials5 = new IntervalSprinkleState(
             EActivityType.ReadFile,
             materialsWeek5,
-            new TimeFrame(new DateTime(2023, 1, 30), examRegistrationEndTerm3)
+            readStudyMaterialsPeriod5
         );
         
         var readStudyMaterials6 = new IntervalSprinkleState(
             EActivityType.ReadFile,
             materialsWeek6,
-            new TimeFrame(new DateTime(2023, 2, 6), examRegistrationEndTerm3)
+            readStudyMaterialsPeriod6
         );
         
-        var viewRopot1 = new SprinkleState(
+        var viewRopot1 = new IntervalSprinkleState(
             EActivityType.ViewRopot,
             ropot1,
-            new HashSet<ProcessState>() { submitRopot1 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
+            viewRopotPeriod1
         );
 
-        var viewRopot2 = new SprinkleState(
+        var viewRopot2 = new IntervalSprinkleState(
             EActivityType.ViewRopot,
             ropot2,
-            new HashSet<ProcessState>() { submitRopot2 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
+            viewRopotPeriod2
         );
 
-        var viewRopot3 = new SprinkleState(
+        var viewRopot3 = new IntervalSprinkleState(
             EActivityType.ViewRopot,
             ropot3,
-            new HashSet<ProcessState>() { submitRopot3 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
+            viewRopotPeriod3
         );
 
-        var viewRopot4 = new SprinkleState(
+        var viewRopot4 = new IntervalSprinkleState(
             EActivityType.ViewRopot,
             ropot4,
-            new HashSet<ProcessState>() { submitRopot4 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
+            viewRopotPeriod4
         );
 
-        var viewRopot5 = new SprinkleState(
+        var viewRopot5 = new IntervalSprinkleState(
             EActivityType.ViewRopot,
             ropot5,
-            new HashSet<ProcessState>() { submitRopot5 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
+            viewRopotPeriod5
         );
 
-        var viewRopot6 = new SprinkleState(
+        var viewRopot6 = new IntervalSprinkleState(
             EActivityType.ViewRopot,
             ropot6,
-            new HashSet<ProcessState>() { submitRopot6 },
-            endCourseSet,
-            openRopotSet,
-            submitRopotSet
+            viewRopotPeriod6
         );
 
         var receivePointsHomework1 = new FixedTimeState(
             EActivityType.ReceivePoints,
             notebookhw1,
-            deadlineHomework1 + TimeSpan.FromDays(5),
+            receivePointsTime1,
             submitHomework1
             );
 
         var receivePointsHomework2 = new FixedTimeState(
             EActivityType.ReceivePoints,
             notebookhw2,
-            deadlineHomework2 + TimeSpan.FromDays(5),
+            receivePointsTime2,
             submitHomework2
         );
 
         var receivePointsHomework3 = new FixedTimeState(
             EActivityType.ReceivePoints,
             notebookhw3,
-            deadlineHomework3 + TimeSpan.FromDays(5),
+            receivePointsTime3,
             submitHomework3
         );
 
@@ -786,5 +792,11 @@ public static class StudentGenerator
 
         // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
         // This could be applied if Collector collected the whole process of single actor and then dumped it into the log
+        
+        // TODO: Check EXCEL data for seconds (manual job)
+        
+        // TODO: For ropot attack, do more variable week (manual job)
+        
+        // TODO: There is no prevention for reading of student materials and homework submission not to take place while ropot session is opened
     }
 }
