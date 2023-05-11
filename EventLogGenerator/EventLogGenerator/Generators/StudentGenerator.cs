@@ -824,7 +824,5 @@ public static class StudentGenerator
         // TODO: Check EXCEL data for seconds (manual job)
         
         // TODO: For ropot attack, do more variable week (manual job)
-        
-        // TODO: Add constraint to only 3 exam term registrations
     }
 }
