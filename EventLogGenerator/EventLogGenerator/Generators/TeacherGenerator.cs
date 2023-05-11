@@ -302,8 +302,6 @@ public static class TeacherGenerator
             SprinkleService.RunIntervalSprinkles(actor);
         }
         
-        // TODO: Create random 6 digit number for student IDs (start at 600000) and teacher IDs (us researchers)
-        
         // TODO: When attacking, view more homeworks (10) (manual job)
     }
 }
