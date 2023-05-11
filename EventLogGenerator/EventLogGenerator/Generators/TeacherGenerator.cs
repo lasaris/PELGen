@@ -213,8 +213,8 @@ public static class TeacherGenerator
             EActivityType.PassExam,
             "Exam term 1",
             examScan1,
-            - TimeSpan.FromMinutes(5)
-            // TODO: Add min-max offset for this activity
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
         );
         
         var addScansPositive2 = new ReactiveState(
@@ -223,7 +223,8 @@ public static class TeacherGenerator
             EActivityType.PassExam,
             "Exam term 2",
             examScan2,
-            - TimeSpan.FromMinutes(5)
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
         );
         
         var addScansPositive3 = new ReactiveState(
@@ -232,7 +233,8 @@ public static class TeacherGenerator
             EActivityType.PassExam,
             "Exam term 3",
             examScan3,
-            - TimeSpan.FromMinutes(5)
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
         );
         
         var addScansNegative1 = new ReactiveState(
@@ -241,7 +243,8 @@ public static class TeacherGenerator
             EActivityType.FailExam,
             "Exam term 1",
             examScan1,
-            - TimeSpan.FromMinutes(5)
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
         );
         
         var addScansNegative2 = new ReactiveState(
@@ -250,7 +253,8 @@ public static class TeacherGenerator
             EActivityType.FailExam,
             "Exam term 2",
             examScan2,
-            - TimeSpan.FromMinutes(5)
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
         );
         
         var addScansNegative3 = new ReactiveState(
@@ -259,7 +263,8 @@ public static class TeacherGenerator
             EActivityType.FailExam,
             "Exam term 3",
             examScan3,
-            - TimeSpan.FromMinutes(5)
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
         );
 
         // Teacher sprinkles

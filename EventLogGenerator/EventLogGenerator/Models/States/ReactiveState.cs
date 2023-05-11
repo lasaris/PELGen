@@ -15,14 +15,18 @@ public class ReactiveState : ABaseState
 
     public TimeSpan Offset;
 
+    public TimeSpan TimeVariable;
+
     public ReactiveState(EActivityType activityType, Resource resource, EActivityType reactToActivity,
-        string? reactToResourceName = null, Resource? ownResource = null, TimeSpan? offset = null) : base(activityType, resource)
+        string? reactToResourceName = null, Resource? ownResource = null, TimeSpan? offset = null,
+        TimeSpan? variable = null) : base(activityType, resource)
     {
         ReactToActivity = reactToActivity;
         ReactToResourceName = reactToResourceName;
         OwnResource = ownResource;
         Offset = offset ?? TimeSpan.Zero;
+        TimeVariable = variable ?? TimeSpan.Zero;
 
-        ReactiveStateService.LoadFixedState(this);
+        ReactiveStateService.LoadReactiveState(this);
     }
 }
