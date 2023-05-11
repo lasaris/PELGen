@@ -1,5 +1,7 @@
-﻿using EventLogGenerator.Exceptions;
+﻿using System.Diagnostics;
+using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
+using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Models.Events;
 using EventLogGenerator.Services;
 
@@ -22,6 +24,9 @@ public static class StateEvaluator
     // The time when process has to be finished. Can be used as emergency limit
     public static DateTime? ProcessEnd { get; set; }
 
+    // The constraints to different activities (maximum occurences in a single process)
+    public static Dictionary<EActivityType, int> ActivitiesLimits = new();
+
     public static ActorFrame RunProcess(ProcessState initial)
     {
         // Check for desired state of evaluator
@@ -34,10 +39,10 @@ public static class StateEvaluator
         {
             throw new Exception("ProcessEnd must be set before running the evaluator");
         }
-        
+
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
         OnStateEnter(CurrentActorFrame.Actor, initial, CurrentActorFrame.CurrentTime);
-        
+
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
         {
@@ -67,6 +72,15 @@ public static class StateEvaluator
                     continue;
                 }
 
+                // Skip states with activities that reached its limit
+                var newActivity = state.ActivityType;
+                if (CurrentActorFrame.VisitedActivitiesMap.ContainsKey(newActivity)
+                    && ActivitiesLimits.ContainsKey(newActivity)
+                    && CurrentActorFrame.VisitedActivitiesMap[newActivity] == ActivitiesLimits[newActivity])
+                {
+                    continue;
+                }
+
                 float rating = 0;
 
                 // Rank following chance
@@ -74,13 +88,13 @@ public static class StateEvaluator
                 rating += currentState.FollowingMap[state] * Constants.ChanceToFollowWeight;
                 weightedStates.Add(state, rating);
             }
-            
+
             if (!weightedStates.Any())
             {
                 throw new InvalidProcessStateException(
                     "Weighted states are empty, this can happen because all following states end sooner than our current state");
             }
-            
+
             var nextState = SelectWeightedState(weightedStates);
             var jumpTime = nextState.TimeFrame.PickTimeByDistribution(CurrentActorFrame.CurrentTime);
             var actorOffset = ActorService.GetActorActivityOffset(CurrentActorFrame.Actor, nextState.ActivityType);
@@ -98,7 +112,8 @@ public static class StateEvaluator
         {
             newState.Callback(CurrentActorFrame.Actor);
         }
-            // Update VisitedMap
+
+        // Update VisitedMap
         if (CurrentActorFrame.VisitedMap.ContainsKey(CurrentActorFrame.CurrentState))
         {
             CurrentActorFrame.VisitedMap[CurrentActorFrame.CurrentState] += 1;
@@ -106,6 +121,16 @@ public static class StateEvaluator
         else
         {
             CurrentActorFrame.VisitedMap.Add(CurrentActorFrame.CurrentState, 1);
+        }
+
+        // Update VisitedActivities
+        if (CurrentActorFrame.VisitedActivitiesMap.ContainsKey(CurrentActorFrame.CurrentState.ActivityType))
+        {
+            CurrentActorFrame.VisitedActivitiesMap[CurrentActorFrame.CurrentState.ActivityType] += 1;
+        }
+        else
+        {
+            CurrentActorFrame.VisitedActivitiesMap.Add(CurrentActorFrame.CurrentState.ActivityType, 1);
         }
 
         // Update loop count or current state to the new one
@@ -118,7 +143,7 @@ public static class StateEvaluator
             CurrentActorFrame.LastVisited = CurrentActorFrame.CurrentState;
             CurrentActorFrame.CurrentState = newState;
         }
-        
+
         CurrentActorFrame.CurrentTime = jumpDate;
         CurrentActorFrame.VisitedStack.Add((newState, jumpDate + actorOffset));
         OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate + actorOffset);
@@ -138,7 +163,7 @@ public static class StateEvaluator
                 return kvp.Key;
             }
         }
-        
+
         throw new InvalidOperationException("Cannot pick from empty state-weight pairs");
     }
 
@@ -153,5 +178,10 @@ public static class StateEvaluator
     {
         CurrentActorFrame = actorFrame;
         ProcessEnd = processEnd;
+    }
+
+    public static void SetLimits(Dictionary<EActivityType, int> activitiesLimits)
+    {
+        ActivitiesLimits = activitiesLimits;
     }
 }

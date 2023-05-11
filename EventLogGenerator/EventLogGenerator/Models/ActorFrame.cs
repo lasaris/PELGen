@@ -1,4 +1,6 @@
-﻿namespace EventLogGenerator.Models;
+﻿using EventLogGenerator.Models.Enums;
+
+namespace EventLogGenerator.Models;
 
 /// <summary>
 /// This frame moves along states with the actor. Simulates the entire process
@@ -13,6 +15,9 @@ public class ActorFrame
 
     // Dictionary of ProcessStates that were previously visited in the process, values counts the visits
     public Dictionary<ProcessState, int> VisitedMap = new();
+    
+    // Dictionary of ProcessStates that were previously visited in the process, values counts the visits
+    public Dictionary<EActivityType, int> VisitedActivitiesMap = new();
     
     // The List (stack) of all visited States and the times they were visited in
     public List<(ProcessState, DateTime)> VisitedStack = new();

@@ -22,6 +22,10 @@ public static class StudentGenerator
         IdService.SetInitialId(600000);
         SprinkleService.ResetService();
         Collector.CreateCollectorMap();
+        StateEvaluator.SetLimits(new Dictionary<EActivityType, int>()
+        {
+            { EActivityType.RegisterExamTerm, 3 }
+        });
 
         // Prepare Actors (time offset for )
         List<Actor> students = Enumerable.Range(0, studentsCount)
@@ -808,7 +812,7 @@ public static class StudentGenerator
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
             // FIXME: StateEvaluator.RunProcess() can take these parameters
-            StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 4, 1));
+            StateEvaluator.InitializeEvaluator(actorFrame, semesterEnd);
             var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
             SprinkleService.RunSprinkling(filledActorFrame);
             FixedTimeStateService.RunFixedStatesWithPreceding(filledActorFrame);
