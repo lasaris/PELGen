@@ -16,7 +16,6 @@ public static class TeacherGenerator
         IdService.ResetService();
         SprinkleService.ResetService();
         ReactiveStateService.ResetService();
-        FixedTimeStateService.ResetService();
         Collector.CreateCollectorMap();
 
         // Prepare Actors
@@ -36,10 +35,6 @@ public static class TeacherGenerator
         var materialsWeek4 = new Resource("/um/slides-week04.pdf");
         var materialsWeek5 = new Resource("/um/slides-week05.pdf");
         var materialsWeek6 = new Resource("/um/slides-week06.pdf");
-
-        var homeworkAssignment1 = new Resource("/um/homework1.pdf");
-        var homeworkAssignment2 = new Resource("/um/homework2.pdf");
-        var homeworkAssignment3 = new Resource("/um/homework3.pdf");
 
         var examScan1 = new Resource("/re/scan-exam1.png");
         var examScan2 = new Resource("/re/scan-exam2.png");
@@ -61,26 +56,7 @@ public static class TeacherGenerator
         var submitHomeworkPeriod1 = new TimeFrame((2023, 3, 5), (2023, 3, 19));
         var submitHomeworkPeriod2 = new TimeFrame((2023, 4, 2), (2023, 4, 16));
         var submitHomeworkPeriod3 = new TimeFrame((2023, 4, 30), (2023, 5, 14));
-
-        // Fixed time states
-        var publishHomework1 = new FixedTimeState(
-            EActivityType.CreateFile,
-            homeworkAssignment1,
-            submitHomeworkPeriod1.Start
-        );
         
-        var publishHomework2 = new FixedTimeState(
-            EActivityType.CreateFile,
-            homeworkAssignment2,
-            submitHomeworkPeriod2.Start
-        );
-        
-        var publishHomework3 = new FixedTimeState(
-            EActivityType.CreateFile,
-            homeworkAssignment3,
-            submitHomeworkPeriod3.Start
-        );
-
         // Create study materials process
 
         var defaultCompulsaryRules = new StateRules(true, -1);
@@ -320,7 +296,6 @@ public static class TeacherGenerator
         var filledActorFrame = StateEvaluator.RunProcess(createStudyMaterials1);
         
         ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), teachers);
-        FixedTimeStateService.RunFixedStates(teachers[0]);
 
         foreach (var actor in teachers)
         {
