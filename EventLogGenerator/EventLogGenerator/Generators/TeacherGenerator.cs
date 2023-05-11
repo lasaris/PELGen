@@ -301,7 +301,5 @@ public static class TeacherGenerator
         {
             SprinkleService.RunIntervalSprinkles(actor);
         }
-        
-        // TODO: When attacking, view more homeworks (10) (manual job)
     }
 }
