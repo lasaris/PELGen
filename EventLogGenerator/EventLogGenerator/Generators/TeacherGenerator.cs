@@ -23,6 +23,11 @@ public static class TeacherGenerator
         List<Actor> teachers = Enumerable.Range(0, teacherCount)
             .Select(_ => new Actor(EActorType.Teacher))
             .ToList();
+        
+        // FIXME: Hard coded IDs of teachers
+        teachers[0].Id = 514184;
+        teachers[1].Id = 515163;
+        teachers[2].Id = 410452;
 
         // Define resources
         var vaultHomework1 = new Resource("Homework vault 1");
@@ -36,6 +41,11 @@ public static class TeacherGenerator
         var materialsWeek5 = new Resource("/um/slides-week05.pdf");
         var materialsWeek6 = new Resource("/um/slides-week06.pdf");
 
+        var examScan1 = new Resource("/re/scan-exam1.png");
+        var examScan2 = new Resource("/re/scan-exam2.png");
+        var examScan3 = new Resource("/re/scan-exam3.png");
+        var examScan4 = new Resource("/re/scan-exam4.png");
+        
         var studentCourseRecord = new Resource("Student course record");
 
         var placeholder = new Resource("Fill me please");
@@ -203,10 +213,6 @@ public static class TeacherGenerator
             EActivityType.PassExam
         );
 
-        var examScan1 = new Resource("/re/scan-exam1.png");
-        var examScan2 = new Resource("/re/scan-exam2.png");
-        var examScan3 = new Resource("/re/scan-exam3.png");
-        
         var addScansPositive1 = new ReactiveState(
             EActivityType.CreateFile,
             placeholder,
@@ -233,6 +239,16 @@ public static class TeacherGenerator
             EActivityType.PassExam,
             "Exam term 3",
             examScan3,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansPositive4 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.PassExam,
+            "Exam term 4",
+            examScan4,
             - TimeSpan.FromMinutes(5),
             TimeSpan.FromMinutes(2)
         );
@@ -266,12 +282,22 @@ public static class TeacherGenerator
             - TimeSpan.FromMinutes(5),
             TimeSpan.FromMinutes(2)
         );
+        
+        var addScansNegative4 = new ReactiveState(
+            EActivityType.CreateFile,
+            placeholder,
+            EActivityType.FailExam,
+            "Exam term 4",
+            examScan4,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
 
         // Teacher sprinkles
         var viewStudentRecord = new IntervalSprinkleState(
             EActivityType.VisitStudentRecord,
             studentCourseRecord,
-            new TimeFrame(new DateTime(2022, 12, 14), new DateTime(2023, 3, 1))
+            new TimeFrame(new DateTime(2023, 2, 12), new DateTime(2023, 6, 30))
         );
 
         var deleteIncompleteRopotSession = new ReactiveScenario(

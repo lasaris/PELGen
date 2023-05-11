@@ -140,11 +140,11 @@ public static class SprinkleService
             // FIXME: This is hardcoded and should be somehow abstracted
             if (sprinkle.ActivityType == EActivityType.VisitStudentRecord)
             {
-                var totalNumberOfStudents = Collector.GetLastCollectionMaxId();
-                var studentsVisited = Math.Max(RandomService.GetNext((int)Collector.GetLastCollectionMaxId()) / 4, totalNumberOfStudents / 10);
+                var totalNumberOfStudents = (int) (Collector.GetLastCollectionMaxId() + 1 - IdService.InitialSetId);
+                var studentsVisited = Math.Max(RandomService.GetNext(totalNumberOfStudents / 2), totalNumberOfStudents / 6);
                 for (int i = 0; i < studentsVisited; i++)
                 {
-                    additional = Math.Max(RandomService.GetNext((int)Collector.GetLastCollectionMaxId()), 1).ToString();
+                    additional = Math.Max(RandomService.GetNext((int) IdService.InitialSetId + totalNumberOfStudents), IdService.InitialSetId).ToString();
                     AddIntervalSprinkle(sprinkle, actor, additional);
                 }
             }

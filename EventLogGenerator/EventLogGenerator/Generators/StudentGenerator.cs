@@ -19,6 +19,7 @@ public static class StudentGenerator
         // Setup necessary services
         FileManager.SetupNewCsvFile("ActorId,ActorType,Activity,Resource,StartTimestamp,OwnerId", "student.csv");
         IdService.ResetService();
+        IdService.SetInitialId(600000);
         SprinkleService.ResetService();
         Collector.CreateCollectorMap();
 
@@ -819,5 +820,7 @@ public static class StudentGenerator
         // TODO: Check EXCEL data for seconds (manual job)
         
         // TODO: For ropot attack, do more variable week (manual job)
+        
+        // TODO: Add constraint to only 3 exam term registrations
     }
 }

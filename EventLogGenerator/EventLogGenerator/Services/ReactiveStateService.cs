@@ -96,7 +96,7 @@ public static class ReactiveStateService
                         // Assign same resource to the reacting state
                         state.Resource = state.OwnResource ?? stateTimePair.Item1.Resource;
                         var variableDirection = RandomService.GetNext(2) == 0 ? 1 : -1;
-                        var variableTime = TimeSpan.FromTicks((long)RandomService.GetNextDouble() * (state.TimeVariable.Ticks) * variableDirection);
+                        var variableTime = TimeSpan.FromTicks((long)(RandomService.GetNextDouble() * (state.TimeVariable.Ticks) * variableDirection));
                         var reactionTime = stateTimePair.Item2 + state.Offset + variableTime;
                         
                         AddReactiveState(state, reactionTime, actorStatesPair.Key);

@@ -7,12 +7,19 @@ public static class IdService
 {
     private const uint BeginningId = 0;
 
-    private static uint _lastActorId = 0;
+    private static uint _lastActorId = 1;
+
+    public static uint InitialSetId = 1;
 
     public static uint GetNewActorId()
     {
-        _lastActorId++;
-        return _lastActorId;
+        return _lastActorId++;
+    }
+
+    public static void SetInitialId(uint id)
+    {
+        InitialSetId = id;
+        _lastActorId = id;
     }
 
     public static void ResetService()
