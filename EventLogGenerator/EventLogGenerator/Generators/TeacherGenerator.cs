@@ -30,16 +30,16 @@ public static class TeacherGenerator
         teachers[2].Id = 410452;
 
         // Define resources
-        var vaultHomework1 = new Resource("Homework vault 1");
-        var vaultHomework2 = new Resource("Homework vault 2");
-        var vaultHomework3 = new Resource("Homework vault 3");
-
         var materialsWeek1 = new Resource("/um/slides-week01.pdf");
         var materialsWeek2 = new Resource("/um/slides-week02.pdf");
         var materialsWeek3 = new Resource("/um/slides-week03.pdf");
         var materialsWeek4 = new Resource("/um/slides-week04.pdf");
         var materialsWeek5 = new Resource("/um/slides-week05.pdf");
         var materialsWeek6 = new Resource("/um/slides-week06.pdf");
+
+        var homeworkAssignment1 = new Resource("/um/homework1.pdf");
+        var homeworkAssignment2 = new Resource("/um/homework2.pdf");
+        var homeworkAssignment3 = new Resource("/um/homework3.pdf");
 
         var examScan1 = new Resource("/re/scan-exam1.png");
         var examScan2 = new Resource("/re/scan-exam2.png");
@@ -57,27 +57,30 @@ public static class TeacherGenerator
         var createMaterialsPeriod4 = new TimeFrame((2023, 3, 27, 8, 0, 0), (2023, 3, 27, 9, 0, 0));
         var createMaterialsPeriod5 = new TimeFrame((2023, 4, 10, 8, 0, 0), (2023, 4, 10, 9, 0, 0));
         var createMaterialsPeriod6 = new TimeFrame((2023, 4, 24, 8, 0, 0), (2023, 4, 24, 9, 0, 0));
+        
+        var submitHomeworkPeriod1 = new TimeFrame((2023, 3, 5), (2023, 3, 19));
+        var submitHomeworkPeriod2 = new TimeFrame((2023, 4, 2), (2023, 4, 16));
+        var submitHomeworkPeriod3 = new TimeFrame((2023, 4, 30), (2023, 5, 14));
 
         // Fixed time states
-
-        var createVaultHomework1 = new FixedTimeState(
-            EActivityType.CreateHomeworkVault,
-            vaultHomework1,
-            new DateTime(2023, 1, 9)
-        );
-
-        var createVaultHomework2 = new FixedTimeState(
-            EActivityType.CreateHomeworkVault,
-            vaultHomework2,
-            new DateTime(2023, 1, 23)
-        );
-
-        var createVaultHomework3 = new FixedTimeState(
-            EActivityType.CreateHomeworkVault,
-            vaultHomework3,
-            new DateTime(2023, 2, 6)
+        var publishHomework1 = new FixedTimeState(
+            EActivityType.CreateFile,
+            homeworkAssignment1,
+            submitHomeworkPeriod1.Start
         );
         
+        var publishHomework2 = new FixedTimeState(
+            EActivityType.CreateFile,
+            homeworkAssignment2,
+            submitHomeworkPeriod2.Start
+        );
+        
+        var publishHomework3 = new FixedTimeState(
+            EActivityType.CreateFile,
+            homeworkAssignment3,
+            submitHomeworkPeriod3.Start
+        );
+
         // Create study materials process
 
         var defaultCompulsaryRules = new StateRules(true, -1);
@@ -317,7 +320,8 @@ public static class TeacherGenerator
         var filledActorFrame = StateEvaluator.RunProcess(createStudyMaterials1);
         
         ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), teachers);
-        
+        FixedTimeStateService.RunFixedStates(teachers[0]);
+
         foreach (var actor in teachers)
         {
             SprinkleService.RunIntervalSprinkles(actor);
