@@ -100,17 +100,6 @@ public static class StudentGenerator
         var submitRopotPeriod5 = new TimeFrame((2023, 4, 18, 10, 9, 0), (2023, 4, 18, 10, 10, 0), ETimeFrameDistribution.Exponential); 
         var submitRopotPeriod6 = new TimeFrame((2023, 5, 2, 10, 9, 0), (2023, 5, 2, 10, 10, 0), ETimeFrameDistribution.Exponential);
 
-        var viewRopotPeriod1 = new TimeFrame((2023, 2, 24), (2023, 3, 3));
-        var viewRopotPeriod2 = new TimeFrame((2023, 3, 10), (2023, 3, 17));
-        var viewRopotPeriod3 = new TimeFrame((2023, 3, 24), (2023, 3, 31));
-        var viewRopotPeriod4 = new TimeFrame((2023, 4, 7), (2023, 4, 14));
-        var viewRopotPeriod5 = new TimeFrame((2023, 4, 21), (2023, 4, 28));
-        var viewRopotPeriod6 = new TimeFrame((2023, 5, 5), (2023, 5, 12));
-
-        var submitHomeworkPeriod1 = new TimeFrame((2023, 3, 5), (2023, 3, 19), ETimeFrameDistribution.Exponential);
-        var submitHomeworkPeriod2 = new TimeFrame((2023, 4, 2), (2023, 4, 16), ETimeFrameDistribution.Exponential);
-        var submitHomeworkPeriod3 = new TimeFrame((2023, 4, 30), (2023, 5, 14), ETimeFrameDistribution.Exponential);
-
         var receivePointsTime1 = new DateTime(2023, 3, 24, 16, 45, 10); 
         var receivePointsTime2 = new DateTime(2023, 4, 21, 19, 21, 35); 
         var receivePointsTime3 = new DateTime(2023, 5, 19, 17, 37, 55); 
@@ -133,17 +122,51 @@ public static class StudentGenerator
         var createMaterialsPeriod5 = new TimeFrame((2023, 4, 10, 8, 0, 0), (2023, 4, 10, 9, 0, 0));
         var createMaterialsPeriod6 = new TimeFrame((2023, 4, 24, 8, 0, 0), (2023, 4, 24, 9, 0, 0));
 
-        var readStudyMaterialsPeriod1 = new TimeFrame(createMaterialsPeriod1.End, examTime4);
-        var readStudyMaterialsPeriod2 = new TimeFrame(createMaterialsPeriod2.End, examTime4);
-        var readStudyMaterialsPeriod3 = new TimeFrame(createMaterialsPeriod3.End, examTime4);
-        var readStudyMaterialsPeriod4 = new TimeFrame(createMaterialsPeriod4.End, examTime4);
-        var readStudyMaterialsPeriod5 = new TimeFrame(createMaterialsPeriod5.End, examTime4);
-        var readStudyMaterialsPeriod6 = new TimeFrame(createMaterialsPeriod6.End, examTime4);
-        
         var createExamScanTime1 = new DateTime(2023, 5, 29, 10, 6, 10);
         var createExamScanTime2 = new DateTime(2023, 6, 7, 9, 53, 28);
         var createExamScanTime3 = new DateTime(2023, 6, 19, 14, 15, 54);
         var createExamScanTime4 = new DateTime(2023, 6, 26, 8, 42, 49);
+
+        // FIXME: This probably cannot be generalized at all
+        var allRopotPeriods = new HashSet<TimeFrame>()
+        {
+            new TimeFrame(openRopotPeriod1.Start + firstOffset, submitRopotPeriod1.End + firstOffset),
+            new TimeFrame(openRopotPeriod1.Start + secondOffset, submitRopotPeriod1.End + secondOffset),
+            new TimeFrame(openRopotPeriod1.Start + thirdOffset, submitRopotPeriod1.End + thirdOffset),
+            new TimeFrame(openRopotPeriod2.Start + firstOffset, submitRopotPeriod2.End + firstOffset),
+            new TimeFrame(openRopotPeriod2.Start + secondOffset, submitRopotPeriod2.End + secondOffset),
+            new TimeFrame(openRopotPeriod2.Start + thirdOffset, submitRopotPeriod2.End + thirdOffset),
+            new TimeFrame(openRopotPeriod3.Start + firstOffset, submitRopotPeriod3.End + firstOffset),
+            new TimeFrame(openRopotPeriod3.Start + secondOffset, submitRopotPeriod3.End + secondOffset),
+            new TimeFrame(openRopotPeriod3.Start + thirdOffset, submitRopotPeriod3.End + thirdOffset),
+            new TimeFrame(openRopotPeriod4.Start + firstOffset, submitRopotPeriod4.End + firstOffset),
+            new TimeFrame(openRopotPeriod4.Start + secondOffset, submitRopotPeriod4.End + secondOffset),
+            new TimeFrame(openRopotPeriod4.Start + thirdOffset, submitRopotPeriod4.End + thirdOffset),
+            new TimeFrame(openRopotPeriod5.Start + firstOffset, submitRopotPeriod5.End + firstOffset),
+            new TimeFrame(openRopotPeriod5.Start + secondOffset, submitRopotPeriod5.End + secondOffset),
+            new TimeFrame(openRopotPeriod5.Start + thirdOffset, submitRopotPeriod5.End + thirdOffset),
+            new TimeFrame(openRopotPeriod6.Start + firstOffset, submitRopotPeriod6.End + firstOffset),
+            new TimeFrame(openRopotPeriod6.Start + secondOffset, submitRopotPeriod6.End + secondOffset),
+            new TimeFrame(openRopotPeriod6.Start + thirdOffset, submitRopotPeriod6.End + thirdOffset),
+        };
+        
+        var submitHomeworkPeriod1 = new TimeFrame((2023, 3, 5), (2023, 3, 19), ETimeFrameDistribution.Exponential, allRopotPeriods);
+        var submitHomeworkPeriod2 = new TimeFrame((2023, 4, 2), (2023, 4, 16), ETimeFrameDistribution.Exponential, allRopotPeriods);
+        var submitHomeworkPeriod3 = new TimeFrame((2023, 4, 30), (2023, 5, 14), ETimeFrameDistribution.Exponential, allRopotPeriods);
+        
+        var viewRopotPeriod1 = new TimeFrame((2023, 2, 24), (2023, 3, 3), ETimeFrameDistribution.ReverseExponential, allRopotPeriods);
+        var viewRopotPeriod2 = new TimeFrame((2023, 3, 10), (2023, 3, 17), ETimeFrameDistribution.ReverseExponential, allRopotPeriods);
+        var viewRopotPeriod3 = new TimeFrame((2023, 3, 24), (2023, 3, 31), ETimeFrameDistribution.ReverseExponential, allRopotPeriods);
+        var viewRopotPeriod4 = new TimeFrame((2023, 4, 7), (2023, 4, 14), ETimeFrameDistribution.ReverseExponential, allRopotPeriods);
+        var viewRopotPeriod5 = new TimeFrame((2023, 4, 21), (2023, 4, 28), ETimeFrameDistribution.ReverseExponential, allRopotPeriods);
+        var viewRopotPeriod6 = new TimeFrame((2023, 5, 5), (2023, 5, 12), ETimeFrameDistribution.ReverseExponential, allRopotPeriods);
+        
+        var readStudyMaterialsPeriod1 = new TimeFrame(createMaterialsPeriod1.End, examTime4, ETimeFrameDistribution.Uniform, allRopotPeriods);
+        var readStudyMaterialsPeriod2 = new TimeFrame(createMaterialsPeriod2.End, examTime4, ETimeFrameDistribution.Uniform, allRopotPeriods);
+        var readStudyMaterialsPeriod3 = new TimeFrame(createMaterialsPeriod3.End, examTime4, ETimeFrameDistribution.Uniform, allRopotPeriods);
+        var readStudyMaterialsPeriod4 = new TimeFrame(createMaterialsPeriod4.End, examTime4, ETimeFrameDistribution.Uniform, allRopotPeriods);
+        var readStudyMaterialsPeriod5 = new TimeFrame(createMaterialsPeriod5.End, examTime4, ETimeFrameDistribution.Uniform, allRopotPeriods);
+        var readStudyMaterialsPeriod6 = new TimeFrame(createMaterialsPeriod6.End, examTime4, ETimeFrameDistribution.Uniform, allRopotPeriods);
 
         // Useful properties
         var semesterEnd = new DateTime(2023, 7, 1);
@@ -796,7 +819,5 @@ public static class StudentGenerator
         // TODO: Check EXCEL data for seconds (manual job)
         
         // TODO: For ropot attack, do more variable week (manual job)
-        
-        // TODO: There is no prevention for reading of student materials and homework submission not to take place while ropot session is opened
     }
 }
