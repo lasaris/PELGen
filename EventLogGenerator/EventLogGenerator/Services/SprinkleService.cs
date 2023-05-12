@@ -144,7 +144,7 @@ public static class SprinkleService
                 var studentsVisited = Math.Max(RandomService.GetNext(totalNumberOfStudents / 2), totalNumberOfStudents / 6);
                 for (int i = 0; i < studentsVisited; i++)
                 {
-                    additional = Math.Max(RandomService.GetNext((int) IdService.InitialSetId + totalNumberOfStudents), IdService.InitialSetId).ToString();
+                    additional = (RandomService.GetNext(totalNumberOfStudents) + IdService.InitialSetId).ToString();
                     AddIntervalSprinkle(sprinkle, actor, additional);
                 }
             }
