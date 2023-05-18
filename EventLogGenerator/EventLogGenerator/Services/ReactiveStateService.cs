@@ -16,8 +16,8 @@ public static class ReactiveStateService
     // Sprinkles currently ready to be sprinkled into the process
     public static HashSet<ReactiveState> ReactiveStates = new();
 
-    // Maps IDs of actors that are reacted to actors that are reacting to them
-    public static Dictionary<uint, Actor> ReactingActorsMap = new();
+    // Maps actors that are reacted to actors that are reacting to them
+    public static Dictionary<Actor, Actor> ReactingActorsMap = new();
     
     // Stores reactive scnearios
     public static HashSet<ReactiveScenario> ReactiveScenarios = new();
@@ -30,13 +30,13 @@ public static class ReactiveStateService
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Reactive state {state.ActivityType} - {state.Resource.Name}");
     }
 
-    private static void AddReactiveState(ABaseState reactiveState, DateTime reactionTime, uint actorId)
+    private static void AddReactiveState(ABaseState reactiveState, DateTime reactionTime, Actor actor)
     {
         // FIXME: The adding of additional column should be generalized. Perhaps not always you want to add additional ID as StudentId column data?
-        OnStateEnter(reactiveState, ReactingActorsMap[actorId], reactionTime, actorId.ToString());
+        OnStateEnter(reactiveState, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
     }
 
-    public static void RunReactiveStates(Dictionary<uint, List<(ABaseState, DateTime)>> idToStatesMap,
+    public static void RunReactiveStates(Dictionary<Actor, List<(ABaseState, DateTime, string)>> idToStatesMap,
         List<Actor> actors)
     {
         // FIXME: Generalize, perhaps by adding extra parameter and intiializing ReactingActorsMap?
@@ -93,13 +93,21 @@ public static class ReactiveStateService
                             continue;
                         }
                         
-                        // Assign same resource to the reacting state
-                        state.Resource = state.OwnResource ?? stateTimePair.Item1.Resource;
+                        if (state.OwnResource != null)
+                        {
+                            state.Resource = new Resource(state.OwnResource.Name);
+                        }
+                        else
+                        {
+                            state.Resource = new Resource(stateTimePair.Item1.Resource.Name);
+                        }
                         var variableDirection = RandomService.GetNext(2) == 0 ? 1 : -1;
                         var variableTime = TimeSpan.FromTicks((long)(RandomService.GetNextDouble() * (state.TimeVariable.Ticks) * variableDirection));
                         var reactionTime = stateTimePair.Item2 + state.Offset + variableTime;
-                        
-                        AddReactiveState(state, reactionTime, actorStatesPair.Key);
+
+                        // FIXME: Without this new dummy state, the whole thing gets fucked up and everything is just Resource == Seminar week 6 and IDK WHY
+                        var newState = new DummyState(state.ActivityType, state.Resource);
+                        AddReactiveState(newState, reactionTime, actorStatesPair.Key);
                     }
                 }
             }

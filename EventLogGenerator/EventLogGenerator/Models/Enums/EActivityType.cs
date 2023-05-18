@@ -21,11 +21,9 @@ public enum EActivityType
     FailCourse,
     // Teacher activities
     VisitStudentRecord,
-    CreateHomeworkVault,
     GivePoints,
     MarkAttendance,
     MarkAbsence,
-    CreateExamTerm,
     GiveFinalGrade,
     DeleteRopotSession,
     // File operations

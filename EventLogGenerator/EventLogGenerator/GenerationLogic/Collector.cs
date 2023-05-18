@@ -1,4 +1,5 @@
 ﻿using EventLogGenerator.Models;
+using EventLogGenerator.Models.Events;
 using EventLogGenerator.Models.States;
 
 namespace EventLogGenerator.GenerationLogic;
@@ -7,47 +8,62 @@ public static class Collector
 {
     public static int LastIndex = -1;
     
-    public static List<Dictionary<uint, List<(ABaseState, DateTime)>>> CreatedLogs = new();
+    public static List<Dictionary<Actor, List<(ABaseState, DateTime, string?)>>> PassedStates = new();
 
     public static void CreateCollectorMap()
     {
-        var createdDictionary = new Dictionary<uint, List<(ABaseState, DateTime)>>();
-        CreatedLogs.Add(createdDictionary);
+        var createdDictionary = new Dictionary<Actor, List<(ABaseState, DateTime, string?)>>();
+        PassedStates.Add(createdDictionary);
         ++LastIndex;
     }
 
-    public static Dictionary<uint, List<(ABaseState, DateTime)>> GetPreviousCollection()
+    public static Dictionary<Actor, List<(ABaseState, DateTime, string?)>> GetPreviousCollection()
     {
-        if (!CreatedLogs.Any())
+        if (!PassedStates.Any())
         {
             throw new ArgumentException("There is no previous collection of logs created");
         }
 
-        return CreatedLogs[LastIndex - 1];
+        return PassedStates[LastIndex - 1];
     }
 
     public static uint GetLastCollectionMaxId()
     {
-        return CreatedLogs[LastIndex - 1].Keys.Max();
+        return PassedStates[LastIndex - 1].Keys.Select(actor => actor.Id).Max();
     }
 
-    public static Dictionary<uint, List<(ABaseState, DateTime)>> GetProcessMap(int index)
+    public static Dictionary<Actor, List<(ABaseState, DateTime, string?)>> GetProcessMap(int index)
     {
         if (index > LastIndex || index < 0)
         {
             throw new ArgumentException("Index out of bounds for CreatedLogs");
         }
 
-        return CreatedLogs[index];
+        return PassedStates[index];
     }
     
-    public static void AddLog(uint actorId, ABaseState state, DateTime timeStamp)
+    public static void StateEnteredHandler(object sender, StateEnteredEvent data)
     {
-        if (!CreatedLogs[LastIndex].ContainsKey(actorId))
+        if (!PassedStates[LastIndex].ContainsKey(data.Actor))
         {
-            CreatedLogs[LastIndex][actorId] = new();
+            PassedStates[LastIndex][data.Actor] = new();
         }
         
-        CreatedLogs[LastIndex][actorId].Add((state, timeStamp));
+        PassedStates[LastIndex][data.Actor].Add((data.State, data.TimeStamp, data.Additional));
+    }
+
+    // FIXME: This function does 2 things 1) applies rules, thus changing PassedStates 2) logs the traces. Bad design!
+    public static void DumpLastProcess()
+    {
+        var currentProcess = PassedStates[LastIndex];
+        var newProcess = new Dictionary<Actor, List<(ABaseState, DateTime, string)>>();
+        foreach (var actorStates in currentProcess)
+        {
+            var evaluatedTrace = RuleEnforcer.GetEvaluatedProcess(actorStates.Value);
+            newProcess[actorStates.Key] = evaluatedTrace;
+            EventLogger.LogTrace(actorStates.Key, evaluatedTrace);
+        }
+
+        PassedStates[LastIndex] = newProcess;
     }
 }

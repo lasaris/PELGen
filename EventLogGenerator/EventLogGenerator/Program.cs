@@ -15,9 +15,9 @@ internal class Program
 
     private static void RegisterSubscribers()
     {
-        StateEvaluator.StateEntered += EventLogger.StateEnteredHandler;
-        SprinkleService.SprinkleAdded += EventLogger.StateEnteredHandler;
-        ReactiveStateService.StateEntered += EventLogger.StateEnteredHandler;
-        FixedTimeStateService.StateEntered += EventLogger.StateEnteredHandler;
+        StateEvaluator.StateEntered += Collector.StateEnteredHandler;
+        SprinkleService.SprinkleAdded += Collector.StateEnteredHandler;
+        ReactiveStateService.StateEntered += Collector.StateEnteredHandler;
+        FixedTimeStateService.StateEntered += Collector.StateEnteredHandler;
     }
 }

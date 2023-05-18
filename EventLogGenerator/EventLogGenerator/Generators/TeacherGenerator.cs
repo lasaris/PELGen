@@ -16,6 +16,7 @@ public static class TeacherGenerator
         IdService.ResetService();
         SprinkleService.ResetService();
         ReactiveStateService.ResetService();
+        RuleEnforcer.ResetService();
         Collector.CreateCollectorMap();
 
         // Prepare Actors
@@ -301,5 +302,7 @@ public static class TeacherGenerator
         {
             SprinkleService.RunIntervalSprinkles(actor);
         }
+        
+        Collector.DumpLastProcess();
     }
 }

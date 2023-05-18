@@ -807,6 +807,20 @@ public static class StudentGenerator
             new DummyState(EActivityType.ReceiveAbsence, seminarWeek6),
             TimeSpan.FromHours(1)
         );
+        
+        var minAttendanceRule = new MinimumActivityCountRule(
+            registerTerm1,
+            (failCourse, semesterEnd),
+            EActivityType.ReceiveAttendance,
+            5
+        );
+        
+        var minHomeworks = new MinimumActivityCountRule(
+            registerTerm1,
+            (failCourse, semesterEnd),
+            EActivityType.CreateFile,
+            2
+        );
 
         foreach (var student in students)
         {
@@ -818,7 +832,6 @@ public static class StudentGenerator
             FixedTimeStateService.RunFixedStatesWithPreceding(filledActorFrame);
         }
 
-        // TODO: Implement rules for the whole scenarios, if the rules apply, process finishes? (like student missing more than 2 seminars)
-        // This could be applied if Collector collected the whole process of single actor and then dumped it into the log
+        Collector.DumpLastProcess();
     }
 }

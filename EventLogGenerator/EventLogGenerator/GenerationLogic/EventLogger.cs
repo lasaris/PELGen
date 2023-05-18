@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using EventLogGenerator.InputOutput;
+using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Models.Events;
+using EventLogGenerator.Models.States;
 using EventLogGenerator.Utilities;
 
 namespace EventLogGenerator.GenerationLogic;
@@ -11,20 +13,8 @@ namespace EventLogGenerator.GenerationLogic;
 /// </summary>
 public static class EventLogger
 {
-    public static void StateEnteredHandler(object sender, StateEnteredEvent data)
+    public static void LogTrace(Actor actor, List<(ABaseState, DateTime, string?)> evaluatedTrace)
     {
-        // Prepare string
-        var sb = new StringBuilder();
-        sb.Append(data.Actor.Id + ",");
-        sb.Append(data.Actor.Type + ",");
-        sb.Append(data.State.ActivityType + ",");
-        sb.Append(data.State.Resource.Name + ",");
-        sb.Append(data.TimeStamp);
-        if (data.Additional != null)
-        {
-            sb.Append("," + data.Additional);
-        }
-
         // FIXME: Make more general or design somehow else. This hardcoded shit is fucked up man.
         var StudentFiles = new List<string>()
         {
@@ -41,31 +31,54 @@ public static class EventLogger
             "/um/slides-week06.pdf",
         };
         
-        if (StudentFiles.Contains(data.State.Resource.Name))
+        var sbLogs = new StringBuilder();
+        foreach (var stateLog in evaluatedTrace)
         {
-            if (data.Actor.Type == EActorType.Student)
+            var sb = new StringBuilder();
+            
+            sb.Append(actor.Id + ",");
+            sb.Append(actor.Type + ",");
+            sb.Append(stateLog.Item1.ActivityType + ",");
+            sb.Append(stateLog.Item1.Resource.Name + ",");
+            sb.Append(stateLog.Item2);
+            if (stateLog.Item3 != null)
             {
-                sb.Append($",{data.Actor.Id}");
-            } else if (data.Additional != null)
-            {
-                sb.Append($",{data.Additional}");
+                sb.Append("," + stateLog.Item3);
             }
-        } else if (TeacherFIles.Contains(data.State.Resource.Name))
-        {
-            if (data.Additional == null && data.Actor.Type == EActorType.Teacher)
+            
+            if (StudentFiles.Contains(stateLog.Item1.Resource.Name))
             {
-                sb.Append(",,514184");
-            }
-            else
+                if (actor.Type == EActorType.Student)
+                {
+                    sb.Append($",{actor.Id}");
+                } else if (stateLog.Item3 != null)
+                {
+                    sb.Append($",{stateLog.Item3}");
+                }
+            } else if (TeacherFIles.Contains(stateLog.Item1.Resource.Name))
             {
-                sb.Append(",514184");
+                if (stateLog.Item3 == null && actor.Type == EActorType.Teacher)
+                {
+                    sb.Append(",,514184");
+                }
+                else
+                {
+                    sb.Append(",514184");
+                }
             }
+            
+            // FIXME: Is this optimal?
+            var lineColumnCount = sb.ToString().Split(',').Count() + 1;
+            while (FileManager.ColumnCount > lineColumnCount)
+            {
+                sb.Append(",");
+                ++lineColumnCount;
+            }
+            
+            sb.Append('\n');
+            sbLogs.Append(sb.ToString());
         }
-
-        // Note in logs collector
-        Collector.AddLog(data.Actor.Id, data.State, data.TimeStamp);
-
-        // Write string to CSV file
-        FileManager.AppendLineToCsv(sb.ToString());
+        // Write into CSV file
+        FileManager.AddLogs(sbLogs.ToString());
     }
 }

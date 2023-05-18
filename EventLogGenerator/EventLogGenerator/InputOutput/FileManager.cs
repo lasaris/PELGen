@@ -5,6 +5,8 @@ public static class FileManager
     public static string OutputFileName = "output.csv";
 
     public static string OutputFolderName = "generated";
+
+    public static int ColumnCount = 0;
     
     private static void AppendLine(string line)
     {
@@ -34,6 +36,7 @@ public static class FileManager
             }
         }
 
+        ColumnCount = headerLine.Split(',').Count() + 1;
         AppendLine(headerLine);
     }
 
@@ -47,41 +50,13 @@ public static class FileManager
         OutputFileName = filePath;
     }
 
-    /// <summary>
-    /// Safely tries to append line to already created CSV file.
-    /// </summary>
-    /// <param name="line">valid CSV line of data for given file</param>
-    /// <param name="filename">name of file that line should be appended to</param>
-    /// <exception cref="ArgumentException">Thrown on invalid filename, file format or line data format</exception>
-    public static void AppendLineToCsv(string line)
+    public static void AddLogs(string logs)
     {
         string outPath = Path.Combine(OutputFolderName, OutputFileName);
 
-        if (!File.Exists(outPath))
+        using (StreamWriter writer = new StreamWriter(outPath, true))
         {
-            throw new ArgumentException("Provided file does not exist");
+            writer.Write(logs);
         }
-
-        // FIXME: Could this be optimized so we don't open file on every write?
-        using (var reader = new StreamReader(outPath))
-        {
-            var headerLine = reader.ReadLine();
-            if (headerLine == null)
-            {
-                throw new ArgumentException("Given CSV file has no header");
-            }
-
-            var columnCount = headerLine.Split(',').Length;
-            var lineColumnCount = line.Split(',').Length;
-
-            // FIXME: Is this optimal?
-            while (columnCount > lineColumnCount)
-            {
-                line += ",";
-                ++lineColumnCount;
-            }
-        }
-
-        AppendLine(line);
     }
 }
