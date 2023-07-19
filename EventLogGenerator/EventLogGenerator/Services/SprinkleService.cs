@@ -33,9 +33,6 @@ public static class SprinkleService
     // Keeps track of sprinkles that were added by the service
     public static List<(ABaseState, DateTime)> SprinkleStack = new();
 
-    // Track dynamic sprinkle mutexes
-    public static HashSet<DynamicSprinkleMutex> DynamicSprinkleMutexes = new();
-
     // Track periodic sprinkles
     public static HashSet<PeriodicSprinkleState> PeriodicSprinkles = new();
 
@@ -101,21 +98,6 @@ public static class SprinkleService
     {
         IntervalSprinkleStates.Add(sprinkle);
     }
-
-    public static void LoadDynamicSrpinkleMutex(DynamicSprinkleMutex dynamicSprinkleMutex)
-    {
-        if (!DynamicSprinkles.Contains(dynamicSprinkleMutex.FirstState)
-            || !DynamicSprinkles.Contains(dynamicSprinkleMutex.SecondState))
-        {
-            throw new ArgumentException(
-                "Dynamic sprinkle mutex must contain states that are registerd in Sprinkle service");
-        }
-
-        DynamicSprinkles.Remove(dynamicSprinkleMutex.FirstState);
-        DynamicSprinkles.Remove(dynamicSprinkleMutex.SecondState);
-        DynamicSprinkleMutexes.Add(dynamicSprinkleMutex);
-    }
-
 
     public static void LoadPeriodicSprinkle(PeriodicSprinkleState sprinkle)
     {
@@ -222,20 +204,6 @@ public static class SprinkleService
         {
             foreach (var stateTimePair in filledActorFrame.VisitedStack)
             {
-                if (sprinkle.BeginAfter.Contains(stateTimePair.Item1))
-                {
-                    AddDynamicSprinkle(sprinkle, filledActorFrame.Actor, stateTimePair.Item2);
-                }
-            }
-        }
-
-        // Execute dynamic sprinkle mutexes
-        foreach (var mutex in DynamicSprinkleMutexes)
-        {
-            foreach (var stateTimePair in filledActorFrame.VisitedStack)
-            {
-                var sprinkle = mutex.PickState();
-
                 if (sprinkle.BeginAfter.Contains(stateTimePair.Item1))
                 {
                     AddDynamicSprinkle(sprinkle, filledActorFrame.Actor, stateTimePair.Item2);
