@@ -7,9 +7,6 @@ public delegate void AdditionalActionFunc(Actor currentActor);
 
 public class ProcessState : ABaseState
 {
-    // Rules which apply for given state and which lead to the next
-    public StateRules Rules;
-
     // Start and end time in between which the state can be visited
     public TimeFrame TimeFrame;
 
@@ -18,26 +15,30 @@ public class ProcessState : ABaseState
 
     // Indicates if process is finished with this state (can be multiple states)
     public bool IsFinishing;
+    
+    // Rules which apply for given state and which lead to the next
+    public int MaxPasses;
 
+    // FIXME: Design this better and more generally!
     public AdditionalActionFunc? Callback;
 
-    public ProcessState(EActivityType activity, Resource resource, StateRules rules, TimeFrame timeFrame,
+    public ProcessState(EActivityType activity, Resource resource, int maxPasses, TimeFrame timeFrame,
         bool isFinishing = false, AdditionalActionFunc? callback = null) : base(activity, resource)
     {
-        Rules = rules;
         TimeFrame = timeFrame;
         IsFinishing = isFinishing;
         FollowingMap = new();
+        MaxPasses = maxPasses;
         Callback = callback;
     }
     
-    public ProcessState(EActivityType activity, Resource resource, StateRules rules, DateTime start,
+    public ProcessState(EActivityType activity, Resource resource, int maxPasses, DateTime start,
         bool isFinishing = false, AdditionalActionFunc? callback = null) : base(activity, resource)
     {
-        Rules = rules;
         TimeFrame = new TimeFrame(start, start + TimeSpan.FromSeconds(1));
         IsFinishing = isFinishing;
         FollowingMap = new();
+        MaxPasses = maxPasses;
         Callback = callback;
     }
 

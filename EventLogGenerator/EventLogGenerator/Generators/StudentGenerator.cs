@@ -180,7 +180,7 @@ public static class StudentGenerator
         var enrollCourse = new ProcessState(
             EActivityType.EnrollCourse,
             course,
-            new StateRules(true, 1, 0),
+            1,
             courseRegistrationPeriod
         );
 
@@ -189,7 +189,7 @@ public static class StudentGenerator
         var registerSeminarGroup1 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup1,
-            new StateRules(true, 1, 0),
+            1,
             seminarRegistrationPeriod,
             false,
             (actor) =>
@@ -202,7 +202,7 @@ public static class StudentGenerator
         var registerSeminarGroup2 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup2,
-            new StateRules(true, 1, 0),
+            1,
             seminarRegistrationPeriod,
             false,
             (actor) =>
@@ -215,7 +215,7 @@ public static class StudentGenerator
         var registerSeminarGroup3 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
             seminarGroup3,
-            new StateRules(true, 1, 0),
+            1,
             seminarRegistrationPeriod,
             false,
             (actor) =>
@@ -225,222 +225,192 @@ public static class StudentGenerator
             }
         );
 
-        var submitHomeworkRules = new StateRules(true, -1, 0);
-
         var submitHomework1 = new ProcessState(
             EActivityType.CreateFile,
             hw1,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod1
             );
 
         var submitHomework2 = new ProcessState(
             EActivityType.CreateFile,
             hw2,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod2
         );
 
         var submitHomework3 = new ProcessState(
             EActivityType.CreateFile,
             hw3,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod3
         );
 
         var removeHomework1 = new ProcessState(
             EActivityType.DeleteFile,
             hw1,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod1
         );
 
         var removeHomework2 = new ProcessState(
             EActivityType.DeleteFile,
             hw2,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod2
         );
 
         var removeHomework3 = new ProcessState(
             EActivityType.DeleteFile,
             hw3,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod3
         );
 
         var readHomework1 = new ProcessState(
             EActivityType.ReadFile,
             hw1,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod1
         );
 
         var readHomework2 = new ProcessState(
             EActivityType.ReadFile,
             hw2,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod2
         );
 
         var readHomework3 = new ProcessState(
             EActivityType.ReadFile,
             hw3,
-            submitHomeworkRules,
+            -1,
             submitHomeworkPeriod3
         );
-        
-        var openRopotRules = new StateRules(true, 2); 
 
         var openRopot1 = new ProcessState(
             EActivityType.OpenRopot,
             ropot1,
-            openRopotRules,
+            2,
             openRopotPeriod1
         );
 
         var openRopot2 = new ProcessState(
             EActivityType.OpenRopot,
             ropot2,
-            openRopotRules,
+            2,
             openRopotPeriod2
         );
 
         var openRopot3 = new ProcessState(
             EActivityType.OpenRopot,
             ropot3,
-            openRopotRules,
+            2,
             openRopotPeriod3
         );
 
         var openRopot4 = new ProcessState(
             EActivityType.OpenRopot,
             ropot4,
-            openRopotRules,
+            2,
             openRopotPeriod4
         );
 
         var openRopot5 = new ProcessState(
             EActivityType.OpenRopot,
             ropot5,
-            openRopotRules,
+            2,
             openRopotPeriod5
         );
 
         var openRopot6 = new ProcessState(
             EActivityType.OpenRopot,
             ropot6,
-            openRopotRules,
+            2,
             openRopotPeriod6
         );
-
-        var saveRopotRulesSeminar1 =
-            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot1 });
-        var saveRopotRulesSeminar2 =
-            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot2 });
-        var saveRopotRulesSeminar3 =
-            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot3 });
-        var saveRopotRulesSeminar4 =
-            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot4 });
-        var saveRopotRulesSeminar5 =
-            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot5 });
-        var saveRopotRulesSeminar6 =
-            new StateRules(false, 1, 3, new HashSet<ProcessState>() { openRopot6 });
-
-        var submitRopotRulesSeminar1 =
-            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot1 });
-        var submitRopotRulesSeminar2 =
-            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot2 });
-        var submitRopotRulesSeminar3 =
-            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot3 });
-        var submitRopotRulesSeminar4 =
-            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot4 });
-        var submitRopotRulesSeminar5 =
-            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot5 });
-        var submitRopotRulesSeminar6 =
-            new StateRules(true, 1, 0, new HashSet<ProcessState>() { openRopot6 });
 
         var saveRopot1 = new ProcessState(
             EActivityType.SaveRopot,
             ropot1,
-            saveRopotRulesSeminar1,
+            1,
             saveRopotPeriod1
         );
 
         var saveRopot2 = new ProcessState(
             EActivityType.SaveRopot,
             ropot2,
-            saveRopotRulesSeminar2,
+            1,
             saveRopotPeriod2
         );
 
         var saveRopot3 = new ProcessState(
             EActivityType.SaveRopot,
             ropot3,
-            saveRopotRulesSeminar3,
+            1,
             saveRopotPeriod3
         );
 
         var saveRopot4 = new ProcessState(
             EActivityType.SaveRopot,
             ropot4,
-            saveRopotRulesSeminar4,
+            1,
             saveRopotPeriod4
         );
 
         var saveRopot5 = new ProcessState(
             EActivityType.SaveRopot,
             ropot5,
-            saveRopotRulesSeminar5,
+            1,
             saveRopotPeriod5
         );
 
         var saveRopot6 = new ProcessState(
             EActivityType.SaveRopot,
             ropot6,
-            saveRopotRulesSeminar6,
+            1,
             saveRopotPeriod6
         );
         
         var submitRopot1 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot1,
-            submitRopotRulesSeminar1,
+            1,
             submitRopotPeriod1
         );
 
         var submitRopot2 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot2,
-            submitRopotRulesSeminar2,
+            1,
             submitRopotPeriod2
         );
 
         var submitRopot3 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot3,
-            submitRopotRulesSeminar3,
+            1,
             submitRopotPeriod3
         );
 
         var submitRopot4 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot4,
-            submitRopotRulesSeminar4,
+            1,
             submitRopotPeriod4
         );
 
         var submitRopot5 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot5,
-            submitRopotRulesSeminar5,
+            1,
             submitRopotPeriod5
         );
 
         var submitRopot6 = new ProcessState(
             EActivityType.SubmitRopot,
             ropot6,
-            submitRopotRulesSeminar6,
+            1,
             submitRopotPeriod6
         );
         
@@ -508,89 +478,87 @@ public static class StudentGenerator
             (reopenRopot6, 0.013f, 1)
         );
 
-        var examRegistrationRules = new StateRules(false, 1, 0);
-
         var registerTerm1 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam1,
-            examRegistrationRules,
+            1,
             examRegistrationPeriod1
         );
 
         var registerTerm2 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam2,
-            examRegistrationRules,
+            1,
             examRegistrationPeriod2
         );
 
         var registerTerm3 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam3,
-            examRegistrationRules,
+            1,
             examRegistrationPeriod3
         );
         
         var registerTerm4 = new ProcessState(
             EActivityType.RegisterExamTerm,
             exam4,
-            examRegistrationRules,
+            1,
             examRegistrationPeriod4
         );
 
         var failExam1 = new ProcessState(
             EActivityType.FailExam,
             exam1,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime1
         );
 
         var failExam2 = new ProcessState(
             EActivityType.FailExam,
             exam2,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime2
         );
 
         var failExam3 = new ProcessState(
             EActivityType.FailExam,
             exam3,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime3
         );
         
         var failExam4 = new ProcessState(
             EActivityType.FailExam,
             exam4,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime4
         );
         
         var passExam1 = new ProcessState(
             EActivityType.PassExam,
             exam1,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime1
         );
 
         var passExam2 = new ProcessState(
             EActivityType.PassExam,
             exam2,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime2
         );
 
         var passExam3 = new ProcessState(
             EActivityType.PassExam,
             exam3,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime3
         );
         
         var passExam4 = new ProcessState(
             EActivityType.PassExam,
             exam4,
-            new StateRules(false, 1, 0),
+            1,
             createExamScanTime4
         );
 
@@ -598,7 +566,7 @@ public static class StudentGenerator
         var passCourse = new ProcessState(
             EActivityType.PassCourse,
             course,
-            new StateRules(true, 1, 0),
+            1,
             new TimeFrame(examRegistrationStart, semesterEnd),
             true
         );
@@ -606,7 +574,7 @@ public static class StudentGenerator
         var failCourse = new ProcessState(
             EActivityType.FailCourse,
             course,
-            new StateRules(true, 1, 0),
+            1,
             new TimeFrame(examRegistrationStart, semesterEnd),
             true
         );

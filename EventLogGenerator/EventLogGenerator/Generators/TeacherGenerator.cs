@@ -59,49 +59,45 @@ public static class TeacherGenerator
         var submitHomeworkPeriod3 = new TimeFrame((2023, 4, 30), (2023, 5, 14));
         
         // Create study materials process
-
-        var defaultCompulsaryRules = new StateRules(true, -1);
-        var defaultOptionalRules = new StateRules();
-
         var createStudyMaterials1 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek1,
-            defaultCompulsaryRules,
+            -1,
             createMaterialsPeriod1
         );
 
         var createStudyMaterials2 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek2,
-            defaultCompulsaryRules,
+            -1,
             createMaterialsPeriod2
         );
 
         var createStudyMaterials3 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek3,
-            defaultCompulsaryRules,
+            -1,
             createMaterialsPeriod3
         );
 
         var createStudyMaterials4 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek4,
-            defaultCompulsaryRules,
+            -1,
             createMaterialsPeriod4
         );
 
         var createStudyMaterials5 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek5,
-            defaultCompulsaryRules,
+            -1,
             createMaterialsPeriod5
         );
 
         var createStudyMaterials6 = new ProcessState(
             EActivityType.CreateFile,
             materialsWeek6,
-            defaultCompulsaryRules,
+            -1,
             createMaterialsPeriod6,
             true
         );
@@ -109,42 +105,42 @@ public static class TeacherGenerator
         var removeStudyMaterials1 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek1,
-            defaultOptionalRules,
+            1,
             createMaterialsPeriod1.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials2 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek2,
-            defaultOptionalRules,
+            1,
             createMaterialsPeriod2.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials3 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek3,
-            defaultOptionalRules,
+            1,
             createMaterialsPeriod3.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials4 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek4,
-            defaultOptionalRules,
+            1,
             createMaterialsPeriod4.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials5 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek5,
-            defaultOptionalRules,
+            1,
             createMaterialsPeriod5.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         
         var removeStudyMaterials6 = new ProcessState(
             EActivityType.DeleteFile,
             materialsWeek6,
-            defaultOptionalRules,
+            1,
             createMaterialsPeriod6.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
         );
         

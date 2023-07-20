@@ -15,9 +15,4 @@ public abstract class ABaseRule
     }
 
     public abstract bool Evaluate(List<(ABaseState, DateTime, string?)> processStates);
-
-    public (ABaseState, DateTime) GetEnd()
-    {
-        return NegativeEnd;
-    }
 }

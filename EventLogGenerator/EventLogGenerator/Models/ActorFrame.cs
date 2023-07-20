@@ -22,14 +22,8 @@ public class ActorFrame
     // The List (stack) of all visited States and the times they were visited in
     public List<(ProcessState, DateTime)> VisitedStack = new();
 
-    // The previously visited state (null if currently at start)
-    public ProcessState? LastVisited = null;
-
     // The time in which the frame moves. Should be updated forward after each state transition
     public DateTime CurrentTime;
-
-    // Number of loops over the current state
-    public int CurrentLoopCount = 0;
 
     public ActorFrame(Actor actor, ProcessState currentState)
    {

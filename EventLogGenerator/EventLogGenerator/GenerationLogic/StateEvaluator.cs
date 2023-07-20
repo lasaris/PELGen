@@ -67,7 +67,7 @@ public static class StateEvaluator
 
                 // Skip states that are at maximum amount of passes
                 if (CurrentActorFrame.VisitedMap.ContainsKey(state)
-                    && CurrentActorFrame.VisitedMap[state] == state.Rules.MaxPasses)
+                    && CurrentActorFrame.VisitedMap[state] == state.MaxPasses)
                 {
                     continue;
                 }
@@ -133,17 +133,8 @@ public static class StateEvaluator
             CurrentActorFrame.VisitedActivitiesMap.Add(CurrentActorFrame.CurrentState.ActivityType, 1);
         }
 
-        // Update loop count or current state to the new one
-        if (CurrentActorFrame.CurrentState.Equals(newState))
-        {
-            CurrentActorFrame.CurrentLoopCount += 1;
-        }
-        else
-        {
-            CurrentActorFrame.LastVisited = CurrentActorFrame.CurrentState;
-            CurrentActorFrame.CurrentState = newState;
-        }
-
+        // Update CurrentState
+        CurrentActorFrame.CurrentState = newState;
         CurrentActorFrame.CurrentTime = jumpDate;
         CurrentActorFrame.VisitedStack.Add((newState, jumpDate + actorOffset));
         OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate + actorOffset);
