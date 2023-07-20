@@ -61,19 +61,9 @@ public class TimeFrame
         return (double)(ticks - Start.Ticks) / range;
     }
 
-    private double WeightFunctionReverseLinear(long ticks, long range)
-    {
-        return 1 - (double)(ticks - Start.Ticks) / range;
-    }
-
     private double WeightFunctionExponential(long ticks, long range, double exponent = 2.0f)
     {
-        return Math.Pow((double)(ticks - Start.Ticks) / range, exponent);
-    }
-
-    private double WeightFunctionReverseExponential(long ticks, long range, double exponent = 0.5f)
-    {
-        return Math.Pow((double)(ticks - Start.Ticks) / range, exponent);
+        return Math.Pow(WeightFunctionLinear(ticks, range), exponent);
     }
 
     public DateTime PickTimeByDistribution(DateTime? newStartLimit = null)
@@ -106,7 +96,7 @@ public class TimeFrame
 
             case ETimeFrameDistribution.ReverseLinear:
                 long weightedTicksReverseLinear = (long)(RandomService.GetNextDouble() * range *
-                                                         WeightFunctionReverseLinear(randomTicks, range));
+                                                         (1 - WeightFunctionLinear(randomTicks, range)));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightedTicksReverseLinear);
                 break;
 
@@ -118,7 +108,7 @@ public class TimeFrame
 
             case ETimeFrameDistribution.ReverseExponential:
                 long weightetTicksReverseExponential = (long)(RandomService.GetNextDouble() * range *
-                                                              WeightFunctionReverseExponential(randomTicks, range));
+                                                              WeightFunctionExponential(randomTicks, range, 0.5f));
                 pickedDateTime = Start + TimeSpan.FromTicks(weightetTicksReverseExponential);
                 break;
 

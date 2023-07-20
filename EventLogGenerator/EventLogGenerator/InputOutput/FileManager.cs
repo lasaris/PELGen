@@ -39,17 +39,7 @@ public static class FileManager
         ColumnCount = headerLine.Split(',').Count() + 1;
         AppendLine(headerLine);
     }
-
-    public static void SetOutputCsvPath(string filePath)
-    {
-        if (!File.Exists(filePath))
-        {
-            throw new ArgumentException("File must exist!");
-        }
-        
-        OutputFileName = filePath;
-    }
-
+    
     public static void AddLogs(string logs)
     {
         string outPath = Path.Combine(OutputFolderName, OutputFileName);

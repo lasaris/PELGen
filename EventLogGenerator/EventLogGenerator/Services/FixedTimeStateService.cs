@@ -28,16 +28,8 @@ public static class FixedTimeStateService
         OnReactionAdd(state, actor, timeWithActorOffset);
     }
 
-    public static void RunFixedStates(Actor actor)
-    {
-        foreach (var state in FixedTimeStates)
-        {
-            AddFixedState(state, actor);
-        }
-    }
-    
     // FIXME: In ideal world, this would be probably abstracted to another state. FixedTimeState should have a single responsibility.
-    public static void RunFixedStatesWithPreceding(ActorFrame filledActorFrame)
+    public static void RunFixedStates(ActorFrame filledActorFrame)
     {
         foreach (var state in FixedTimeStates)
         {

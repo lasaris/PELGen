@@ -14,5 +14,5 @@ public abstract class ABaseRule
         NegativeEnd = negativeEnd;
     }
 
-    public abstract bool Evaluate(List<(ABaseState, DateTime, string?)> processStates);
+    public abstract bool Evaluate(List<(ABaseState, DateTime, string?)> process);
 }

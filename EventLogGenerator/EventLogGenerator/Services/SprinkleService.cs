@@ -25,7 +25,7 @@ public static class SprinkleService
     public static HashSet<DynamicSprinkleState> DynamicSprinkles = new();
 
     // Interval sprinkles with time distribution
-    public static HashSet<IntervalSprinkleState> IntervalSprinkleStates = new();
+    public static HashSet<IntervalSprinkleState> IntervalSprinkles = new();
 
     // Maps sprinkles to available timeframes for given actorframe
     public static Dictionary<SprinkleState, List<TimeFrame>> SprinkleTimeMap = new();
@@ -35,9 +35,6 @@ public static class SprinkleService
 
     // Track periodic sprinkles
     public static HashSet<PeriodicSprinkleState> PeriodicSprinkles = new();
-
-    // Track scenario sprinkles
-    public static HashSet<ScenarioSetSprinkle> ScenarioSprinkles = new();
 
     // Track conditional sprinkles
     public static HashSet<ConditionalSprinkle> ConditionalSprinkles = new();
@@ -84,7 +81,7 @@ public static class SprinkleService
         OnSprinkleAdd(sprinkle, actor, timestamp);
     }
 
-    public static void LoadSprinklerState(SprinkleState sprinkle)
+    public static void LoadSprinkleState(SprinkleState sprinkle)
     {
         Sprinkles.Add(sprinkle);
     }
@@ -96,17 +93,12 @@ public static class SprinkleService
 
     public static void LoadIntervalSprinkleState(IntervalSprinkleState sprinkle)
     {
-        IntervalSprinkleStates.Add(sprinkle);
+        IntervalSprinkles.Add(sprinkle);
     }
 
     public static void LoadPeriodicSprinkle(PeriodicSprinkleState sprinkle)
     {
         PeriodicSprinkles.Add(sprinkle);
-    }
-
-    public static void LoadScenarioSprinkle(ScenarioSetSprinkle sprinkle)
-    {
-        ScenarioSprinkles.Add(sprinkle);
     }
 
     public static void LoadConditionalSprinkle(ConditionalSprinkle sprinkle)
@@ -116,7 +108,7 @@ public static class SprinkleService
 
     public static void RunIntervalSprinkles(Actor actor)
     {
-        foreach (var sprinkle in IntervalSprinkleStates)
+        foreach (var sprinkle in IntervalSprinkles)
         {
             string? additional = null;
             // FIXME: This is hardcoded and should be somehow abstracted
@@ -251,38 +243,6 @@ public static class SprinkleService
             }
         }
 
-        // Sprinkle scenarios
-        foreach (var scenario in ScenarioSprinkles)
-        {
-            // Randomly skipped based on scenario chance to occur
-            if (RandomService.GetNextDouble() > scenario.ChanceToOccur)
-            {
-                continue;
-            }
-
-            DateTime? beginTime = null;
-            foreach (var stateTimePair in filledActorFrame.VisitedStack)
-            {
-                if (beginTime == null && scenario.StartStates.Contains(stateTimePair.Item1))
-                {
-                    beginTime = stateTimePair.Item2;
-                }
-                else if (beginTime != null && scenario.EndStates.Contains(stateTimePair.Item1))
-                {
-                    DateTime currentTime = (DateTime)beginTime;
-                    foreach (var stateOffsetPair in scenario.ScenarioSprinkleOffsets)
-                    {
-                        var minTime = currentTime + stateOffsetPair.Item2;
-                        var maxTime = currentTime + stateOffsetPair.Item3;
-                        currentTime = TimeUtils.PickDateInInterval(minTime, maxTime);
-                        OnSprinkleAdd(stateOffsetPair.Item1, filledActorFrame.Actor, currentTime);
-                    }
-
-                    beginTime = null;
-                }
-            }
-        }
-
         // Sprinkle conditionals
         foreach (var sprinkle in ConditionalSprinkles)
         {
@@ -315,8 +275,7 @@ public static class SprinkleService
         DynamicSprinkles = new();
         SprinkleTimeMap = new();
         SprinkleStack = new();
-        IntervalSprinkleStates = new();
-        ScenarioSprinkles = new();
+        IntervalSprinkles = new();
         ConditionalSprinkles = new();
     }
 }

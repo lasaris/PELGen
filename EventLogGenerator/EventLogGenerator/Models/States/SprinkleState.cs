@@ -18,9 +18,6 @@ public class SprinkleState : ABaseState
     // States that again enable the sprinkle to be performed
     public HashSet<ProcessState>? SkipEnd;
 
-    // How much likely is the sprinkle going to be used right after the BeginAfter state
-    public Dictionary<ProcessState, float>? AfterStateChances;
-
     // How many passes should this sprinkle be able to perform
     public int Passes;
 
@@ -84,9 +81,8 @@ public class SprinkleState : ABaseState
         StopBefore = stopBefore;
         SkipStart = skipStart;
         SkipEnd = skipEnd;
-        AfterStateChances = afterStateChances;
         Passes = passes;
 
-        SprinkleService.LoadSprinklerState(this);
+        SprinkleService.LoadSprinkleState(this);
     }
 }

@@ -20,10 +20,10 @@ public class MinimumActivityCountRule : ABaseRule
         RuleEnforcer.LoadRule(this);
     }
     
-    public override bool Evaluate(List<(ABaseState, DateTime, string)> processStates)
+    public override bool Evaluate(List<(ABaseState, DateTime, string)> process)
     {
         var currentCount = 0;
-        foreach(var state in processStates)
+        foreach(var state in process)
         {
             if (state.Item1 == Checkpoint)
             {

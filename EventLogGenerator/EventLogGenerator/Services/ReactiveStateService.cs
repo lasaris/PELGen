@@ -30,10 +30,10 @@ public static class ReactiveStateService
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Reactive state {state.ActivityType} - {state.Resource.Name}");
     }
 
-    private static void AddReactiveState(ABaseState reactiveState, DateTime reactionTime, Actor actor)
+    private static void AddReactiveState(ABaseState state, DateTime reactionTime, Actor actor)
     {
         // FIXME: The adding of additional column should be generalized. Perhaps not always you want to add additional ID as StudentId column data?
-        OnStateEnter(reactiveState, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
+        OnStateEnter(state, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
     }
 
     public static void RunReactiveStates(Dictionary<Actor, List<(ABaseState, DateTime, string)>> idToStatesMap,
@@ -158,14 +158,14 @@ public static class ReactiveStateService
         }
     }
 
-    public static void LoadReactiveState(ReactiveState reactiveState)
+    public static void LoadReactiveState(ReactiveState state)
     {
-        ReactiveStates.Add(reactiveState);
+        ReactiveStates.Add(state);
     }
 
-    public static void LoadReactiveScenario(ReactiveScenario reactiveScenario)
+    public static void LoadReactiveScenario(ReactiveScenario scenario)
     {
-        ReactiveScenarios.Add(reactiveScenario);
+        ReactiveScenarios.Add(scenario);
     }
 
     public static void ResetService()

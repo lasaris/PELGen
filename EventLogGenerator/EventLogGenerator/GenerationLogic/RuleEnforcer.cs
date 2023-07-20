@@ -7,7 +7,7 @@ public static class RuleEnforcer
 {
     public static HashSet<ABaseRule> Rules = new();
     
-    public static void LoadRule(MinimumActivityCountRule newRule)
+    public static void LoadRule(ABaseRule newRule)
     {
         Rules.Add(newRule);
     }

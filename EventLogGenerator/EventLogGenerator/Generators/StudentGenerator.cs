@@ -794,10 +794,10 @@ public static class StudentGenerator
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
             // FIXME: StateEvaluator.RunProcess() can take these parameters
-            StateEvaluator.InitializeEvaluator(actorFrame, semesterEnd);
+            StateEvaluator.InitializeEvaluator(actorFrame);
             var filledActorFrame = StateEvaluator.RunProcess(enrollCourse);
             SprinkleService.RunSprinkling(filledActorFrame);
-            FixedTimeStateService.RunFixedStatesWithPreceding(filledActorFrame);
+            FixedTimeStateService.RunFixedStates(filledActorFrame);
         }
 
         Collector.DumpLastProcess();

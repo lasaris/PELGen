@@ -17,6 +17,7 @@ public static class TeacherGenerator
         SprinkleService.ResetService();
         ReactiveStateService.ResetService();
         RuleEnforcer.ResetService();
+        FixedTimeStateService.ResetService();
         Collector.CreateCollectorMap();
 
         // Prepare Actors
@@ -289,7 +290,7 @@ public static class TeacherGenerator
         // to tell, which actors should participate (i.e. parsing all actors and then EStrategy.First)
         var actorFrame = new ActorFrame(teachers[0], createStudyMaterials1);
         // FIXME: StateEvaluator.RunProcess() can take these parameters
-        StateEvaluator.InitializeEvaluator(actorFrame, new DateTime(2023, 2, 1));
+        StateEvaluator.InitializeEvaluator(actorFrame);
         var filledActorFrame = StateEvaluator.RunProcess(createStudyMaterials1);
         
         ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), teachers);

@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using EventLogGenerator.Exceptions;
+﻿using EventLogGenerator.Exceptions;
 using EventLogGenerator.Models;
 using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Models.Events;
@@ -21,9 +20,6 @@ public static class StateEvaluator
     // Current ActorFrame going through the process
     public static ActorFrame? CurrentActorFrame { get; set; }
 
-    // The time when process has to be finished. Can be used as emergency limit
-    public static DateTime? ProcessEnd { get; set; }
-
     // The constraints to different activities (maximum occurences in a single process)
     public static Dictionary<EActivityType, int> ActivitiesLimits = new();
 
@@ -33,11 +29,6 @@ public static class StateEvaluator
         if (CurrentActorFrame == null)
         {
             throw new Exception("ActorFrame must be set before running the evaluator");
-        }
-
-        if (ProcessEnd == null)
-        {
-            throw new Exception("ProcessEnd must be set before running the evaluator");
         }
 
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
@@ -84,8 +75,7 @@ public static class StateEvaluator
                 float rating = 0;
 
                 // Rank following chance
-                // FIXME: Since following chance/weight is the only ranking, it should be emitted and refactored to simpler form
-                rating += currentState.FollowingMap[state] * Constants.ChanceToFollowWeight;
+                rating += currentState.FollowingMap[state];
                 weightedStates.Add(state, rating);
             }
 
@@ -105,12 +95,12 @@ public static class StateEvaluator
         return CurrentActorFrame;
     }
 
-    private static void JumpNextState(ProcessState newState, DateTime jumpDate, TimeSpan actorOffset)
+    private static void JumpNextState(ProcessState state, DateTime jumpDate, TimeSpan offset)
     {
         // Perform callback function if possible
-        if (newState.Callback != null)
+        if (state.Callback != null)
         {
-            newState.Callback(CurrentActorFrame.Actor);
+            state.Callback(CurrentActorFrame.Actor);
         }
 
         // Update VisitedMap
@@ -134,10 +124,10 @@ public static class StateEvaluator
         }
 
         // Update CurrentState
-        CurrentActorFrame.CurrentState = newState;
+        CurrentActorFrame.CurrentState = state;
         CurrentActorFrame.CurrentTime = jumpDate;
-        CurrentActorFrame.VisitedStack.Add((newState, jumpDate + actorOffset));
-        OnStateEnter(CurrentActorFrame.Actor, newState, jumpDate + actorOffset);
+        CurrentActorFrame.VisitedStack.Add((state, jumpDate + offset));
+        OnStateEnter(CurrentActorFrame.Actor, state, jumpDate + offset);
     }
 
     public static ProcessState SelectWeightedState(Dictionary<ProcessState, float> stateWeights)
@@ -165,10 +155,9 @@ public static class StateEvaluator
         StateEntered.Invoke(null, eventData);
     }
 
-    public static void InitializeEvaluator(ActorFrame actorFrame, DateTime processEnd)
+    public static void InitializeEvaluator(ActorFrame actorFrame)
     {
         CurrentActorFrame = actorFrame;
-        ProcessEnd = processEnd;
     }
 
     public static void SetLimits(Dictionary<EActivityType, int> activitiesLimits)
