@@ -13,14 +13,14 @@ public static class RuleEnforcer
     }
 
     // Run registered rules on a process and returns it after it was processed
-    public static List<(ABaseState, DateTime, string?)> GetEvaluatedProcess(List<(ABaseState, DateTime, string?)> process)
+    public static List<(ABaseState, DateTime, string?)> GetEvaluatedProcess(List<(ABaseState, DateTime, string?)> trace)
     {
         if (!Rules.Any())
         {
-            return process;
+            return trace;
         }
         
-        var orderedProcess = process.OrderBy(item => item.Item2).ToList();
+        var orderedProcess = trace.OrderBy(item => item.Item2).ToList();
         var newProcess = new List<(ABaseState, DateTime, string?)>();
         foreach (var rule in Rules)
         {
@@ -43,7 +43,7 @@ public static class RuleEnforcer
             break;
         }
 
-        return (newProcess.Any()) ? newProcess : process;
+        return (newProcess.Any()) ? newProcess : trace;
     }
 
     public static void ResetService()
