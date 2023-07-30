@@ -5,7 +5,7 @@ using EventLogGenerator.Models.Enums;
 using EventLogGenerator.Models.States;
 using EventLogGenerator.Services;
 
-namespace EventLogGenerator;
+namespace EventLogGenerator.Generators;
 
 public static class StudentGenerator
 {
@@ -26,11 +26,6 @@ public static class StudentGenerator
         {
             { EActivityType.RegisterExamTerm, 3 }
         });
-
-        // Prepare Actors (time offset for )
-        List<Actor> students = Enumerable.Range(0, studentsCount)
-            .Select(_ => new Actor(EActorType.Student))
-            .ToList();
 
         // FIXME: This logic should be implemented somewhere else, not the scenario itself
         // Setup seminar offsets
@@ -79,6 +74,8 @@ public static class StudentGenerator
         var exam2 = new Resource("Exam term 2");
         var exam3 = new Resource("Exam term 3");
         var exam4 = new Resource("Exam term 4");
+        
+        // CREATE TIMEFRAMES
         
         // Prepare times
         var courseRegistrationPeriod = new TimeFrame((2023, 1, 31, 17, 0, 0), (2023, 2, 12));
@@ -176,15 +173,14 @@ public static class StudentGenerator
         // Useful properties
         var semesterEnd = new DateTime(2023, 7, 1);
 
-        // Prepare states
+        // CREATE STATES
+        
         var enrollCourse = new ProcessState(
             EActivityType.EnrollCourse,
             course,
             1,
             courseRegistrationPeriod
         );
-
-        var enrolledCourseSet = new HashSet<ProcessState>() { enrollCourse };
 
         var registerSeminarGroup1 = new ProcessState(
             EActivityType.RegisterSeminarGroup,
@@ -579,66 +575,6 @@ public static class StudentGenerator
             true
         );
 
-        // Setup following states map
-        enrollCourse.AddFollowingStates((registerSeminarGroup1, 1 / 3f), (registerSeminarGroup2, 1 / 3f),
-            (registerSeminarGroup3, 1 / 3f));
-        registerSeminarGroup1.AddFollowingStates((registerSeminarGroup2, 0.04f), (registerSeminarGroup3, 0.04f),
-            (openRopot1, 0.85f), (openRopot2, 0.05f));
-        registerSeminarGroup2.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup3, 0.04f),
-            (openRopot1, 0.85f), (openRopot2, 0.05f));
-        registerSeminarGroup3.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup2, 0.04f),
-            (openRopot1, 0.85f), (openRopot2, 0.05f));
-        // ropot 1
-        openRopot1.AddFollowingStates((saveRopot1, 0.8f), (submitRopot1, 0.2f));
-        saveRopot1.AddFollowingStates((submitRopot1, 0.85f), (saveRopot1, 0.15f));
-        submitRopot1.AddFollowingStates((openRopot2, 0.90f), (submitHomework1, 0.05f), (openRopot3, 0.05f));
-        // ropot 2
-        openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
-        saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
-        submitRopot2.AddFollowingStates((submitHomework1, 0.90f), (openRopot3, 0.05f), (openRopot4, 0.05f));
-        // hw 1
-        submitHomework1.AddFollowingStates((openRopot3, 0.75f), (readHomework1, 0.2f), (openRopot4, 0.05f));
-        readHomework1.AddFollowingStates((openRopot3, 0.8f), (removeHomework1, 0.2f));
-        removeHomework1.AddFollowingStates((submitHomework1, 1f));
-        // ropot 3
-        openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
-        saveRopot3.AddFollowingStates((submitRopot3, 0.85f), (saveRopot3, 0.15f));
-        submitRopot3.AddFollowingStates((openRopot4, 0.90f), (submitHomework2, 0.05f), (openRopot5, 0.05f));
-        // ropot 4
-        openRopot4.AddFollowingStates((saveRopot4, 0.8f), (submitRopot4, 0.2f));
-        saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
-        submitRopot4.AddFollowingStates((submitHomework2, 0.90f), (openRopot5, 0.05f), (openRopot6, 0.05f));
-        // hw 2
-        submitHomework2.AddFollowingStates((openRopot5, 0.75f), (readHomework2, 0.2f), (openRopot6, 0.05f));
-        readHomework2.AddFollowingStates((openRopot5, 0.8f), (removeHomework2, 0.2f));
-        removeHomework2.AddFollowingStates((submitHomework2, 1f));
-        // ropot 5
-        openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
-        saveRopot5.AddFollowingStates((submitRopot5, 0.85f), (saveRopot5, 0.15f));
-        submitRopot5.AddFollowingStates((openRopot6, 0.90f), (submitHomework3, 0.05f), (registerTerm1, 0.05f));
-        // ropot 6
-        openRopot6.AddFollowingStates((saveRopot6, 0.8f), (submitRopot6, 0.2f));
-        saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
-        submitRopot6.AddFollowingStates((submitHomework3, 0.95f), (registerTerm1, 0.05f));
-        // hw 3
-        submitHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (readHomework3, 0.2f));
-        readHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (removeHomework3, 0.2f));
-        removeHomework3.AddFollowingStates((submitHomework3, 1f));
-
-        // exams
-        registerTerm1.AddFollowingStates((passExam1, 0.60f), (failExam1, 0.40f));
-        registerTerm2.AddFollowingStates((passExam2, 0.55f), (failExam2, 0.45f));
-        registerTerm3.AddFollowingStates((passExam3, 0.50f), (failExam3, 0.50f));
-        registerTerm4.AddFollowingStates((passExam4, 0.45f), (failExam4, 0.55f));
-        failExam1.AddFollowingStates((registerTerm2, 0.8f), (registerTerm3, 0.1f), (failCourse, 0.1f));
-        failExam2.AddFollowingStates((registerTerm3, 0.7f), (registerTerm4, 0.1f), (failCourse, 0.1f));
-        failExam3.AddFollowingStates((registerTerm4, 0.7f), (failCourse, 0.3f));
-        failExam4.AddFollowingStates((failCourse, 1f));
-        passExam1.AddFollowingStates((passCourse, 1f));
-        passExam2.AddFollowingStates((passCourse, 1f));
-        passExam3.AddFollowingStates((passCourse, 1f));
-        passExam4.AddFollowingStates((passCourse, 1f));
-        
         // Create sprinkles
         var readStudyMaterials1 = new IntervalSprinkleState(
             EActivityType.ReadFile,
@@ -789,7 +725,77 @@ public static class StudentGenerator
             EActivityType.CreateFile,
             2
         );
+        
+        // SETUP FOLLOWING STATES
 
+        // Setup following states map
+        enrollCourse.AddFollowingStates((registerSeminarGroup1, 1 / 3f), (registerSeminarGroup2, 1 / 3f),
+            (registerSeminarGroup3, 1 / 3f));
+        registerSeminarGroup1.AddFollowingStates((registerSeminarGroup2, 0.04f), (registerSeminarGroup3, 0.04f),
+            (openRopot1, 0.85f), (openRopot2, 0.05f));
+        registerSeminarGroup2.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup3, 0.04f),
+            (openRopot1, 0.85f), (openRopot2, 0.05f));
+        registerSeminarGroup3.AddFollowingStates((registerSeminarGroup1, 0.04f), (registerSeminarGroup2, 0.04f),
+            (openRopot1, 0.85f), (openRopot2, 0.05f));
+        // ropot 1
+        openRopot1.AddFollowingStates((saveRopot1, 0.8f), (submitRopot1, 0.2f));
+        saveRopot1.AddFollowingStates((submitRopot1, 0.85f), (saveRopot1, 0.15f));
+        submitRopot1.AddFollowingStates((openRopot2, 0.90f), (submitHomework1, 0.05f), (openRopot3, 0.05f));
+        // ropot 2
+        openRopot2.AddFollowingStates((saveRopot2, 0.8f), (submitRopot2, 0.2f));
+        saveRopot2.AddFollowingStates((submitRopot2, 0.85f), (saveRopot2, 0.15f));
+        submitRopot2.AddFollowingStates((submitHomework1, 0.90f), (openRopot3, 0.05f), (openRopot4, 0.05f));
+        // hw 1
+        submitHomework1.AddFollowingStates((openRopot3, 0.75f), (readHomework1, 0.2f), (openRopot4, 0.05f));
+        readHomework1.AddFollowingStates((openRopot3, 0.8f), (removeHomework1, 0.2f));
+        removeHomework1.AddFollowingStates((submitHomework1, 1f));
+        // ropot 3
+        openRopot3.AddFollowingStates((saveRopot3, 0.8f), (submitRopot3, 0.2f));
+        saveRopot3.AddFollowingStates((submitRopot3, 0.85f), (saveRopot3, 0.15f));
+        submitRopot3.AddFollowingStates((openRopot4, 0.90f), (submitHomework2, 0.05f), (openRopot5, 0.05f));
+        // ropot 4
+        openRopot4.AddFollowingStates((saveRopot4, 0.8f), (submitRopot4, 0.2f));
+        saveRopot4.AddFollowingStates((submitRopot4, 0.85f), (saveRopot4, 0.15f));
+        submitRopot4.AddFollowingStates((submitHomework2, 0.90f), (openRopot5, 0.05f), (openRopot6, 0.05f));
+        // hw 2
+        submitHomework2.AddFollowingStates((openRopot5, 0.75f), (readHomework2, 0.2f), (openRopot6, 0.05f));
+        readHomework2.AddFollowingStates((openRopot5, 0.8f), (removeHomework2, 0.2f));
+        removeHomework2.AddFollowingStates((submitHomework2, 1f));
+        // ropot 5
+        openRopot5.AddFollowingStates((saveRopot5, 0.8f), (submitRopot5, 0.2f));
+        saveRopot5.AddFollowingStates((submitRopot5, 0.85f), (saveRopot5, 0.15f));
+        submitRopot5.AddFollowingStates((openRopot6, 0.90f), (submitHomework3, 0.05f), (registerTerm1, 0.05f));
+        // ropot 6
+        openRopot6.AddFollowingStates((saveRopot6, 0.8f), (submitRopot6, 0.2f));
+        saveRopot6.AddFollowingStates((submitRopot6, 0.85f), (saveRopot6, 0.15f));
+        submitRopot6.AddFollowingStates((submitHomework3, 0.95f), (registerTerm1, 0.05f));
+        // hw 3
+        submitHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (readHomework3, 0.2f));
+        readHomework3.AddFollowingStates((registerTerm1, 0.65f), (registerTerm2, 0.05f), (registerTerm3, 0.05f), (removeHomework3, 0.2f));
+        removeHomework3.AddFollowingStates((submitHomework3, 1f));
+
+        // exams
+        registerTerm1.AddFollowingStates((passExam1, 0.60f), (failExam1, 0.40f));
+        registerTerm2.AddFollowingStates((passExam2, 0.55f), (failExam2, 0.45f));
+        registerTerm3.AddFollowingStates((passExam3, 0.50f), (failExam3, 0.50f));
+        registerTerm4.AddFollowingStates((passExam4, 0.45f), (failExam4, 0.55f));
+        failExam1.AddFollowingStates((registerTerm2, 0.8f), (registerTerm3, 0.1f), (failCourse, 0.1f));
+        failExam2.AddFollowingStates((registerTerm3, 0.7f), (registerTerm4, 0.1f), (failCourse, 0.1f));
+        failExam3.AddFollowingStates((registerTerm4, 0.7f), (failCourse, 0.3f));
+        failExam4.AddFollowingStates((failCourse, 1f));
+        passExam1.AddFollowingStates((passCourse, 1f));
+        passExam2.AddFollowingStates((passCourse, 1f));
+        passExam3.AddFollowingStates((passCourse, 1f));
+        passExam4.AddFollowingStates((passCourse, 1f));
+        
+        
+        // RUNNING THE SIMULATION
+
+        // Prepare Actors (time offset for )
+        List<Actor> students = Enumerable.Range(0, studentsCount)
+            .Select(_ => new Actor(EActorType.Student))
+            .ToList();
+        
         foreach (var student in students)
         {
             var actorFrame = new ActorFrame(student, enrollCourse);
