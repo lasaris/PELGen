@@ -47,4 +47,9 @@ internal static class ActorService
         
         return ActorOffsetMap[actor][activity];
     }
+
+    internal static void ResetService()
+    {
+        ActorOffsetMap = new();
+    }
 }
