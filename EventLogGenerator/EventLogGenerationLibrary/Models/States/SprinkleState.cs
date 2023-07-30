@@ -14,24 +14,24 @@ namespace EventLogGenerationLibrary.Models.States;
 /// the process where the sprinkle should not be generated.
 /// Passes indicates how many times should the sprinkle be added to the process.
 /// </summary>
-internal class SprinkleState : ABaseState
+public class SprinkleState : ABaseState
 {
     // States after which sprinkle can be performed
-    internal HashSet<ProcessState> BeginAfter;
+    public HashSet<ProcessState> BeginAfter;
 
     // States after which sprinkle cannot be performed
-    internal HashSet<ProcessState> StopBefore;
+    public HashSet<ProcessState> StopBefore;
 
     // States after which the sprinkle cannot be performed
-    internal HashSet<ProcessState>? SkipStart;
+    public HashSet<ProcessState>? SkipStart;
 
     // States that again enable the sprinkle to be performed
-    internal HashSet<ProcessState>? SkipEnd;
+    public HashSet<ProcessState>? SkipEnd;
 
     // How many passes should this sprinkle be able to perform
-    internal int Passes;
+    public int Passes;
 
-    internal SprinkleState(string activityType, string resource, HashSet<ProcessState> beginAfter,
+    public SprinkleState(string activityType, string resource, HashSet<ProcessState> beginAfter,
         HashSet<ProcessState> stopBefore, HashSet<ProcessState>? skipStart = null, HashSet<ProcessState>? skipEnd = null,
         Dictionary<ProcessState, float>? afterStateChances = null, int passes = 1) : base(activityType, resource)
     {

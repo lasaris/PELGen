@@ -3,7 +3,7 @@
 /// <summary>
 /// Defines, in which part of the timeframe is an Actvity more likely to occur
 /// </summary>
-internal enum ETimeFrameDistribution
+public enum ETimeFrameDistribution
 {
     // Every time equal chances
     Uniform,

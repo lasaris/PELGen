@@ -8,13 +8,13 @@ namespace EventLogGenerationLibrary.Models.States;
 /// <summary>
 /// Sprinkle that is added in a specific time interval, while the timestamp is picked by the defined Distribution.
 /// </summary>
-internal class IntervalSprinkleState : ABaseState
+public class IntervalSprinkleState : ABaseState
 {
-    internal TimeFrame TimeInterval;
+    public TimeFrame TimeInterval;
 
-    internal ETimeFrameDistribution Distribution;
+    public ETimeFrameDistribution Distribution;
 
-    internal IntervalSprinkleState(string activityType, string resource, TimeFrame timeInterval,
+    public IntervalSprinkleState(string activityType, string resource, TimeFrame timeInterval,
         ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform) : base(activityType, resource)
     {
         TimeInterval = timeInterval;

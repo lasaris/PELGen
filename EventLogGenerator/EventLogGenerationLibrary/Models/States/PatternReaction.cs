@@ -6,19 +6,19 @@ namespace EventLogGenerationLibrary.Models.States;
 /// <summary>
 /// 
 /// </summary>
-internal class PatternReaction
+public class PatternReaction
 {
     // Pattern of activities to match in the process
-    internal List<string> ActivitiesPattern;
+    public List<string> ActivitiesPattern;
 
     // NOTE: Could be specified better in case 2 activities match in the pattern, perhaps use index instead?
     // Activity to match time with
-    internal string MatchTimeWith;
+    public string MatchTimeWith;
 
     // Activity that should be reacted with
-    internal string Reaction;
+    public string Reaction;
 
-    internal PatternReaction(List<string> activitiesPattern, string matchTimeWith, string reaction)
+    public PatternReaction(List<string> activitiesPattern, string matchTimeWith, string reaction)
     {
         if (!activitiesPattern.Any())
         {

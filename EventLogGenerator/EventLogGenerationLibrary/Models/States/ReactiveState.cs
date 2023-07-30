@@ -9,24 +9,24 @@ namespace EventLogGenerationLibrary.Models.States;
 /// Optionally ReactoToResoruceName can be specified to additionally also check for resource.
 /// Optionally OwnResource can be defined to specify what other resource should be associated with the created reaction. 
 /// </summary>
-internal class ReactiveState : ABaseState
+public class ReactiveState : ABaseState
 {
     // Activity that should be reacted to
-    internal string ReactToActivity;
+    public string ReactToActivity;
 
     // Optionally specified if we want to match also resource with the activity
-    internal string? ReactToResourceName;
+    public string? ReactToResourceName;
     
     // Optionally specified if we want to visit this state with our own resource
-    internal string? OwnResource;
+    public string? OwnResource;
 
     // Specifies the amount of time offset from the reacting state
-    internal TimeSpan Offset;
+    public TimeSpan Offset;
 
     // Specifies the variability around the timestamp of current state (+ optionally added offset)
-    internal TimeSpan TimeVariable;
+    public TimeSpan TimeVariable;
 
-    internal ReactiveState(string activityType, string resource, string reactToActivity,
+    public ReactiveState(string activityType, string resource, string reactToActivity,
         string? reactToResourceName = null, string? ownResource = null, TimeSpan? offset = null,
         TimeSpan? variable = null) : base(activityType, resource)
     {

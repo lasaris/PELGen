@@ -9,15 +9,15 @@ namespace EventLogGenerationLibrary.Models.States;
 /// MustOccur is an optional attribute that serves as an abstract condition, so that this state is only added
 /// when that state is present in the process (regardless of the time added).
 /// </summary>
-internal class FixedTimeState : ABaseState
+public class FixedTimeState : ABaseState
 {
     // Time at which state will be visited
-    internal DateTime VisitTime;
+    public DateTime VisitTime;
 
     // State that must occur
-    internal ProcessState? MustOccur;
+    public ProcessState? MustOccur;
 
-    internal FixedTimeState(string activityType, string resource, DateTime visitTime,
+    public FixedTimeState(string activityType, string resource, DateTime visitTime,
         ProcessState? mustOccur = null) : base(activityType, resource)
     {
         VisitTime = visitTime;

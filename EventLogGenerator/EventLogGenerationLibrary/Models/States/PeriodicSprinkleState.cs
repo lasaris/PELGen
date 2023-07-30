@@ -10,22 +10,22 @@ namespace EventLogGenerationLibrary.Models.States;
 /// a process in BeginAfter is found and ends before StopBefore is discovered.
 /// Period defines the time in between each sprinkle addition.
 /// </summary>
-internal class PeriodicSprinkleState : ABaseState
+public class PeriodicSprinkleState : ABaseState
 {
     // States after which sprinkling is performed
-    internal HashSet<ProcessState> BeginAfter;
+    public HashSet<ProcessState> BeginAfter;
 
     // States after which sprinkling is stopped
-    internal HashSet<ProcessState> StopBefore;
+    public HashSet<ProcessState> StopBefore;
 
     // Time between each sprinkle (beginAfter + Period = first sprinkle time of this state)
-    internal TimeSpan Period;
+    public TimeSpan Period;
 
     // FIXME: This feels illegal to be here and there is surely better and more general way to do this.
     // Alternative state, chance to occur, max occurrences
-    internal (ABaseState, float, int)? AlternativeState;
+    public (ABaseState, float, int)? AlternativeState;
 
-    internal PeriodicSprinkleState(string activityType, string resource, HashSet<ProcessState> beginAfter,
+    public PeriodicSprinkleState(string activityType, string resource, HashSet<ProcessState> beginAfter,
         HashSet<ProcessState> stopBefore, TimeSpan period, (ABaseState, float, int)? alternativeState = null) :
         base(activityType, resource)
     {

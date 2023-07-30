@@ -5,15 +5,15 @@ namespace EventLogGenerationLibrary.Models;
 /// <summary>
 /// Used for storing actor with unique Id and type specified.
 /// </summary>
-internal class Actor
+public class Actor
 {
     // Unique ID
-    internal uint Id { get; set; }
+    public uint Id { get; set; }
 
     // Type of the Actor. Different Actor can have specific process generated
-    internal string Type;
+    public string Type;
 
-    internal Actor(string type, Dictionary<HashSet<string>, TimeSpan>? offsetMap = null)
+    public Actor(string type, Dictionary<HashSet<string>, TimeSpan>? offsetMap = null)
     {
         Id = IdService.GetNewActorId();
         Type = type;

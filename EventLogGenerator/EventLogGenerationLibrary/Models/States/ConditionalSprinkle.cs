@@ -9,21 +9,21 @@ namespace EventLogGenerationLibrary.Models.States;
 /// Otherwise it tries to guess the time which the ProcessState could've occured and adds NegativeState to the process.
 /// When any DummyState is added, attribute TimeOffset is used and added to the time of StateToOccur. 
 /// </summary>
-internal class ConditionalSprinkle
+public class ConditionalSprinkle
 {
     // The desired state we are looking for
-    internal ProcessState StateToOccur;
+    public ProcessState StateToOccur;
 
     // The state added when StateToOccur is found
-    internal DummyState PositiveState;
+    public DummyState PositiveState;
 
     // The state added when StateToOccur did not occur
-    internal DummyState NegativeState;
+    public DummyState NegativeState;
 
     // Fixed offset from the StateToOccur time
-    internal TimeSpan TimeOffset;
+    public TimeSpan TimeOffset;
 
-    internal ConditionalSprinkle(ProcessState stateToOccur, DummyState positiveState, DummyState negativeState,
+    public ConditionalSprinkle(ProcessState stateToOccur, DummyState positiveState, DummyState negativeState,
         TimeSpan timeOffset)
     {
         StateToOccur = stateToOccur;

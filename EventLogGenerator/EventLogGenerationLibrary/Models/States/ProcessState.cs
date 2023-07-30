@@ -2,7 +2,7 @@
 
 namespace EventLogGenerationLibrary.Models.States;
 
-internal delegate void AdditionalActionFunc(Actor currentActor);
+public delegate void AdditionalActionFunc(Actor currentActor);
 
 /// <summary>
 /// The main building block for the process.
@@ -11,24 +11,24 @@ internal delegate void AdditionalActionFunc(Actor currentActor);
 /// IsFinishing indicates if the whole process should finish with this state.
 /// MaxPasses defines the maximum amount of passes through current state, which can also loop on itself.
 /// </summary>
-internal class ProcessState : ABaseState
+public class ProcessState : ABaseState
 {
     // Start and end time in between which the state can be visited
-    internal TimeFrame TimeFrame;
+    public TimeFrame TimeFrame;
 
     // Following states and their changes
-    internal Dictionary<ProcessState, float> FollowingMap;
+    public Dictionary<ProcessState, float> FollowingMap;
 
     // Indicates if process is finished with this state (can be multiple states)
-    internal bool IsFinishing;
+    public bool IsFinishing;
     
     // Rules which apply for given state and which lead to the next
-    internal int MaxPasses;
+    public int MaxPasses;
 
     // FIXME: Design this better and more generally!
-    internal AdditionalActionFunc? Callback;
+    public AdditionalActionFunc? Callback;
 
-    internal ProcessState(string activity, string resource, int maxPasses, TimeFrame timeFrame,
+    public ProcessState(string activity, string resource, int maxPasses, TimeFrame timeFrame,
         bool isFinishing = false, AdditionalActionFunc? callback = null) : base(activity, resource)
     {
         TimeFrame = timeFrame;
@@ -38,7 +38,7 @@ internal class ProcessState : ABaseState
         Callback = callback;
     }
     
-    internal ProcessState(string activity, string resource, int maxPasses, DateTime start,
+    public ProcessState(string activity, string resource, int maxPasses, DateTime start,
         bool isFinishing = false, AdditionalActionFunc? callback = null) : base(activity, resource)
     {
         TimeFrame = new TimeFrame(start, start + TimeSpan.FromSeconds(1));
@@ -48,7 +48,7 @@ internal class ProcessState : ABaseState
         Callback = callback;
     }
 
-    internal void AddFollowingState(ProcessState state, float chance)
+    public void AddFollowingState(ProcessState state, float chance)
     {
         if (chance < 0 || chance > 1)
         {
@@ -61,7 +61,7 @@ internal class ProcessState : ABaseState
         }
     }
     
-    internal void AddFollowingStates(params (ProcessState, float)[] tuples)
+    public void AddFollowingStates(params (ProcessState, float)[] tuples)
     {
         foreach (var pair in tuples)
         {

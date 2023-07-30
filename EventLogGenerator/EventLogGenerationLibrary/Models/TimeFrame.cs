@@ -7,7 +7,7 @@ namespace EventLogGenerator.Models;
 /// The Distribution attribute is used for randomly selecting a DateTime from the timeframe.
 /// Optionally the attribute ExcludedTimes serves as sub-intervals that cannot be picked from the timeframe.
 /// </summary>
-internal class TimeFrame
+public class TimeFrame
 {
     internal DateTime Start;
 
