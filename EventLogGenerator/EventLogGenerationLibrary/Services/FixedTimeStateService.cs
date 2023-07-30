@@ -1,11 +1,12 @@
 ﻿using EventLogGenerationLibrary.Models;
 using EventLogGenerationLibrary.Models.Events;
 using EventLogGenerationLibrary.Models.States;
-using EventLogGenerationLibrary.Services;
-using EventLogGenerator.Models;
 
-namespace EventLogGenerator.Services;
+namespace EventLogGenerationLibrary.Services;
 
+/// <summary>
+/// Handles FixedTimeState operations.
+/// </summary>
 internal static class FixedTimeStateService
 {
     // Delegate for handling event of entering state

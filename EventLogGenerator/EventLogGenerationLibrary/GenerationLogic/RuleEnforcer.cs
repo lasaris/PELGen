@@ -23,17 +23,17 @@ internal static class RuleEnforcer
             return trace;
         }
         
-        var orderedProcess = trace.Trace.OrderBy(item => item.Item2).ToList();
+        var orderedTrace = new OrderedTrace(trace.Trace.OrderBy(item => item.Item2).ToList());
         var newProcess = new OrderedTrace();
         foreach (var rule in Rules)
         {
             // Rule evaluated positively (no need to change process)
-            if (rule.Evaluate(orderedProcess))
+            if (rule.Evaluate(orderedTrace))
             {
                 continue;
             }
             
-            foreach (var state in orderedProcess)
+            foreach (var state in orderedTrace.Trace)
             {
                 if (state.Item1 == rule.Checkpoint)
                 {

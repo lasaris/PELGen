@@ -3,6 +3,9 @@ using EventLogGenerationLibrary.Models.States;
 
 namespace EventLogGenerationLibrary.Models;
 
+/// <summary>
+/// Rule that specifies the minimum count of events with an Activity that must be present in the process.
+/// </summary>
 internal class MinimumActivityCountRule : ABaseRule
 {
     internal string Activity;
@@ -18,10 +21,10 @@ internal class MinimumActivityCountRule : ABaseRule
         RuleEnforcer.LoadRule(this);
     }
     
-    internal override bool Evaluate(List<(ABaseState, DateTime, string?)> process)
+    internal override bool Evaluate(OrderedTrace trace)
     {
         var currentCount = 0;
-        foreach(var state in process)
+        foreach(var state in trace.Trace)
         {
             if (state.Item1 == Checkpoint)
             {

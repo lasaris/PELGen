@@ -19,5 +19,5 @@ internal abstract class ABaseRule
         NegativeEnd = negativeEnd;
     }
 
-    internal abstract bool Evaluate(List<(ABaseState, DateTime, string?)> process);
+    internal abstract bool Evaluate(OrderedTrace trace);
 }

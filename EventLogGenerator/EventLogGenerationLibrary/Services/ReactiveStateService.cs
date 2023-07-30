@@ -5,6 +5,9 @@ using EventLogGenerator.Services;
 
 namespace EventLogGenerationLibrary.Services;
 
+/// <summary>
+/// Handles reactive states and scenarios operations.
+/// </summary>
 internal static class ReactiveStateService
 {
     // Delegate for handling event of entering state

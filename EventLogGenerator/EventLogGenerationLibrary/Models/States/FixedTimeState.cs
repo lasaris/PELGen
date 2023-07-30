@@ -1,4 +1,5 @@
-﻿using EventLogGenerator.Models;
+﻿using EventLogGenerationLibrary.Services;
+using EventLogGenerator.Models;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerationLibrary.Models.States;

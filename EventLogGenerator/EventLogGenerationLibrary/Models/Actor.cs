@@ -2,6 +2,9 @@
 
 namespace EventLogGenerationLibrary.Models;
 
+/// <summary>
+/// Used for storing actor with unique Id and type specified.
+/// </summary>
 internal class Actor
 {
     // Unique ID

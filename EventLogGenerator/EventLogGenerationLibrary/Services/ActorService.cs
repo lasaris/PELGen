@@ -2,6 +2,9 @@
 
 namespace EventLogGenerationLibrary.Services;
 
+/// <summary>
+/// Handles operations related to Actor.
+/// </summary>
 internal static class ActorService
 {
     // Maps each actor to a list of offsets for different activities (useful when we want certain actors to have a time offset)
