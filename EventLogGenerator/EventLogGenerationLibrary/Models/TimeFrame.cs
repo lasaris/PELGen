@@ -9,15 +9,15 @@ namespace EventLogGenerator.Models;
 /// </summary>
 public class TimeFrame
 {
-    internal DateTime Start;
+    public DateTime Start;
 
-    internal DateTime End;
+    public DateTime End;
 
-    internal ETimeFrameDistribution Distribution;
+    public ETimeFrameDistribution Distribution;
 
-    internal HashSet<TimeFrame>? ExcludedTimes;
+    public HashSet<TimeFrame>? ExcludedTimes;
 
-    internal TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform,
+    public TimeFrame(DateTime start, DateTime end, ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform,
         HashSet<TimeFrame>? excludedTimes = null)
     {
         if (start >= end)
@@ -31,21 +31,21 @@ public class TimeFrame
         ExcludedTimes = excludedTimes;
     }
 
-    internal TimeFrame((int, int, int) start, (int, int, int) end,
+    public TimeFrame((int, int, int) start, (int, int, int) end,
         ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
         : this(new DateTime(start.Item1, start.Item2, start.Item3), new DateTime(end.Item1, end.Item2, end.Item3),
             distribution)
     {
     }
 
-    internal TimeFrame((int, int, int, int, int, int) start, (int, int, int) end,
+    public TimeFrame((int, int, int, int, int, int) start, (int, int, int) end,
         ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
         : this(new DateTime(start.Item1, start.Item2, start.Item3, start.Item4, start.Item5, start.Item6),
             new DateTime(end.Item1, end.Item2, end.Item3), distribution)
     {
     }
 
-    internal TimeFrame((int, int, int) start, (int, int, int, int, int, int) end,
+    public TimeFrame((int, int, int) start, (int, int, int, int, int, int) end,
         ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
         : this(new DateTime(start.Item1, start.Item2, start.Item3),
             new DateTime(end.Item1, end.Item2, end.Item3, end.Item4, end.Item5, end.Item6),
@@ -53,7 +53,7 @@ public class TimeFrame
     {
     }
 
-    internal TimeFrame((int, int, int, int, int, int) start, (int, int, int, int, int, int) end,
+    public TimeFrame((int, int, int, int, int, int) start, (int, int, int, int, int, int) end,
         ETimeFrameDistribution distribution = ETimeFrameDistribution.Uniform, HashSet<TimeFrame>? excludedTimes = null)
         : this(new DateTime(start.Item1, start.Item2, start.Item3, start.Item4, start.Item5, start.Item6),
             new DateTime(end.Item1, end.Item2, end.Item3, end.Item4, end.Item5, end.Item6),
@@ -71,7 +71,7 @@ public class TimeFrame
         return Math.Pow(WeightFunctionLinear(ticks, range), exponent);
     }
 
-    internal DateTime PickTimeByDistribution(DateTime? newStartLimit = null)
+    public DateTime PickTimeByDistribution(DateTime? newStartLimit = null)
     {
         if (newStartLimit != null && newStartLimit >= End)
         {
@@ -143,7 +143,7 @@ public class TimeFrame
         return pickedDateTime;
     }
 
-    internal TimeFrame GetTimeFrameWithOffset(TimeSpan? startOffset = null, TimeSpan? endOffset = null)
+    public TimeFrame GetTimeFrameWithOffset(TimeSpan? startOffset = null, TimeSpan? endOffset = null)
     {
         var newStart = startOffset == null ? Start : Start + (TimeSpan)startOffset;
         var newEnd = endOffset == null ? End : End + (TimeSpan)endOffset;

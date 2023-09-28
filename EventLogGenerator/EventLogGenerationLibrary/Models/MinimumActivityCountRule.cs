@@ -6,13 +6,13 @@ namespace EventLogGenerationLibrary.Models;
 /// <summary>
 /// Rule that specifies the minimum count of events with an Activity that must be present in the process.
 /// </summary>
-internal class MinimumActivityCountRule : ABaseRule
+public class MinimumActivityCountRule : ABaseRule
 {
-    internal string Activity;
+    public string Activity;
 
-    internal readonly int MinimumCount;
+    public readonly int MinimumCount;
 
-    internal MinimumActivityCountRule(ABaseState checkpoint, (ABaseState, DateTime) negativeEnd, string activity,
+    public MinimumActivityCountRule(ABaseState checkpoint, (ABaseState, DateTime) negativeEnd, string activity,
         int minimumCount) : base(checkpoint, negativeEnd)
     {
         Activity = activity;

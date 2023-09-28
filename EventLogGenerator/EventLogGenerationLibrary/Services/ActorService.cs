@@ -5,12 +5,12 @@ namespace EventLogGenerationLibrary.Services;
 /// <summary>
 /// Handles operations related to Actor.
 /// </summary>
-internal static class ActorService
+public static class ActorService
 {
     // Maps each actor to a list of offsets for different activities (useful when we want certain actors to have a time offset)
     internal static Dictionary<Actor, Dictionary<string, TimeSpan>> ActorOffsetMap = new();
 
-    internal static void SetActivitiesOffset(Actor actor, HashSet<string> activities, TimeSpan offset)
+    public static void SetActivitiesOffset(Actor actor, HashSet<string> activities, TimeSpan offset)
     {
         foreach (var activity in activities)
         {
