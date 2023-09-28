@@ -40,9 +40,15 @@ internal static class ReactiveStateService
         OnStateEnter(state, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
     }
 
-    internal static void RunReactiveStates(Process idToStatesMap,
+    internal static void RunReactiveStates(Process? idToStatesMap,
         List<Actor> actors)
     {
+        // If no previous process provided, just quit
+        if (idToStatesMap == null)
+        {
+            return;
+        }
+        
         // FIXME: Generalize, perhaps by adding extra parameter and intiializing ReactingActorsMap?
         foreach (var actorStatePair in idToStatesMap.Log)
         {

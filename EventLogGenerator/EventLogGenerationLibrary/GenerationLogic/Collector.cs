@@ -23,19 +23,19 @@ internal static class Collector
         ++LastIndex;
     }
 
-    internal  static Process GetPreviousCollection()
+    internal static Process? GetPreviousCollection()
     {
-        if (!Processes.Any())
+        if (!Processes.Any() || Processes.Count <= 1)
         {
-            throw new ArgumentException("There is no previous collection of logs created");
+            return null;
         }
 
-        return Processes[LastIndex];
+        return Processes[LastIndex - 1];
     }
 
     internal static uint GetLastCollectionMaxId()
     {
-        return Processes[LastIndex].Log.Keys.Select(actor => actor.Id).Max();
+        return Processes[LastIndex - 1].Log.Keys.Select(actor => actor.Id).Max();
     }
 
     internal static void StateEnteredHandler(object sender, StateEnteredArgs data)
