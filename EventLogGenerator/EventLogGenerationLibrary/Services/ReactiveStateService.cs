@@ -64,7 +64,7 @@ internal static class ReactiveStateService
                 }
             }
 
-            if (seminarGroupId == -1)
+            if (seminarGroupId == -1 && actorStatePair.Key.Type == "Student")
             {
                 throw new ArgumentException("Every student must be signed to seminar group");
             }

@@ -125,8 +125,7 @@ public class Program
         var createExamScanTime2 = new DateTime(2023, 6, 7, 9, 53, 28);
         var createExamScanTime3 = new DateTime(2023, 6, 19, 14, 15, 54);
         var createExamScanTime4 = new DateTime(2023, 6, 26, 8, 42, 49);
-
-        // FIXME: This probably cannot be generalized at all
+        
         var allRopotPeriods = new HashSet<TimeFrame>()
         {
             new TimeFrame(openRopotPeriod1.Start + firstOffset, submitRopotPeriod1.End + firstOffset),
@@ -821,5 +820,265 @@ public class Program
 
         var studentGenerator = new EventGenerator(studentConfig);
         studentGenerator.RunGeneration();
+        
+        // --- TEACHER PROCESS ---
+
+        // Define resources
+        var examScan1 = "/re/scan-exam1.png";
+        var examScan2 = "/re/scan-exam2.png";
+        var examScan3 = "/re/scan-exam3.png";
+        var examScan4 = "/re/scan-exam4.png";
+        
+        var studentCourseRecord = "Student course record";
+        var placeholder = "Will be filled automatically";
+        
+        // Create study materials process
+        var createStudyMaterials1 = new ProcessState(
+            "CreateFile",
+            materialsWeek1,
+            -1,
+            createMaterialsPeriod1
+        );
+
+        var createStudyMaterials2 = new ProcessState(
+            "CreateFile",
+            materialsWeek2,
+            -1,
+            createMaterialsPeriod2
+        );
+
+        var createStudyMaterials3 = new ProcessState(
+            "CreateFile",
+            materialsWeek3,
+            -1,
+            createMaterialsPeriod3
+        );
+
+        var createStudyMaterials4 = new ProcessState(
+            "CreateFile",
+            materialsWeek4,
+            -1,
+            createMaterialsPeriod4
+        );
+
+        var createStudyMaterials5 = new ProcessState(
+            "CreateFile",
+            materialsWeek5,
+            -1,
+            createMaterialsPeriod5
+        );
+
+        var createStudyMaterials6 = new ProcessState(
+            "CreateFile",
+            materialsWeek6,
+            -1,
+            createMaterialsPeriod6,
+            true
+        );
+        
+        var removeStudyMaterials1 = new ProcessState(
+            "DeleteFile",
+            materialsWeek1,
+            1,
+            createMaterialsPeriod1.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+        );
+        
+        var removeStudyMaterials2 = new ProcessState(
+            "DeleteFile",
+            materialsWeek2,
+            1,
+            createMaterialsPeriod2.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+        );
+        
+        var removeStudyMaterials3 = new ProcessState(
+            "DeleteFile",
+            materialsWeek3,
+            1,
+            createMaterialsPeriod3.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+        );
+        
+        var removeStudyMaterials4 = new ProcessState(
+            "DeleteFile",
+            materialsWeek4,
+            1,
+            createMaterialsPeriod4.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+        );
+        
+        var removeStudyMaterials5 = new ProcessState(
+            "DeleteFile",
+            materialsWeek5,
+            1,
+            createMaterialsPeriod5.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+        );
+        
+        var removeStudyMaterials6 = new ProcessState(
+            "DeleteFile",
+            materialsWeek6,
+            1,
+            createMaterialsPeriod6.GetTimeFrameWithOffset(null, -TimeSpan.FromMinutes(15))
+        );
+        
+        createStudyMaterials1.AddFollowingStates((createStudyMaterials2, 0.6f), (removeStudyMaterials1, 0.4f));
+        createStudyMaterials2.AddFollowingStates((createStudyMaterials3, 0.6f), (removeStudyMaterials2, 0.4f));
+        createStudyMaterials3.AddFollowingStates((createStudyMaterials4, 0.6f), (removeStudyMaterials3, 0.4f));
+        createStudyMaterials4.AddFollowingStates((createStudyMaterials5, 0.6f), (removeStudyMaterials4, 0.4f));
+        createStudyMaterials5.AddFollowingStates((createStudyMaterials6, 0.6f), (removeStudyMaterials5, 0.4f));
+        
+        removeStudyMaterials1.AddFollowingStates((createStudyMaterials1, 1f));
+        removeStudyMaterials2.AddFollowingStates((createStudyMaterials2, 1f));
+        removeStudyMaterials3.AddFollowingStates((createStudyMaterials3, 1f));
+        removeStudyMaterials4.AddFollowingStates((createStudyMaterials4, 1f));
+        removeStudyMaterials5.AddFollowingStates((createStudyMaterials5, 1f));
+        removeStudyMaterials6.AddFollowingStates((createStudyMaterials6, 1f));
+
+        // Reactive states
+
+        var givePointsHomework = new ReactiveState(
+            "GivePoints",
+            placeholder,
+            "ReceivePoints"
+        );
+
+        var markSeminarAttendance = new ReactiveState(
+            "MarkAttendance",
+            placeholder,
+            "ReceiveAttendance"
+        );
+        
+        var markSeminarAbsence = new ReactiveState(
+            "MarkAbsence",
+            placeholder,
+            "ReceiveAbsence"
+        );
+
+        var giveFinalGrade1 = new ReactiveState(
+            "GiveFinalGrade",
+            placeholder,
+            "FailExam"
+        );
+
+        var giveFinalGrade2 = new ReactiveState(
+            "GiveFinalGrade",
+            placeholder,
+            "PassExam"
+        );
+
+        var addScansPositive1 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "PassExam",
+            "Exam term 1",
+            examScan1,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansPositive2 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "PassExam",
+            "Exam term 2",
+            examScan2,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansPositive3 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "PassExam",
+            "Exam term 3",
+            examScan3,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansPositive4 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "PassExam",
+            "Exam term 4",
+            examScan4,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansNegative1 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "FailExam",
+            "Exam term 1",
+            examScan1,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansNegative2 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "FailExam",
+            "Exam term 2",
+            examScan2,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansNegative3 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "FailExam",
+            "Exam term 3",
+            examScan3,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+        
+        var addScansNegative4 = new ReactiveState(
+            "CreateFile",
+            placeholder,
+            "FailExam",
+            "Exam term 4",
+            examScan4,
+            - TimeSpan.FromMinutes(5),
+            TimeSpan.FromMinutes(2)
+        );
+
+        // Teacher sprinkles
+        var viewStudentRecord = new IntervalSprinkleState(
+            "VisitStudentRecord",
+            studentCourseRecord,
+            new TimeFrame(new DateTime(2023, 2, 12), new DateTime(2023, 6, 30))
+        );
+
+        var deleteIncompleteRopotSession = new PatternReaction(
+            new List<string>()
+            {
+                "SaveRopot", "OpenRopot"
+            },
+            "SaveRopot",
+            "DeleteRopotSession"
+        );
+        
+        // Prepare Actors
+        List<Actor> teachers = Enumerable.Range(0, 3)
+            .Select(_ => new Actor("Teacher"))
+            .ToList();
+        
+        teachers[0].Id = 514184;
+        teachers[1].Id = 515163;
+        teachers[2].Id = 410452;
+        
+        var teacherConfig = new Configuration(
+            3,
+            createStudyMaterials1,
+            teachers,
+            new Dictionary<string, int>(),
+            "teacher.csv",
+            "ActorId,ActorType,Activity,Resource,StartTimestamp,StudentId,OwnerId",
+            "Teacher"
+        );
+        
+        var teacherGenerator = new EventGenerator(teacherConfig);
+        teacherGenerator.RunGeneration();
     }
 }

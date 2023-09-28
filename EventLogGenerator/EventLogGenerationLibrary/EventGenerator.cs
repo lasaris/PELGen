@@ -23,18 +23,19 @@ public class EventGenerator
         RegisterSubscribers();
 
         List<Actor>? actors = _configuration.Actors;
-        if (actors == null && _configuration.InitialId != null)
+        if (actors == null)
         {
+            if (_configuration.InitialId == null)
+            {
+                throw new Exception("Invalid process configuration - must contain initial ID or actors");
+            }
+            
             IdService.SetInitialId((uint)_configuration.InitialId);
             actors = Enumerable.Range(0, _configuration.ActorCount)
                 .Select(_ => new Actor(_configuration.ActorType))
                 .ToList();
         }
-        else
-        {
-            throw new Exception("Invalid actor configuration for process - does not contain initialId nor actors");
-        }
-        
+
         foreach (var actor in actors)
         {
             var actorFrame = new ActorFrame(actor, _configuration.StartState);
