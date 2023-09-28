@@ -24,8 +24,10 @@ internal static class StateEvaluator
     // The constraints to different activities (maximum occurences in a single process)
     internal static Dictionary<string, int> ActivitiesLimits = new();
 
-    internal static ActorFrame RunProcess(ProcessState initial)
+    internal static ActorFrame RunProcess(ActorFrame actorFrame)
     {
+        CurrentActorFrame = actorFrame;
+
         // Check for desired state of evaluator
         if (CurrentActorFrame == null)
         {
@@ -33,7 +35,7 @@ internal static class StateEvaluator
         }
 
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
-        OnStateEnter(CurrentActorFrame.Actor, initial, CurrentActorFrame.CurrentTime);
+        OnStateEnter(CurrentActorFrame.Actor, CurrentActorFrame.CurrentState, CurrentActorFrame.CurrentTime);
 
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
@@ -154,11 +156,6 @@ internal static class StateEvaluator
         Console.Out.WriteLine($"[INFO] {actor.Id} Entering state: {newState.ActivityType} {newState.Resource}");
         var eventData = new StateEnteredArgs(newState, actor, enteredTime);
         StateEntered.Invoke(null, eventData);
-    }
-
-    internal static void InitializeEvaluator(ActorFrame actorFrame)
-    {
-        CurrentActorFrame = actorFrame;
     }
 
     internal static void SetLimits(Dictionary<string, int> activitiesLimits)
