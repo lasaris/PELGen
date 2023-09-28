@@ -89,9 +89,16 @@ internal static class FileManager
                 sb.Append("," + stateLog.Item3);
             }
 
-            if (StudentFiles.Contains(stateLog.Item1.Resource) && actor.Type == "Student")
+            if (StudentFiles.Contains(stateLog.Item1.Resource))
             {
-                sb.Append($",{actor.Id}");
+                if (actor.Type == "Student")
+                {
+                    sb.Append($",{actor.Id}");
+                }
+                else if (stateLog.Item3 != null)
+                {
+                    sb.Append($",{stateLog.Item3}");
+                }
             }
             else if (TeacherFIles.Contains(stateLog.Item1.Resource))
             {

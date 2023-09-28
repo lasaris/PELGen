@@ -46,11 +46,16 @@ public static class EventLogger
                 sb.Append("," + stateLog.Item3);
             }
             
-            if (StudentFiles.Contains(stateLog.Item1.Resource.Name) && actor.Type == EActorType.Student)
+            if (StudentFiles.Contains(stateLog.Item1.Resource.Name))
             {
-                sb.Append($",{actor.Id}");
-            } 
-            else if (TeacherFIles.Contains(stateLog.Item1.Resource.Name))
+                if (actor.Type == EActorType.Student)
+                {
+                    sb.Append($",{actor.Id}");
+                } else if (stateLog.Item3 != null)
+                {
+                    sb.Append($",{stateLog.Item3}");
+                }
+            } else if (TeacherFIles.Contains(stateLog.Item1.Resource.Name))
             {
                 if (stateLog.Item3 == null && actor.Type == EActorType.Teacher)
                 {
