@@ -32,10 +32,15 @@ internal static class Collector
 
         return Processes[LastIndex - 1];
     }
-
-    internal static uint GetLastCollectionMaxId()
+    
+    internal static uint GetPreviousCollectionmaxId()
     {
         return Processes[LastIndex - 1].Log.Keys.Select(actor => actor.Id).Max();
+    }
+
+    internal static uint GetCurrentCollectionMaxId()
+    {
+        return Processes[LastIndex].Log.Keys.Select(actor => actor.Id).Max();
     }
 
     internal static void StateEnteredHandler(object sender, StateEnteredArgs data)

@@ -19,24 +19,31 @@ public class AdditionalRandomIdModifier
     /// </summary>
     public int NumberOfOccurrences;
 
+    public string GetPreviousRandomId()
+    {
+        var totalNumberOfActors = (int)(Collector.GetPreviousCollectionmaxId() + 1 - IdService.InitialSetId);
+        return (RandomService.GetNext(totalNumberOfActors) + IdService.InitialSetId).ToString();
+    }
+    
     public string GetRandomActorId()
     {
-        var totalNumberOfActors = (int)(Collector.GetLastCollectionMaxId() + 1 - IdService.InitialSetId);
+        var totalNumberOfActors = (int)(Collector.GetCurrentCollectionMaxId() + 1 - IdService.InitialSetId);
         return (RandomService.GetNext(totalNumberOfActors) + IdService.InitialSetId).ToString();
     }
 
     public AdditionalRandomIdModifier(List<string> actionsToReact, int? numberOfOccurrences = null,
-        float lowerBound = 1 / 6f, float upperBound = 1 / 2f)
+        float lowerBound = 1/6f, float upperBound = 1/2f)
     {
         ActionsToReact = actionsToReact;
         if (numberOfOccurrences == null)
         {
-            var totalNumberOfActors = (int)(Collector.GetLastCollectionMaxId() + 1 - IdService.InitialSetId);
-            NumberOfOccurrences = (int)Math.Max(RandomService.GetNext((int)(totalNumberOfActors * upperBound)), totalNumberOfActors * lowerBound);
+            // there is current collection, because the process is not running and evaluating with new process, when state is created with this modifier
+            var totalNumberOfActors = (int)(Collector.GetCurrentCollectionMaxId() + 1 - IdService.InitialSetId);
+            NumberOfOccurrences = (int) Math.Max(RandomService.GetNext((int) (totalNumberOfActors * upperBound)), totalNumberOfActors * lowerBound);
         }
         else
         {
-            NumberOfOccurrences = (int)numberOfOccurrences;
+            NumberOfOccurrences = (int) numberOfOccurrences;
         }
     }
 }
