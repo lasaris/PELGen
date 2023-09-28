@@ -45,7 +45,6 @@ internal static class SprinkleService
         var newEvent = new StateEnteredArgs(sprinkle, actor, timeStamp, additional);
         SprinkleStack.Add((sprinkle, timeStamp));
         SprinkleAdded.Invoke(null, newEvent);
-        // FIXME: Should the logging be done by FileManager instead?
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Sprinkle {sprinkle.ActivityType} - {sprinkle.Resource}");
     }
 
@@ -117,7 +116,7 @@ internal static class SprinkleService
             {
                 for (int i = 0; i < sprinkle.Modifier.NumberOfOccurrences; i++)
                 {
-                    additional = sprinkle.Modifier.GetRandomActorId();
+                    additional = sprinkle.Modifier.GetPreviousRandomId();
                     AddIntervalSprinkle(sprinkle, actor, additional);
                 }
             }

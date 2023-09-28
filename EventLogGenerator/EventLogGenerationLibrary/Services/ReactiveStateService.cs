@@ -30,7 +30,6 @@ internal static class ReactiveStateService
     {
         var newEvent = new StateEnteredArgs(state, actor, timeStamp, additional);
         StateEntered.Invoke(null, newEvent);
-        // FIXME: Should the logging be done by FileManager instead?
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Reactive state {state.ActivityType} - {state.Resource}");
     }
 

@@ -22,7 +22,6 @@ internal static class FixedTimeStateService
     {
         var newEvent = new StateEnteredArgs(state, actor, timeStamp);
         StateEntered.Invoke(null, newEvent);
-        // FIXME: Should the logging be done by FileManager instead?
         Console.Out.WriteLine($"[INFO] {actor.Id} Added Fixed state {state.ActivityType} - {state.Resource}");
     }
 
