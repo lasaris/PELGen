@@ -1,6 +1,7 @@
 ﻿using EventLogGenerationLibrary.Models;
 using EventLogGenerationLibrary.Models.Events;
 using EventLogGenerationLibrary.Models.States;
+using EventLogGenerator.Models;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerationLibrary.Services;
@@ -39,15 +40,15 @@ internal static class ReactiveStateService
         OnStateEnter(state, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
     }
 
-    internal static void RunReactiveStates(Dictionary<Actor, List<(ABaseState, DateTime, string)>> idToStatesMap,
+    internal static void RunReactiveStates(Process idToStatesMap,
         List<Actor> actors)
     {
         // FIXME: Generalize, perhaps by adding extra parameter and intiializing ReactingActorsMap?
-        foreach (var actorStatePair in idToStatesMap)
+        foreach (var actorStatePair in idToStatesMap.Log)
         {
             var seminarGroupId = -1;
 
-            foreach (var stateTimePair in actorStatePair.Value)
+            foreach (var stateTimePair in actorStatePair.Value.Trace)
             {
                 switch (stateTimePair.Item1.Resource)
                 {
@@ -83,9 +84,9 @@ internal static class ReactiveStateService
         }
         
         // Adding the reactive states
-        foreach (var actorStatesPair in idToStatesMap)
+        foreach (var actorStatesPair in idToStatesMap.Log)
         {
-            foreach (var stateTimePair in actorStatesPair.Value)
+            foreach (var stateTimePair in actorStatesPair.Value.Trace)
             {
                 foreach (var state in ReactiveStates)
                 {
@@ -117,14 +118,14 @@ internal static class ReactiveStateService
         }
         
         // Execute reactive scenario
-        foreach (var actorStatesPair in idToStatesMap)
+        foreach (var actorStatesPair in idToStatesMap.Log)
         {
             foreach (var scenario in ReactiveScenarios)
             {
                 var stateTimePairs = actorStatesPair.Value;
 
                 int scenarioIndex = 0;
-                for (int i = 0; i < stateTimePairs.Count; i++)
+                for (int i = 0; i < stateTimePairs.Trace.Count; i++)
                 {
                     var stateTimePair = stateTimePairs[i];
 

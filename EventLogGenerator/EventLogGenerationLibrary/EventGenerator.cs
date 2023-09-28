@@ -19,13 +19,21 @@ public class EventGenerator
     {
         Collector.CreateCollectorMap();
         FileManager.SetupNewCsvFile(_configuration.FileHeader, _configuration.FileName);
-        IdService.SetInitialId(_configuration.InitialId);
         StateEvaluator.SetLimits(_configuration.ActivityLimits);
         RegisterSubscribers();
-        
-        List<Actor> actors = Enumerable.Range(0, _configuration.ActorCount)
-            .Select(_ => new Actor(_configuration.ActorType))
-            .ToList();
+
+        List<Actor>? actors = _configuration.Actors;
+        if (actors == null && _configuration.InitialId != null)
+        {
+            IdService.SetInitialId((uint)_configuration.InitialId);
+            actors = Enumerable.Range(0, _configuration.ActorCount)
+                .Select(_ => new Actor(_configuration.ActorType))
+                .ToList();
+        }
+        else
+        {
+            throw new Exception("Invalid actor configuration for process - does not contain initialId nor actors");
+        }
         
         foreach (var actor in actors)
         {
@@ -33,8 +41,9 @@ public class EventGenerator
             var filledActorFrame = StateEvaluator.RunProcess(actorFrame);
             SprinkleService.RunSprinkling(filledActorFrame);
             FixedTimeStateService.RunFixedStates(filledActorFrame);
-        }
-        
+        }  
+
+        ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), actors);
         Collector.DumpLastProcess();
         ResetServices();
     }

@@ -9,7 +9,9 @@ public class Configuration
 
     public ProcessState StartState { get; set; }
     
-    public uint InitialId { get; set; }
+    public uint? InitialId { get; set; }
+    
+    public List<Actor>? Actors { get; set; }
     
     public Dictionary<string, int> ActivityLimits { get; set; }
     
@@ -24,6 +26,17 @@ public class Configuration
         ActorCount = actorCount;
         StartState = startState;
         InitialId = initialId;
+        ActivityLimits = activityLimits;
+        FileName = fileName;
+        FileHeader = fileHeader;
+        ActorType = actorType;
+    }
+    
+    public Configuration(int actorCount, ProcessState startState, List<Actor> actors, Dictionary<string, int> activityLimits, string fileName, string fileHeader, string actorType)
+    {
+        ActorCount = actorCount;
+        StartState = startState;
+        Actors = actors;
         ActivityLimits = activityLimits;
         FileName = fileName;
         FileHeader = fileHeader;
