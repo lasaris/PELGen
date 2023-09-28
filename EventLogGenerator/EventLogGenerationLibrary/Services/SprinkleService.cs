@@ -112,14 +112,12 @@ internal static class SprinkleService
         foreach (var sprinkle in IntervalSprinkles)
         {
             string? additional = null;
-            // FIXME: This is hardcoded and should be somehow abstracted
-            if (sprinkle.ActivityType == "VisitStudentRecord")
+
+            if (sprinkle.Modifier != null && sprinkle.Modifier.ActionsToReact.Contains(sprinkle.ActivityType))
             {
-                var totalNumberOfStudents = (int) (Collector.GetLastCollectionMaxId() + 1 - IdService.InitialSetId);
-                var studentsVisited = Math.Max(RandomService.GetNext(totalNumberOfStudents / 2), totalNumberOfStudents / 6);
-                for (int i = 0; i < studentsVisited; i++)
+                for (int i = 0; i < sprinkle.Modifier.NumberOfOccurrences; i++)
                 {
-                    additional = (RandomService.GetNext(totalNumberOfStudents) + IdService.InitialSetId).ToString();
+                    additional = sprinkle.Modifier.GetRandomActorId();
                     AddIntervalSprinkle(sprinkle, actor, additional);
                 }
             }
