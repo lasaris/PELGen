@@ -30,12 +30,12 @@ internal static class Collector
             throw new ArgumentException("There is no previous collection of logs created");
         }
 
-        return Processes[LastIndex - 1];
+        return Processes[LastIndex];
     }
 
     internal static uint GetLastCollectionMaxId()
     {
-        return Processes[LastIndex - 1].Log.Keys.Select(actor => actor.Id).Max();
+        return Processes[LastIndex].Log.Keys.Select(actor => actor.Id).Max();
     }
 
     internal static void StateEnteredHandler(object sender, StateEnteredArgs data)
