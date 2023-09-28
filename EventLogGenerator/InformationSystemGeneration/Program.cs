@@ -1,5 +1,6 @@
 ﻿using EventLogGenerationLibrary;
 using EventLogGenerationLibrary.Models;
+using EventLogGenerationLibrary.Models.Modifiers;
 using EventLogGenerationLibrary.Models.States;
 using EventLogGenerationLibrary.Services;
 using EventLogGenerator.Models;
@@ -1047,7 +1048,12 @@ public class Program
         var viewStudentRecord = new IntervalSprinkleState(
             "VisitStudentRecord",
             studentCourseRecord,
-            new TimeFrame(new DateTime(2023, 2, 12), new DateTime(2023, 6, 30))
+            new TimeFrame(new DateTime(2023, 2, 12), new DateTime(2023, 6, 30)),
+            ETimeFrameDistribution.Uniform,
+            new AdditionalRandomIdModifier(new List<string>()
+            {
+                "VisitStudentRecord"
+            })
         );
 
         var deleteIncompleteRopotSession = new PatternReaction(
