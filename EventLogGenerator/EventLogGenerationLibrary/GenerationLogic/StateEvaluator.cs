@@ -46,7 +46,8 @@ internal static class StateEvaluator
 
             if (!availableStates.Any())
             {
-                throw new InvalidProcessStateException("Following map must contain following states");
+                throw new InvalidProcessStateException(
+                    "Following map must contain following states. Perhaps some state is missing following states or no finishing state is defined?");
             }
 
             // Evaluate weight of the states
