@@ -48,7 +48,7 @@ public class ProcessState : ABaseState
         Callback = callback;
     }
 
-    public void AddFollowingState(ProcessState state, float chance)
+    public void AddFollowingState(ProcessState state, float chance = 1)
     {
         if (chance < 0 || chance > 1)
         {

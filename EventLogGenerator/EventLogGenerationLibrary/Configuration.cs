@@ -21,23 +21,23 @@ public class Configuration
     
     public string ActorType { get; set; }
 
-    public Configuration(int actorCount, ProcessState startState, uint initialId, Dictionary<string, int> activityLimits, string fileName, string fileHeader, string actorType)
+    public Configuration(int actorCount, ProcessState startState, uint initialId, Dictionary<string, int>? activityLimits, string fileName, string fileHeader, string actorType)
     {
         ActorCount = actorCount;
         StartState = startState;
         InitialId = initialId;
-        ActivityLimits = activityLimits;
+        ActivityLimits = activityLimits ?? new Dictionary<string, int>();
         FileName = fileName;
         FileHeader = fileHeader;
         ActorType = actorType;
     }
     
-    public Configuration(int actorCount, ProcessState startState, List<Actor> actors, Dictionary<string, int> activityLimits, string fileName, string fileHeader, string actorType)
+    public Configuration(int actorCount, ProcessState startState, List<Actor> actors, Dictionary<string, int>? activityLimits, string fileName, string fileHeader, string actorType)
     {
         ActorCount = actorCount;
         StartState = startState;
         Actors = actors;
-        ActivityLimits = activityLimits;
+        ActivityLimits = activityLimits ?? new Dictionary<string, int>();
         FileName = fileName;
         FileHeader = fileHeader;
         ActorType = actorType;
