@@ -21,7 +21,7 @@ public class EventGenerator
         Collector.CreateCollectorMap();
         FileManager.SetupNewCsvFile(_configuration.FileHeader, _configuration.FileName);
         StateEvaluator.SetLimits(_configuration.ActivityLimits);
-        RegisterSubscribers();
+        SubscribersService.RegisterSubscribers();
 
         List<Actor>? actors = _configuration.Actors;
         if (actors == null)
@@ -58,13 +58,5 @@ public class EventGenerator
         RuleEnforcer.ResetService();
         SprinkleService.ResetService();
         IdService.ResetService();
-    }
-    
-    private static void RegisterSubscribers()
-    {
-        StateEvaluator.StateEntered += Collector.StateEnteredHandler;
-        SprinkleService.SprinkleAdded += Collector.StateEnteredHandler;
-        ReactiveStateService.StateEntered += Collector.StateEnteredHandler;
-        FixedTimeStateService.StateEntered += Collector.StateEnteredHandler;
     }
 }
