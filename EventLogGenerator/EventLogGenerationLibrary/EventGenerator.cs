@@ -15,6 +15,7 @@ public class EventGenerator
         _configuration = configuration;
     }
 
+    // FIXME: TODO: This thing could actually return the generated process and that would help us control the dependant processes
     public void RunGeneration()
     {
         Collector.CreateCollectorMap();
