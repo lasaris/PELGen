@@ -7,13 +7,13 @@ The library is created to offer a certain level of customization and control ove
 
 Description of repository projects:
 
-- EventLogGenerationLibrary - PELGen library for process generation.
-- EventLogGenerator - Old (deprecated) application for Information system generation. Contains many hacks and probably bugs as well.
-- Examples - Contains multiple documented examples to help better undrestand the library and its capabilities.
-- InformationSystemGeneration - Example project for advanced and complex library usage for real-life scenario.
-- UnitTests - Contains tests to ensure the functionality and correctness of the library.
+- [EventLogGenerationLibrary](https://github.com/lasaris/PELGen/tree/main/EventLogGenerationLibrary) - PELGen library for process generation.
+- [EventLogGenerator](https://github.com/lasaris/PELGen/tree/main/EventLogGenerator) - Old (deprecated) application for Information system generation. Contains many hacks and probably bugs as well.
+- [Examples](https://github.com/lasaris/PELGen/tree/main/Examples) - Contains multiple documented examples to help better undrestand the library and its capabilities.
+- [InformationSystemGeneration](https://github.com/lasaris/PELGen/tree/main/InformationSystemGeneration) - Example project for advanced and complex library usage for real-life scenario.
+- [UnitTests](https://github.com/lasaris/PELGen/tree/main/UnitTests) - Contains tests to ensure the functionality and correctness of the library.
 
 # Usage
 
 To use library within your domain, create your own project and import EventLogGenerationLibrary into it.
-For inspiration you can have a look into [Examples](https://github.com/lasaris/PELGen/tree/main/Examples) project.
+For inspiration you can have a look into [Examples](https://github.com/lasaris/PELGen/blob/main/Examples/Program.cs).
