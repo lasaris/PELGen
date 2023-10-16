@@ -42,8 +42,9 @@ internal static class ReactiveStateService
     internal static void RunReactiveStates(Process? idToStatesMap,
         List<Actor> actors)
     {
-        // If no previous process provided, just quit
-        if (idToStatesMap == null)
+        
+        // If no previous process provided or no reactive states available, just quit
+        if (idToStatesMap == null || !ReactiveStates.Any())
         {
             return;
         }
