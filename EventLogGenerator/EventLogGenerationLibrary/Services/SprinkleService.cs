@@ -219,7 +219,7 @@ internal static class SprinkleService
                     int pickedAlternativeCount = 0;
                     // Dirty hack to compare the whole seconds
                     var periodSeconds = (int)sprinkle.Period.TotalSeconds;
-                    var elapsedSeconds = (int)(endTime - currentTime).TotalSeconds;
+                    var elapsedSeconds = (int)(endTime - (DateTime)beginTime).TotalSeconds;
                     var numIterations = elapsedSeconds / periodSeconds;
                     for (int i = 0; i < numIterations; i++)
                     {
