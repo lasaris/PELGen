@@ -3,7 +3,7 @@
 /// <summary>
 /// Handles randomness. If desirable, it can be specified by random or predefined seed.
 /// </summary>
-internal static class RandomService
+public static class RandomService
 {
     private static int _seed = 4269123;
     
@@ -19,13 +19,15 @@ internal static class RandomService
         return _randomGenerator.Next(max);
     }
 
-    internal static void SetRandomSeed()
+    public static void SetRandomSeed()
     {
         _seed = new Random().Next();
+        _randomGenerator = new(_seed);
     }
 
-    internal static void SetSeed(int newSeed)
+    public static void SetSeed(int newSeed)
     {
         _seed = newSeed;
+        _randomGenerator = new(_seed);
     }
 }
