@@ -12,6 +12,7 @@ public class IntervalSprinkleState : ABaseState
 {
     public TimeFrame TimeInterval;
 
+    // FIXME: TODO: Why the fuck is this not ever used?
     public ETimeFrameDistribution Distribution;
 
     public AdditionalRandomIdModifier? Modifier;
