@@ -54,7 +54,7 @@ internal static class Collector
     }
 
     // NOTE: This function does 2 things 1) applies rules, thus changing PassedStates 2) logs the traces. Bad design!
-    internal static void DumpLastProcess()
+    internal static Process DumpLastProcess()
     {
         var currentProcess = Processes[LastIndex];
         var newProcess = new Process();
@@ -64,7 +64,8 @@ internal static class Collector
             newProcess.Log[actorStates.Key] = evaluatedTrace;
             FileManager.LogTrace(actorStates.Key, evaluatedTrace);
         }
-
+        
         Processes[LastIndex] = newProcess;
+        return newProcess;
     }
 }

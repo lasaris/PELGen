@@ -2,6 +2,7 @@
 using EventLogGenerationLibrary.InputOutput;
 using EventLogGenerationLibrary.Models;
 using EventLogGenerationLibrary.Services;
+using EventLogGenerator.Models;
 using EventLogGenerator.Services;
 
 namespace EventLogGenerationLibrary;
@@ -15,8 +16,7 @@ public class EventGenerator
         _configuration = configuration;
     }
 
-    // FIXME: TODO: This thing could actually return the generated process and that would help us control the dependant processes
-    public void RunGeneration()
+    public Process RunGeneration()
     {
         Collector.CreateCollectorMap();
         FileManager.SetupNewCsvFile(_configuration.FileHeader, _configuration.FileName);
@@ -46,8 +46,10 @@ public class EventGenerator
         }  
 
         ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), actors);
-        Collector.DumpLastProcess();
+        var newProcess = Collector.DumpLastProcess();
         ResetServices();
+
+        return newProcess;
     }
     
     private void ResetServices()
