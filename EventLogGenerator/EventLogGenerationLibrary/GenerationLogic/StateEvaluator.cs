@@ -35,7 +35,7 @@ internal static class StateEvaluator
         }
 
         Console.WriteLine("[INFO] --- PROCESS RUN STARTED---");
-        OnStateEnter(CurrentActorFrame.Actor, CurrentActorFrame.CurrentState, CurrentActorFrame.CurrentTime);
+        JumpNextState(CurrentActorFrame.CurrentState, CurrentActorFrame.CurrentTime, TimeSpan.Zero);
 
         // Running loop
         while (!CurrentActorFrame.CurrentState.IsFinishing)
