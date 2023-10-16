@@ -255,7 +255,8 @@ internal static class SprinkleService
                     }
                 }
             }
-            else
+            // NegativeState does not have to be defined
+            else if (sprinkle.NegativeState != null)
             {
                 var ourTheoreticalTime = sprinkle.StateToOccur.TimeFrame.PickTimeByDistribution();
                 ourTheoreticalTime +=

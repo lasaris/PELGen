@@ -18,12 +18,12 @@ public class ConditionalSprinkle
     public DummyState PositiveState;
 
     // The state added when StateToOccur did not occur
-    public DummyState NegativeState;
+    public DummyState? NegativeState;
 
     // Fixed offset from the StateToOccur time
     public TimeSpan TimeOffset;
 
-    public ConditionalSprinkle(ProcessState stateToOccur, DummyState positiveState, DummyState negativeState,
+    public ConditionalSprinkle(ProcessState stateToOccur, DummyState positiveState, DummyState? negativeState,
         TimeSpan timeOffset)
     {
         StateToOccur = stateToOccur;
