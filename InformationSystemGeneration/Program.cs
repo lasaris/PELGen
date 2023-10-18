@@ -820,7 +820,7 @@ public class Program
         );
 
         var studentGenerator = new EventGenerator(studentConfig);
-        studentGenerator.RunGeneration();
+        var studentProcess = studentGenerator.RunGeneration();
         
         // --- TEACHER PROCESS ---
 
@@ -1081,7 +1081,8 @@ public class Program
             new Dictionary<string, int>(),
             "teacher.csv",
             "ActorId,ActorType,Activity,Resource,StartTimestamp,StudentId,OwnerId",
-            "Teacher"
+            "Teacher",
+            studentProcess
         );
         
         var teacherGenerator = new EventGenerator(teacherConfig);

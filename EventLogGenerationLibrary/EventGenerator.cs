@@ -43,9 +43,13 @@ public class EventGenerator
             var filledActorFrame = StateEvaluator.RunProcess(actorFrame);
             SprinkleService.RunSprinkling(filledActorFrame);
             FixedTimeStateService.RunFixedStates(filledActorFrame);
-        }  
+        }
 
-        ReactiveStateService.RunReactiveStates(Collector.GetPreviousCollection(), actors);
+        // Run reactive states only when previous process is configured
+        if (_configuration.ReactToProcess != null)
+        {
+            ReactiveStateService.RunReactiveStates(_configuration.ReactToProcess, actors);
+        }
         var newProcess = Collector.DumpLastProcess();
         ResetServices();
 

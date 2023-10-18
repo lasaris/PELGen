@@ -23,16 +23,6 @@ internal static class Collector
         ++LastIndex;
     }
 
-    internal static Process? GetPreviousCollection()
-    {
-        if (!Processes.Any() || Processes.Count <= 1)
-        {
-            return null;
-        }
-
-        return Processes[LastIndex - 1];
-    }
-    
     internal static uint GetPreviousCollectionmaxId()
     {
         return Processes[LastIndex - 1].Log.Keys.Select(actor => actor.Id).Max();
