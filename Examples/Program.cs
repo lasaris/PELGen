@@ -207,10 +207,46 @@ public class Program
 
     /// <summary>
     /// Finally we can add another process that reacts to the previous process run.
+    /// This is also very useful when we have randomized process and want to react only when some activity occured.
     /// </summary>
     private static void DependantProcess()
     {
-        // TODO - better process dependency needs to be created
+        // We firstly create process that we will react to later (we can use the same process as first example
+        var resource = "Assembly line 42";
+        var state1 = new ProcessState("Component assembly", resource, 1, new DateTime(2023, 10, 13, 12, 00, 00));
+        var state2 = new ProcessState("Quality inspection", resource, 1, new DateTime(2023, 10, 13, 12, 00, 10));
+        var state3 = new ProcessState("Product packing", resource, 1, new DateTime(2023, 10, 13, 13, 30, 40), true);
+        state1.AddFollowingState(state2);
+        state2.AddFollowingState(state3);
+        var config = new Configuration(1, state1, 1, null, "reactive-manufacture.csv",
+            "ActorId,ActorType,Activity,Resource,Timestamp",
+            "Suspected worker");
+        var generator = new EventGenerator(config);
+        // Here we save the reference to created process
+        var previousProcess = generator.RunGeneration();
+
+        // Now we can create our own process with reactive states. We can mix between reactive states and normal process
+        var newState1 = new ProcessState("Begin daily inspection", "Management System", 1, new DateTime(2023, 10, 13, 8, 0, 0),
+            true);
+
+        // We can react with a single react state. 
+        var reactiveState1 = new ReactiveState("Check assembly", "placeholder", "Component assembly");
+
+        // For single state we can also specify offset (here 5 minutes for example) and add our own resource (not to be same as the one we react to).
+        var reactiveState2 = new ReactiveState("Check quality inspection", "placeholder", "Quality inspection", null,
+            "Quality management system", TimeSpan.FromMinutes(5));
+
+        // We can also react to a pattern
+        var patternReaction = new PatternReaction(new List<string>(){ "Quality inspection", "Product packing" },
+            "Product packing", "Check packed product");
+
+        var newConfig = new Configuration(1, newState1, 1, null, "reactive-manager.csv",
+            "ActorId,ActorType,Activity,Resource,Timestamp",
+            "Manager", previousProcess);
+        
+        // Generate process with reactive states
+        var newGenerator = new EventGenerator(newConfig);
+        newGenerator.RunGeneration();
     }
 
     /// <summary>
