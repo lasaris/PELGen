@@ -18,7 +18,10 @@ public class PatternReaction
     // Activity that should be reacted with
     public string Reaction;
 
-    public PatternReaction(List<string> activitiesPattern, string matchTimeWith, string reaction)
+    // Time offset for reaction
+    public TimeSpan Offset;
+
+    public PatternReaction(List<string> activitiesPattern, string matchTimeWith, string reaction, TimeSpan? offset = null)
     {
         if (!activitiesPattern.Any())
         {
@@ -28,6 +31,7 @@ public class PatternReaction
         ActivitiesPattern = activitiesPattern;
         MatchTimeWith = matchTimeWith;
         Reaction = reaction;
+        Offset = offset ?? TimeSpan.Zero;
 
         ReactiveStateService.LoadReactiveScenario(this);
     }

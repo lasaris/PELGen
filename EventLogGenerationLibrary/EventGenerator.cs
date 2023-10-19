@@ -48,7 +48,8 @@ public class EventGenerator
         // Run reactive states only when previous process is configured
         if (_configuration.ReactToProcess != null)
         {
-            ReactiveStateService.RunReactiveStates(_configuration.ReactToProcess, actors);
+            // Run reactive states. If we want to react but user has not supplied any strategy, use the first actor available.
+            ReactiveStateService.RunReactiveStates(_configuration.ReactToProcess, _configuration.ReactionStrategy ?? new ReactingActorStrategy(actors[0]));
         }
         var newProcess = Collector.DumpLastProcess();
         ResetServices();

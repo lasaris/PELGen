@@ -1062,7 +1062,8 @@ public class Program
                 "SaveRopot", "OpenRopot"
             },
             "SaveRopot",
-            "DeleteRopotSession"
+            "DeleteRopotSession",
+            TimeSpan.FromSeconds(20)
         );
         
         // Prepare Actors
@@ -1082,7 +1083,36 @@ public class Program
             "teacher.csv",
             "ActorId,ActorType,Activity,Resource,StartTimestamp,StudentId,OwnerId",
             "Teacher",
-            studentProcess
+            studentProcess,
+            new ReactingActorStrategy(null, (Process previousProcess) =>
+            {
+                Dictionary<Actor, Actor> reactingActorsMap = new();
+                
+                foreach (var actorStatePair in previousProcess.Log)
+                {
+                    var seminarGroupId = -1;
+
+                    foreach (var stateTimePair in actorStatePair.Value.Trace)
+                    {
+                        switch (stateTimePair.Item1.Resource)
+                        {
+                            case "Seminar group 1":
+                                seminarGroupId = 1;
+                                break;
+                            case "Seminar group 2":
+                                seminarGroupId = 2;
+                                break;
+                            case "Seminar group 3":
+                                seminarGroupId = 3;
+                                break;
+                        }
+                    }
+                    
+                    reactingActorsMap[actorStatePair.Key] = teachers[seminarGroupId - 1];
+                }
+
+                return reactingActorsMap;
+            })
         );
         
         var teacherGenerator = new EventGenerator(teacherConfig);

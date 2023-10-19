@@ -9,7 +9,7 @@ namespace EventLogGenerator.Models;
 public class Process
 {
     // Collection to keep the process
-    internal Dictionary<Actor, OrderedTrace> Log;
+    public Dictionary<Actor, OrderedTrace> Log;
 
     public Process()
     {

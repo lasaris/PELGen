@@ -21,10 +21,12 @@ internal static class ReactiveStateService
     internal static HashSet<ReactiveState> ReactiveStates = new();
 
     // Maps actors that are reacted to actors that are reacting to them
-    internal static Dictionary<Actor, Actor> ReactingActorsMap = new();
+    internal static Dictionary<Actor, Actor>? ReactingActorsMap = null;
+
+    internal static Actor? SingleReactingActor = null; 
     
     // Stores reactive scnearios
-    internal static HashSet<PatternReaction> ReactiveScenarios = new();
+    internal static HashSet<PatternReaction> PatternReactions = new();
 
     private static void OnStateEnter(ABaseState state, Actor actor, DateTime timeStamp, string? additional = null)
     {
@@ -35,62 +37,43 @@ internal static class ReactiveStateService
 
     private static void AddReactiveState(ABaseState state, DateTime reactionTime, Actor actor)
     {
-        // FIXME: The adding of additional column should be generalized. Perhaps not always you want to add additional ID as StudentId column data?
-        OnStateEnter(state, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
+        if (SingleReactingActor != null)
+        {
+            OnStateEnter(state, SingleReactingActor, reactionTime, actor.Id.ToString());
+        }
+        else if (ReactingActorsMap != null)
+        {
+            OnStateEnter(state, ReactingActorsMap[actor], reactionTime, actor.Id.ToString());
+        }
+        else
+        {
+            throw new Exception("Invalid state of Reactive state service.");
+        }
     }
 
-    internal static void RunReactiveStates(Process? idToStatesMap,
-        List<Actor> actors)
+    internal static void RunReactiveStates(Process? previousProcess, ReactingActorStrategy reactingStrategy)
     {
-        
         // If no previous process provided or no reactive states available, just quit
-        if (idToStatesMap == null || !ReactiveStates.Any())
+        if (previousProcess == null || !ReactiveStates.Any())
         {
             return;
         }
-        
-        // FIXME: Generalize, perhaps by adding extra parameter and intiializing ReactingActorsMap?
-        foreach (var actorStatePair in idToStatesMap.Log)
+
+        if (reactingStrategy.SingleReactingActor != null)
         {
-            var seminarGroupId = -1;
-
-            foreach (var stateTimePair in actorStatePair.Value.Trace)
-            {
-                switch (stateTimePair.Item1.Resource)
-                {
-                    case "Seminar group 1":
-                        seminarGroupId = 1;
-                        break;
-                    case "Seminar group 2":
-                        seminarGroupId = 2;
-                        break;
-                    case "Seminar group 3":
-                        seminarGroupId = 3;
-                        break;
-                }
-            }
-
-            if (seminarGroupId == -1 && actorStatePair.Key.Type == "Student")
-            {
-                throw new ArgumentException("Every student must be signed to seminar group");
-            }
-
-            switch (seminarGroupId)
-            {
-                case 1:
-                    ReactingActorsMap[actorStatePair.Key] = actors[0];
-                    break;
-                case 2:
-                    ReactingActorsMap[actorStatePair.Key] = actors[1];
-                    break;
-                case 3:
-                    ReactingActorsMap[actorStatePair.Key] = actors[2];
-                    break;
-            }
+            SingleReactingActor = reactingStrategy.SingleReactingActor;
+        }
+        else if (reactingStrategy.AssignActorsFunction != null)
+        {
+            ReactingActorsMap = reactingStrategy.AssignActorsFunction(previousProcess);
+        }
+        else
+        {
+            throw new ArgumentException("Invalid Reacting actor strategy provided into Reactive state service.");
         }
         
         // Adding the reactive states
-        foreach (var actorStatesPair in idToStatesMap.Log)
+        foreach (var actorStatesPair in previousProcess.Log)
         {
             foreach (var stateTimePair in actorStatesPair.Value.Trace)
             {
@@ -98,11 +81,12 @@ internal static class ReactiveStateService
                 {
                     if (state.ReactToActivity == stateTimePair.Item1.ActivityType)
                     {
-                        if (state.ReactToResourceName != null && stateTimePair.Item1.Resource != state.ReactToResourceName)
+                        if (state.ReactToResourceName != null &&
+                            stateTimePair.Item1.Resource != state.ReactToResourceName)
                         {
                             continue;
                         }
-                        
+
                         if (state.OwnResource != null)
                         {
                             state.Resource = state.OwnResource;
@@ -111,11 +95,12 @@ internal static class ReactiveStateService
                         {
                             state.Resource = stateTimePair.Item1.Resource;
                         }
+
                         var variableDirection = RandomService.GetNext(2) == 0 ? 1 : -1;
-                        var variableTime = TimeSpan.FromTicks((long)(RandomService.GetNextDouble() * (state.TimeVariable.Ticks) * variableDirection));
+                        var variableTime = TimeSpan.FromTicks((long)(RandomService.GetNextDouble() *
+                                                                     (state.TimeVariable.Ticks) * variableDirection));
                         var reactionTime = stateTimePair.Item2 + state.Offset + variableTime;
 
-                        // FIXME: Without this new dummy state, the whole thing gets fucked up and everything is just Resource == Seminar week 6 and IDK WHY
                         var newState = new DummyState(state.ActivityType, state.Resource);
                         AddReactiveState(newState, reactionTime, actorStatesPair.Key);
                     }
@@ -124,9 +109,9 @@ internal static class ReactiveStateService
         }
         
         // Execute reactive scenario
-        foreach (var actorStatesPair in idToStatesMap.Log)
+        foreach (var actorStatesPair in previousProcess .Log)
         {
-            foreach (var scenario in ReactiveScenarios)
+            foreach (var patternReaction in PatternReactions)
             {
                 var stateTimePairs = actorStatesPair.Value;
 
@@ -135,7 +120,7 @@ internal static class ReactiveStateService
                 {
                     var stateTimePair = stateTimePairs[i];
 
-                    if (stateTimePair.Item1.ActivityType == scenario.ActivitiesPattern[scenarioIndex])
+                    if (stateTimePair.Item1.ActivityType == patternReaction.ActivitiesPattern[scenarioIndex])
                     {
                         ++scenarioIndex;
                     }
@@ -145,18 +130,17 @@ internal static class ReactiveStateService
                     }
 
                     // found the scenario to be matching
-                    if (scenarioIndex == scenario.ActivitiesPattern.Count)
+                    if (scenarioIndex == patternReaction.ActivitiesPattern.Count)
                     {
                         int firstMatchedIndex = i - (scenarioIndex - 1);
 
-                        for (int j = firstMatchedIndex; j < firstMatchedIndex + scenario.ActivitiesPattern.Count; j++)
+                        for (int j = firstMatchedIndex; j < firstMatchedIndex + patternReaction.ActivitiesPattern.Count; j++)
                         {
-                            if (stateTimePairs[j].Item1.ActivityType == scenario.MatchTimeWith)
+                            if (stateTimePairs[j].Item1.ActivityType == patternReaction.MatchTimeWith)
                             {
-                                var newState = new DummyState(scenario.Reaction, stateTimePairs[j].Item1.Resource);
+                                var newState = new DummyState(patternReaction.Reaction, stateTimePairs[j].Item1.Resource);
                                 
-                                // FIXME: This timeSpan offset for ropot session deletion is artificial and should be stored within scenario
-                                AddReactiveState(newState, stateTimePair.Item2 + TimeSpan.FromSeconds(20), actorStatesPair.Key);
+                                AddReactiveState(newState, stateTimePair.Item2 + patternReaction.Offset, actorStatesPair.Key);
                                 break;
                             }
                         }
@@ -175,12 +159,13 @@ internal static class ReactiveStateService
 
     internal static void LoadReactiveScenario(PatternReaction scenario)
     {
-        ReactiveScenarios.Add(scenario);
+        PatternReactions.Add(scenario);
     }
 
     internal static void ResetService()
     {
         ReactiveStates = new();
-        ReactingActorsMap = new();
+        ReactingActorsMap = null;
+        SingleReactingActor = null;
     }
 }

@@ -6,10 +6,10 @@ namespace EventLogGenerationLibrary.Models;
 /// Represents an ordered collection of events (a single trace).
 /// By default the events are kept in chronological order.
 /// </summary>
-internal class OrderedTrace
+public class OrderedTrace
 {
     // Collection to keep traces
-    internal List<(ABaseState, DateTime, string?)> Trace;
+    public List<(ABaseState, DateTime, string?)> Trace;
 
     // Last added timestamp, auxiliary attribute for keeping chronological order
     private DateTime _lastTime;
