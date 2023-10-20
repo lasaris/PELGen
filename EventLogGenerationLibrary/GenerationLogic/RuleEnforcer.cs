@@ -23,7 +23,7 @@ internal static class RuleEnforcer
             return trace;
         }
         
-        var orderedTrace = new OrderedTrace(trace.Trace.OrderBy(item => item.Item2).ToList());
+        var orderedTrace = new OrderedTrace(trace.Trace.OrderBy(record => record.Time).ToList());
         var newProcess = new OrderedTrace();
         foreach (var rule in Rules)
         {
@@ -33,14 +33,14 @@ internal static class RuleEnforcer
                 continue;
             }
             
-            foreach (var state in orderedTrace.Trace)
+            foreach (var record in orderedTrace.Trace)
             {
-                if (state.Item1 == rule.Checkpoint)
+                if (record.State == rule.Checkpoint)
                 {
-                    newProcess.Add((rule.NegativeEnd.Item1, rule.NegativeEnd.Item2, null));
+                    newProcess.Add(new TraceRecord(rule.NegativeEnd.Item1, rule.NegativeEnd.Item2, null));
                     break;
                 }
-                newProcess.Add(state);
+                newProcess.Add(record);
             }
 
             break;

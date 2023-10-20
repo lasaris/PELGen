@@ -24,14 +24,14 @@ public class MinimumActivityCountRule : ABaseRule
     internal override bool Evaluate(OrderedTrace trace)
     {
         var currentCount = 0;
-        foreach(var state in trace.Trace)
+        foreach(var record in trace.Trace)
         {
-            if (state.Item1 == Checkpoint)
+            if (record.State == Checkpoint)
             {
                 break;
             }
             
-            if (state.Item1.ActivityType == Activity)
+            if (record.State.ActivityType == Activity)
             {
                 currentCount++;
             }

@@ -75,14 +75,14 @@ internal static class ReactiveStateService
         // Adding the reactive states
         foreach (var actorStatesPair in previousProcess.Log)
         {
-            foreach (var stateTimePair in actorStatesPair.Value.Trace)
+            foreach (var record in actorStatesPair.Value.Trace)
             {
                 foreach (var state in ReactiveStates)
                 {
-                    if (state.ReactToActivity == stateTimePair.Item1.ActivityType)
+                    if (state.ReactToActivity == record.State.ActivityType)
                     {
                         if (state.ReactToResourceName != null &&
-                            stateTimePair.Item1.Resource != state.ReactToResourceName)
+                            record.State.Resource != state.ReactToResourceName)
                         {
                             continue;
                         }
@@ -93,13 +93,13 @@ internal static class ReactiveStateService
                         }
                         else
                         {
-                            state.Resource = stateTimePair.Item1.Resource;
+                            state.Resource = record.State.Resource;
                         }
 
                         var variableDirection = RandomService.GetNext(2) == 0 ? 1 : -1;
                         var variableTime = TimeSpan.FromTicks((long)(RandomService.GetNextDouble() *
                                                                      (state.TimeVariable.Ticks) * variableDirection));
-                        var reactionTime = stateTimePair.Item2 + state.Offset + variableTime;
+                        var reactionTime = record.Time + state.Offset + variableTime;
 
                         var newState = new DummyState(state.ActivityType, state.Resource);
                         AddReactiveState(newState, reactionTime, actorStatesPair.Key);
@@ -120,7 +120,7 @@ internal static class ReactiveStateService
                 {
                     var stateTimePair = stateTimePairs[i];
 
-                    if (stateTimePair.Item1.ActivityType == patternReaction.ActivitiesPattern[scenarioIndex])
+                    if (stateTimePair.State.ActivityType == patternReaction.ActivitiesPattern[scenarioIndex])
                     {
                         ++scenarioIndex;
                     }
@@ -136,11 +136,11 @@ internal static class ReactiveStateService
 
                         for (int j = firstMatchedIndex; j < firstMatchedIndex + patternReaction.ActivitiesPattern.Count; j++)
                         {
-                            if (stateTimePairs[j].Item1.ActivityType == patternReaction.MatchTimeWith)
+                            if (stateTimePairs[j].State.ActivityType == patternReaction.MatchTimeWith)
                             {
-                                var newState = new DummyState(patternReaction.Reaction, stateTimePairs[j].Item1.Resource);
+                                var newState = new DummyState(patternReaction.Reaction, stateTimePairs[j].State.Resource);
                                 
-                                AddReactiveState(newState, stateTimePair.Item2 + patternReaction.Offset, actorStatesPair.Key);
+                                AddReactiveState(newState, stateTimePair.Time + patternReaction.Offset, actorStatesPair.Key);
                                 break;
                             }
                         }

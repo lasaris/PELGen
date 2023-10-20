@@ -1092,9 +1092,9 @@ public class Program
                 {
                     var seminarGroupId = -1;
 
-                    foreach (var stateTimePair in actorStatePair.Value.Trace)
+                    foreach (var record in actorStatePair.Value.Trace)
                     {
-                        switch (stateTimePair.Item1.Resource)
+                        switch (record.State.Resource)
                         {
                             case "Seminar group 1":
                                 seminarGroupId = 1;

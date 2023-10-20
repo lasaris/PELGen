@@ -81,21 +81,21 @@ internal static class FileManager
 
             sb.Append(actor.Id + ",");
             sb.Append(actor.Type + ",");
-            sb.Append(stateLog.Item1.ActivityType + ",");
-            sb.Append(stateLog.Item1.Resource + ",");
-            sb.Append(stateLog.Item2);
-            if (stateLog.Item3 != null)
+            sb.Append(stateLog.State.ActivityType + ",");
+            sb.Append(stateLog.State.Resource + ",");
+            sb.Append(stateLog.Time);
+            if (stateLog.Additional != null)
             {
-                sb.Append("," + stateLog.Item3);
+                sb.Append("," + stateLog.Additional);
             }
 
-            if (StudentFiles.Contains(stateLog.Item1.Resource) && (actor.Type == "Student"))
+            if (StudentFiles.Contains(stateLog.State.Resource) && (actor.Type == "Student"))
             {
                 sb.Append($",{actor.Id}");
             }
-            else if (TeacherFIles.Contains(stateLog.Item1.Resource))
+            else if (TeacherFIles.Contains(stateLog.State.Resource))
             {
-                if (stateLog.Item3 == null && actor.Type == "Teacher")
+                if (stateLog.Additional == null && actor.Type == "Teacher")
                 {
                     sb.Append(",,514184");
                 }

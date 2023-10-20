@@ -40,7 +40,7 @@ internal static class Collector
             Processes[LastIndex].Log[data.Actor] = new OrderedTrace();
         }
         
-        Processes[LastIndex].Log[data.Actor].Add((data.State, data.TimeStamp, data.Additional));
+        Processes[LastIndex].Log[data.Actor].Add(new TraceRecord(data.State, data.TimeStamp, data.Additional));
     }
 
     // NOTE: This function does 2 things 1) applies rules, thus changing PassedStates 2) logs the traces. Bad design!

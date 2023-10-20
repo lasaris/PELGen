@@ -1,4 +1,5 @@
-﻿using EventLogGenerationLibrary.Models.States;
+﻿using System.Text.Json.Serialization;
+using EventLogGenerationLibrary.Models.States;
 
 namespace EventLogGenerationLibrary.Models;
 
@@ -9,34 +10,34 @@ namespace EventLogGenerationLibrary.Models;
 public class OrderedTrace
 {
     // Collection to keep traces
-    public List<(ABaseState, DateTime, string?)> Trace;
+    public List<TraceRecord> Trace;
 
     // Last added timestamp, auxiliary attribute for keeping chronological order
     private DateTime _lastTime;
 
     public OrderedTrace()
     {
-        Trace = new List<(ABaseState, DateTime, string?)>();
+        Trace = new List<TraceRecord>();
         _lastTime = DateTime.MinValue;
     }
 
-    internal OrderedTrace(List<(ABaseState, DateTime, string?)> trace)
+    internal OrderedTrace(List<TraceRecord> trace)
     {
         Trace = trace;
         _lastTime = DateTime.MinValue;
     }
 
-    internal void Add((ABaseState, DateTime, string?) action)
+    internal void Add(TraceRecord record)
     {
-        Trace.Add(action);
+        Trace.Add(record);
 
-        if (action.Item2 < _lastTime)
+        if (record.Time < _lastTime)
         {
-            Trace = Trace.OrderBy(item => item.Item2).ToList();
+            Trace = Trace.OrderBy(item => item.Time).ToList();
         }
 
-        _lastTime = action.Item2;
+        _lastTime = record.Time;
     }
     
-    public (ABaseState, DateTime, string?) this[int index] => Trace[index];
+    public TraceRecord this[int index] => Trace[index];
 }
