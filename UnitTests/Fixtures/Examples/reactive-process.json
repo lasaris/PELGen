@@ -1,0 +1,50 @@
+{
+  "Log": {
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-13T08:00:00",
+              "End": "2023-10-13T08:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Begin daily inspection",
+            "Resource": "Management System"
+          },
+          "Time": "2023-10-13T08:00:00.0659241",
+          "Additional": null
+        },
+        {
+          "State": {
+            "ActivityType": "Check assembly",
+            "Resource": "Assembly line 42"
+          },
+          "Time": "2023-10-13T12:00:00.9863072",
+          "Additional": "1"
+        },
+        {
+          "State": {
+            "ActivityType": "Check quality inspection",
+            "Resource": "Quality management system"
+          },
+          "Time": "2023-10-13T12:05:10.3618378",
+          "Additional": "1"
+        },
+        {
+          "State": {
+            "ActivityType": "Check packed product",
+            "Resource": "Assembly line 42"
+          },
+          "Time": "2023-10-13T13:30:40.8649763",
+          "Additional": "1"
+        }
+      ]
+    }
+  }
+}

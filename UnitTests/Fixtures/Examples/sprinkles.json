@@ -1,0 +1,293 @@
+{
+  "Log": {
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-08-10T10:00:00",
+              "End": "2023-08-10T10:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Requirement gathering",
+            "Resource": "IT Project"
+          },
+          "Time": "2023-08-10T10:00:00.9863072",
+          "Additional": null
+        },
+        {
+          "State": {
+            "BeginAfter": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-08-10T10:00:00",
+                  "End": "2023-08-10T10:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {
+                  "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+                },
+                "IsFinishing": false,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Requirement gathering",
+                "Resource": "IT Project"
+              }
+            ],
+            "StopBefore": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-08-14T08:00:00",
+                  "End": "2023-08-14T08:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {
+                  "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+                },
+                "IsFinishing": false,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Development start",
+                "Resource": "IT Project"
+              }
+            ],
+            "SkipStart": null,
+            "SkipEnd": null,
+            "Passes": 1,
+            "ActivityType": "Planning team meet",
+            "Resource": "Google Meet"
+          },
+          "Time": "2023-08-13T12:08:40.7836092",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-08-14T08:00:00",
+              "End": "2023-08-14T08:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Development start",
+            "Resource": "IT Project"
+          },
+          "Time": "2023-08-14T08:00:00.3618378",
+          "Additional": null
+        },
+        {
+          "State": {
+            "BeginAfter": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-08-14T08:00:00",
+                  "End": "2023-08-14T08:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {
+                  "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+                },
+                "IsFinishing": false,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Development start",
+                "Resource": "IT Project"
+              }
+            ],
+            "StopBefore": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-10-10T13:00:00",
+                  "End": "2023-10-10T13:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {},
+                "IsFinishing": true,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Acceptance testing",
+                "Resource": "IT Project"
+              }
+            ],
+            "SkipStart": null,
+            "SkipEnd": null,
+            "Passes": 4,
+            "ActivityType": "QA team meeting",
+            "Resource": "Zoom"
+          },
+          "Time": "2023-09-08T07:58:04.6358279",
+          "Additional": null
+        },
+        {
+          "State": {
+            "BeginAfter": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-08-14T08:00:00",
+                  "End": "2023-08-14T08:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {
+                  "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+                },
+                "IsFinishing": false,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Development start",
+                "Resource": "IT Project"
+              }
+            ],
+            "StopBefore": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-10-10T13:00:00",
+                  "End": "2023-10-10T13:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {},
+                "IsFinishing": true,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Acceptance testing",
+                "Resource": "IT Project"
+              }
+            ],
+            "SkipStart": null,
+            "SkipEnd": null,
+            "Passes": 4,
+            "ActivityType": "QA team meeting",
+            "Resource": "Zoom"
+          },
+          "Time": "2023-09-13T20:33:18.8983991",
+          "Additional": null
+        },
+        {
+          "State": {
+            "BeginAfter": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-08-14T08:00:00",
+                  "End": "2023-08-14T08:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {
+                  "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+                },
+                "IsFinishing": false,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Development start",
+                "Resource": "IT Project"
+              }
+            ],
+            "StopBefore": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-10-10T13:00:00",
+                  "End": "2023-10-10T13:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {},
+                "IsFinishing": true,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Acceptance testing",
+                "Resource": "IT Project"
+              }
+            ],
+            "SkipStart": null,
+            "SkipEnd": null,
+            "Passes": 4,
+            "ActivityType": "QA team meeting",
+            "Resource": "Zoom"
+          },
+          "Time": "2023-09-26T18:38:01.311952",
+          "Additional": null
+        },
+        {
+          "State": {
+            "BeginAfter": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-08-14T08:00:00",
+                  "End": "2023-08-14T08:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {
+                  "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+                },
+                "IsFinishing": false,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Development start",
+                "Resource": "IT Project"
+              }
+            ],
+            "StopBefore": [
+              {
+                "TimeFrame": {
+                  "Start": "2023-10-10T13:00:00",
+                  "End": "2023-10-10T13:00:01",
+                  "Distribution": 0,
+                  "ExcludedTimes": null
+                },
+                "FollowingMap": {},
+                "IsFinishing": true,
+                "MaxPasses": 1,
+                "Callback": null,
+                "ActivityType": "Acceptance testing",
+                "Resource": "IT Project"
+              }
+            ],
+            "SkipStart": null,
+            "SkipEnd": null,
+            "Passes": 4,
+            "ActivityType": "QA team meeting",
+            "Resource": "Zoom"
+          },
+          "Time": "2023-10-09T00:33:47.7480974",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-10T13:00:00",
+              "End": "2023-10-10T13:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Acceptance testing",
+            "Resource": "IT Project"
+          },
+          "Time": "2023-10-10T13:00:00.8649763",
+          "Additional": null
+        }
+      ]
+    }
+  }
+}

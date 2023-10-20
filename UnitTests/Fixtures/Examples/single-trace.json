@@ -1,0 +1,66 @@
+{
+  "Log": {
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-13T12:00:00",
+              "End": "2023-10-13T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Component assembly",
+            "Resource": "Assembly line 42"
+          },
+          "Time": "2023-10-13T12:00:00.9863072",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-13T12:00:10",
+              "End": "2023-10-13T12:00:11",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Quality inspection",
+            "Resource": "Assembly line 42"
+          },
+          "Time": "2023-10-13T12:00:10.3618378",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-13T13:30:40",
+              "End": "2023-10-13T13:30:41",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Product packing",
+            "Resource": "Assembly line 42"
+          },
+          "Time": "2023-10-13T13:30:40.8649763",
+          "Additional": null
+        }
+      ]
+    }
+  }
+}

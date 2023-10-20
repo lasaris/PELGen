@@ -1,0 +1,2524 @@
+{
+  "Log": {
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.9863072",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:49.1807784",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:19.492893",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:04.0252068",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.7593834",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:46.1538732",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:07:25.8473044",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:46.3573539",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.5610122",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:35.0410801",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:06:09.9215919",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:56.5390445",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.1356913",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:17.8040617",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:37.022715",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:37.4095634",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.0013449",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:02.3650024",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:06:58.1050911",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:30.55615",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.8175802",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "No answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:16.1593137",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:19.2108402",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:54.9082257",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.1954043",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:14.3049113",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:06:43.9199525",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:16.4212994",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.4155266",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:08.2135955",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:05.0121401",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:28.4880488",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.8711723",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:00:37.469902",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:43.1244798",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:14.50244",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.5108401",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "No answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:36.4246459",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:05.3050437",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:14.1616448",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.9605995",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:01.5429849",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:08:55.8981165",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:33.8625803",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.8860598",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:17.4036479",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:08:22.8484006",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:53.1691931",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.2276096",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:02.2136838",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:53.4376153",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:19.6806938",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.2434974",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:38.9559574",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:10.6653107",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:49.3570569",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.2577358",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "No answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:00:31.1129962",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:07:58.7310317",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:32.2067975",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.7244724",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:06.5573189",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:07:55.3578059",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:19.3202895",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.1947289",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "No answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:48.8833959",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:06:14.7405432",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:58.596179",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.3218808",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:55.9261847",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:58.4926989",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:12.8671875",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.0588992",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:04:51.0619328",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:23.3631166",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:43.8513968",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.1686373",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:58.0185837",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:37.2205878",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:50.3323614",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.3996542",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "No answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:05.4072073",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:06:00.8456537",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:50.141993",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.2717881",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.5
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "No answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:00:42.309626",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:17.5632415",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:11.3272111",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.5771543",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:36.2060367",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:41.2872669",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:03.7814056",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.8626024",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:56.2515648",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:07:50.336106",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:46.4930468",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.6867653",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:00:20.8865602",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:08:54.4910098",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:58.3952142",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.4402643",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:01:59.923362",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:23.5634266",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:36.4314735",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.2682836",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:03:20.102598",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:35.5880225",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:07.9652097",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.7502779",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:45.3022677",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:05:10.7611418",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:07.0781015",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.760699",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:03.2518647",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "True answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:06:33.600556",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:11:42.3937718",
+          "Additional": null
+        }
+      ]
+    },
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.8,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.2
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Open quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:00:00.736405",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:00:00",
+              "End": "2023-09-23T12:05:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.3,
+              "EventLogGenerationLibrary.Models.States.ProcessState": 0.7
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Yes answer",
+            "Resource": "Question 1"
+          },
+          "Time": "2023-09-23T12:02:38.1219012",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:05:00",
+              "End": "2023-09-23T12:10:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "False answer",
+            "Resource": "Question 2"
+          },
+          "Time": "2023-09-23T12:09:45.2879522",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-09-23T12:10:00",
+              "End": "2023-09-23T12:12:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Submit quiz",
+            "Resource": "Test quiz"
+          },
+          "Time": "2023-09-23T12:10:32.0570943",
+          "Additional": null
+        }
+      ]
+    }
+  }
+}

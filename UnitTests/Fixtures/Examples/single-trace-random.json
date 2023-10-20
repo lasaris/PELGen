@@ -1,0 +1,66 @@
+{
+  "Log": {
+    "EventLogGenerationLibrary.Models.Actor": {
+      "Trace": [
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-27T07:00:00",
+              "End": "2023-10-27T07:00:01",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Wake up",
+            "Resource": "Morning routine"
+          },
+          "Time": "2023-10-27T07:00:00.9863072",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-27T07:00:00",
+              "End": "2023-10-27T07:30:00",
+              "Distribution": 0,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {
+              "EventLogGenerationLibrary.Models.States.ProcessState": 1.0
+            },
+            "IsFinishing": false,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Take shower",
+            "Resource": "Morning routine"
+          },
+          "Time": "2023-10-27T07:10:51.9375507",
+          "Additional": null
+        },
+        {
+          "State": {
+            "TimeFrame": {
+              "Start": "2023-10-27T07:30:00",
+              "End": "2023-10-27T08:00:00",
+              "Distribution": 4,
+              "ExcludedTimes": null
+            },
+            "FollowingMap": {},
+            "IsFinishing": true,
+            "MaxPasses": 1,
+            "Callback": null,
+            "ActivityType": "Prepare breakfast",
+            "Resource": "Morning routine"
+          },
+          "Time": "2023-10-27T07:36:18.202605",
+          "Additional": null
+        }
+      ]
+    }
+  }
+}

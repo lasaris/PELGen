@@ -1,0 +1,5 @@
+ActorId,ActorType,Activity,Resource,Timestamp
+1,Manager,Begin daily inspection,Management System,13.10.2023 8:00:00
+1,Manager,Check assembly,Assembly line 42,13.10.2023 12:00:00,1
+1,Manager,Check quality inspection,Quality management system,13.10.2023 12:05:10,1
+1,Manager,Check packed product,Assembly line 42,13.10.2023 13:30:40,1

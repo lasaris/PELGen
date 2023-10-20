@@ -1,0 +1,303 @@
+ActorId,ActorType,Activity,Resource,Timestamp
+1,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+1,Ticket,Notify analyst,Emailing service,10.08.2023 22:21:03
+1,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+1,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+1,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+1,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+1,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+1,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+1,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+1,Ticket,Quality assurance,Testing SW,02.09.2023 1:53:22
+1,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+2,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+2,Ticket,Notify analyst,Emailing service,10.08.2023 22:05:17
+2,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+2,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+2,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+2,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+2,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+2,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+2,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+2,Ticket,Quality assurance,Testing SW,19.08.2023 13:58:08
+2,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+3,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+3,Ticket,Notify analyst,Emailing service,10.08.2023 22:06:46
+3,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+3,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+3,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+3,Ticket,Quality assurance,Testing SW,30.08.2023 20:19:37
+3,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+3,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+3,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+4,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+4,Ticket,Notify analyst,Emailing service,10.08.2023 22:11:12
+4,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+4,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+4,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+4,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+4,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+4,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+4,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+4,Ticket,Quality assurance,Testing SW,30.08.2023 5:41:28
+4,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+5,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+5,Ticket,Notify analyst,Emailing service,10.08.2023 22:03:43
+5,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+5,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+5,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+5,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+5,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+5,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+5,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+5,Ticket,Quality assurance,Testing SW,29.08.2023 12:16:48
+5,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+6,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+6,Ticket,Notify analyst,Emailing service,10.08.2023 22:11:31
+6,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+6,Ticket,Quality assurance,Testing SW,20.08.2023 9:29:51
+6,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+6,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+6,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+6,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+6,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+7,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+7,Ticket,Notify analyst,Emailing service,10.08.2023 22:02:36
+7,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+7,Ticket,Quality assurance,Testing SW,17.08.2023 22:53:23
+7,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+7,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+7,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+7,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+7,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+8,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+8,Ticket,Notify analyst,Emailing service,10.08.2023 22:02:54
+8,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+8,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+8,Ticket,Quality assurance,Testing SW,25.08.2023 10:27:36
+8,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+8,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+8,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+8,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+9,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+9,Ticket,Notify analyst,Emailing service,10.08.2023 22:05:06
+9,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+9,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+9,Ticket,Quality assurance,Testing SW,28.08.2023 6:25:33
+9,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+9,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+9,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+9,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+10,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+10,Ticket,Notify analyst,Emailing service,10.08.2023 22:20:57
+10,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+10,Ticket,Quality assurance,Testing SW,23.08.2023 9:50:45
+10,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+10,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+10,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+10,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+10,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+11,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+11,Ticket,Notify analyst,Emailing service,10.08.2023 22:01:11
+11,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+11,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+11,Ticket,Quality assurance,Testing SW,27.08.2023 22:27:26
+11,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+11,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+11,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+11,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+12,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+12,Ticket,Notify analyst,Emailing service,10.08.2023 22:24:52
+12,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+12,Ticket,Quality assurance,Testing SW,20.08.2023 0:45:33
+12,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+12,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+12,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+12,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+12,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+13,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+13,Ticket,Notify analyst,Emailing service,10.08.2023 22:12:21
+13,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+13,Ticket,Quality assurance,Testing SW,15.08.2023 23:56:25
+13,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+13,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+13,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+13,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+13,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+13,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+13,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+14,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+14,Ticket,Notify analyst,Emailing service,10.08.2023 22:07:03
+14,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+14,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+14,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+14,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+14,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+14,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+14,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+14,Ticket,Quality assurance,Testing SW,30.08.2023 19:25:01
+14,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+15,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+15,Ticket,Notify analyst,Emailing service,10.08.2023 22:33:37
+15,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+15,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+15,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+15,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+15,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+15,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+15,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+15,Ticket,Quality assurance,Testing SW,25.08.2023 23:26:32
+15,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+16,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+16,Ticket,Notify analyst,Emailing service,10.08.2023 22:41:14
+16,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+16,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+16,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+16,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+16,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+16,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+16,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+16,Ticket,Quality assurance,Testing SW,16.08.2023 9:05:28
+16,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+17,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+17,Ticket,Notify analyst,Emailing service,10.08.2023 22:04:27
+17,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+17,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+17,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+17,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+17,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+17,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+17,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+17,Ticket,Quality assurance,Testing SW,01.09.2023 1:33:33
+17,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+18,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+18,Ticket,Notify analyst,Emailing service,10.08.2023 22:15:40
+18,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+18,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+18,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+18,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+18,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+18,Ticket,Quality assurance,Testing SW,01.09.2023 19:43:59
+18,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+19,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+19,Ticket,Notify analyst,Emailing service,10.08.2023 22:09:32
+19,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+19,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+19,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+19,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+19,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+19,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+19,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+19,Ticket,Quality assurance,Testing SW,26.08.2023 0:30:47
+19,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+20,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+20,Ticket,Notify analyst,Emailing service,10.08.2023 22:00:43
+20,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+20,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+20,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+20,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+20,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+20,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+20,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+20,Ticket,Quality assurance,Testing SW,29.08.2023 9:01:47
+20,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+21,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+21,Ticket,Notify analyst,Emailing service,10.08.2023 22:09:44
+21,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+21,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+21,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+21,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+21,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+21,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+21,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+21,Ticket,Quality assurance,Testing SW,20.08.2023 5:22:26
+21,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+22,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+22,Ticket,Notify analyst,Emailing service,10.08.2023 22:19:26
+22,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+22,Ticket,Quality assurance,Testing SW,24.08.2023 19:33:49
+22,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+22,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+22,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+22,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+22,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+23,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+23,Ticket,Notify analyst,Emailing service,10.08.2023 22:23:36
+23,Ticket,Quality assurance,Testing SW,17.08.2023 4:33:05
+23,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+23,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+23,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+23,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+23,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+23,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+24,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+24,Ticket,Notify analyst,Emailing service,10.08.2023 22:10:48
+24,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+24,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+24,Ticket,Quality assurance,Testing SW,24.08.2023 22:05:07
+24,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+24,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+24,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+24,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+25,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+25,Ticket,Notify analyst,Emailing service,10.08.2023 22:24:30
+25,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+25,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+25,Ticket,Quality assurance,Testing SW,25.08.2023 22:12:00
+25,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+25,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+25,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+25,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+26,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+26,Ticket,Notify analyst,Emailing service,10.08.2023 22:21:56
+26,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+26,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+26,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+26,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+26,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+26,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+26,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+26,Ticket,Quality assurance,Testing SW,16.08.2023 21:03:28
+26,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+27,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+27,Ticket,Notify analyst,Emailing service,10.08.2023 22:09:19
+27,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+27,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+27,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+27,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+27,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+27,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+27,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+27,Ticket,Quality assurance,Testing SW,31.08.2023 7:05:22
+27,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+28,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+28,Ticket,Notify analyst,Emailing service,10.08.2023 22:29:00
+28,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+28,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+28,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+28,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+28,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+28,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+28,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+28,Ticket,Quality assurance,Testing SW,29.08.2023 9:58:57
+28,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+29,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+29,Ticket,Notify analyst,Emailing service,10.08.2023 22:13:29
+29,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+29,Ticket,Quality assurance,Testing SW,24.08.2023 17:14:10
+29,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+29,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+29,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+29,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+29,Ticket,Update due date,Time cron,01.09.2023 0:00:00
+30,Ticket,Issue reported,Support Software,10.08.2023 22:00:00
+30,Ticket,Notify analyst,Emailing service,10.08.2023 22:00:52
+30,Ticket,Analysis performed,Support Software,14.08.2023 8:00:00
+30,Ticket,Review analysis,Jira,16.08.2023 8:00:00
+30,Ticket,Tickets backup,Database service,17.08.2023 22:00:00
+30,Ticket,Tickets backup,Database service,24.08.2023 22:00:00
+30,Ticket,Resolution added,Support Software,29.08.2023 16:00:00
+30,Ticket,Tickets backup,Database service,31.08.2023 22:00:00
+30,Ticket,Feedback gathered,Support Software,02.09.2023 13:30:00
+30,Ticket,Quality assurance,Testing SW,28.08.2023 18:35:36
+30,Ticket,Update due date,Time cron,01.09.2023 0:00:00

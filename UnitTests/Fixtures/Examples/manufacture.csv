@@ -1,0 +1,4 @@
+ActorId,ActorType,Activity,Resource,Timestamp
+1,Worker,Component assembly,Assembly line 42,13.10.2023 12:00:00
+1,Worker,Quality inspection,Assembly line 42,13.10.2023 12:00:10
+1,Worker,Product packing,Assembly line 42,13.10.2023 13:30:40
