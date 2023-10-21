@@ -25,7 +25,7 @@ public class ProcessState : ABaseState
     // Rules which apply for given state and which lead to the next
     public int MaxPasses;
 
-    // FIXME: Design this better and more generally!
+    // NOTE: this could be designed more general with better abstraction.
     public AdditionalActionFunc? Callback;
 
     public ProcessState(string activity, string resource, int maxPasses, TimeFrame timeFrame,

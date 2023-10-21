@@ -127,13 +127,13 @@ public class TimeFrame
             throw new Exception($"Generated wrong time. Start: {Start}; End: {End}; Generated: {pickedDateTime}");
         }
 
-        // FIXME: This is a performance issue and better algorithm should be put in place
         if (ExcludedTimes != null)
         {
             foreach (var time in ExcludedTimes)
             {
                 if (pickedDateTime >= time.Start && pickedDateTime <= time.End)
                 {
+                    // NOTE: this recursive call could be a potential performance issue
                     return PickTimeByDistribution(newStartLimit);
                 }
             }

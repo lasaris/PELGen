@@ -21,7 +21,7 @@ public class PeriodicSprinkleState : ABaseState
     // Time between each sprinkle (beginAfter + Period = first sprinkle time of this state)
     public TimeSpan Period;
 
-    // FIXME: This feels illegal to be here and there is surely better and more general way to do this.
+    // NOTE: This could be designed more generally or abstracted
     // Alternative state, chance to occur, max occurrences
     public (ABaseState, float, int)? AlternativeState;
 

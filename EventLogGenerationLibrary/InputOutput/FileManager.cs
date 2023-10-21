@@ -105,7 +105,6 @@ internal static class FileManager
                 }
             }
 
-            // FIXME: Is this optimal?
             var lineColumnCount = sb.ToString().Split(',').Count() + 1;
             while (FileManager.ColumnCount > lineColumnCount)
             {

@@ -127,7 +127,6 @@ internal static class SprinkleService
         }
     }
 
-    // FIXME: Ideally remove the dependencies on actor frame and make it more generalized (like reactive states)
     internal static void RunSprinkling(ActorFrame filledActorFrame)
     {
         // Create possible timeframes for each sprinkle
@@ -189,7 +188,6 @@ internal static class SprinkleService
         }
 
         // Execute dynamic sprinkles
-        // FIXME: This could theoretically be unified with normal sprinkles which go through the visited stack
         foreach (var sprinkle in DynamicSprinkles)
         {
             foreach (var stateTimePair in filledActorFrame.VisitedStack)
