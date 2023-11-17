@@ -15,5 +15,33 @@ Description of repository projects:
 
 # Usage
 
-To use library within your domain, create your own project and import EventLogGenerationLibrary into it.
-For inspiration you can have a look into [Examples](https://github.com/lasaris/PELGen/blob/main/Examples/Program.cs).
+To use library within your domain, create your own project and import EventLogGenerationLibrary into it as a Reference.
+Currently built on .NET 7.
+
+# Examples
+
+Here is a simple example of how this library can be used in your code.
+For more inspiration you can have a look into [Examples](https://github.com/lasaris/PELGen/blob/main/Examples/Program.cs).
+
+```cs
+// Define common resources
+var resource = "Assembly line 42";
+
+// Create states with exact time of execution
+var state1 = new ProcessState("Component assembly", resource, 1, new DateTime(2023, 10, 13, 12, 00, 00));
+var state2 = new ProcessState("Quality inspection", resource, 1, new DateTime(2023, 10, 13, 12, 00, 10));
+var state3 = new ProcessState("Product packing", resource, 1, new DateTime(2023, 10, 13, 13, 30, 40), true);
+
+// Add following states to model the process
+state1.AddFollowingState(state2);
+state2.AddFollowingState(state3);
+
+// Create configuration
+var config = new Configuration(1, state1, 1, null, "manufacture.csv",
+  "ActorId,ActorType,Activity,Resource,Timestamp",
+  "Worker");
+
+// Create generator and run generation
+var generator = new EventGenerator(config);
+generator.RunGeneration();
+```
